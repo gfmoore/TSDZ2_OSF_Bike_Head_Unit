@@ -1,0 +1,36 @@
+{
+	// See https://go.microsoft.com/fwlink/?LinkId=733558
+	// for the documentation about the tasks.json format
+	"version": "2.0.0",
+	"tasks": [
+			{
+					"label": "1. List AVD names",
+					"type": "shell",
+					"command": "emulator -list-avds",
+					"options": {
+							"cwd": "${workspaceFolder}"
+					},
+					"problemMatcher": []
+			},
+      {
+          "label": "2. Start AVD emulator",
+          "type": "shell",
+          "command": "C:/Android/android-sdk/emulator/emulator -avd Pixel_2_API_28",
+          "options": {
+              "cwd": "${workspaceFolder}"
+          },
+          "problemMatcher": []
+    },
+    {
+        "label": "3. Start AVD emulator cold boot",
+        "type": "shell",
+        "command": "C:/Android/android-sdk/emulator/emulator -avd Pixel_2_API_28 -no-snapshot-load",
+        "options": {
+            "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": []
+    }
+
+      
+	]
+}

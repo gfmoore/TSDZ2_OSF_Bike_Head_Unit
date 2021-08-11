@@ -1,0 +1,33 @@
+/**
+ * Name:          TSDZ2 OSF Bike Head Unit
+ * Author:        Gordon Moore
+ * File:          walkAssist.js
+ * Date:          11 August 2021
+ * Description:   About this app
+ * Licence        The MIT License https://opensource.org/licenses/MIT 
+ * 
+ * Version history
+ * 0.0.1    11 August 2021     Initial version
+ */
+
+ import React, { useState } from 'react'
+ import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native'
+ import { globalStyles } from '../styles/globalStyles'
+ 
+ 
+ export default function WalkAssist ( { navigation } ) {
+   return (
+     <View>
+       <Text>Level 1</Text>
+       <Text>Level 2</Text>
+       <Text>Level 3</Text>
+       <Text>Level 4</Text>
+       <Text>Level 5</Text>
+       <Text>Level 6</Text>
+       <Text>Level 7>/Text>
+       <Text>Level 8</Text>
+       <Text>Level 9</Text>
+       <Text>Enable cruise feature</Text>
+     </View>
+   )
+ }
