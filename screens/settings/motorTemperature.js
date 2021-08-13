@@ -10,7 +10,7 @@
  * 0.0.1    11 August 2021     Initial version
  */
 
- import React, { useState } from 'react'
+ import React from 'react'
  import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
  import { global } from '../styles/global'
  

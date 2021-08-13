@@ -13,25 +13,26 @@
  import React from 'react'
  import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
  import { global } from '../styles/global'
+
  
  
  export default function Variables ( { route, navigation } ) {
    return (
      <View>
-       <Text>Speed</Text>
-       <Text>Trip distance</Text>
-       <Text>Cadence</Text>
-       <Text>Human power</Text>
-       <Text>Motor power</Text>
-       <Text>Watts/Km</Text>
-       <Text>Battery voltage</Text>
-       <Text>Battery current</Text>
-       <Text>Battery SoC</Text>
-       <Text>Motor current</Text>
-       <Text>Motor temperature</Text>
-       <Text>Motor speed</Text>
-       <Text>Motor pwm</Text>
-       <Text>Motor FOC</Text>
+        <TouchableOpacity onPress={ () => navigation.navigate('VarsSpeed') }><Text>Speed</Text></TouchableOpacity>
+        <TouchableOpacity onPress={ () => navigation.navigate('VarsTripDistance') }><Text>Trip distance</Text></TouchableOpacity>
+        <TouchableOpacity onPress={ () => navigation.navigate('VarsCadence') }><Text>Cadence</Text></TouchableOpacity>
+        <TouchableOpacity onPress={ () => navigation.navigate('VarsHumanPower') }><Text>Human power</Text></TouchableOpacity>
+        <TouchableOpacity onPress={ () => navigation.navigate('VarsMotorPower') }><Text>Motor power</Text></TouchableOpacity>
+        <TouchableOpacity onPress={ () => navigation.navigate('VarsWattsKm') }><Text>Watts/Km</Text></TouchableOpacity>
+        <TouchableOpacity onPress={ () => navigation.navigate('VarsBatteryVoltage') }><Text>Battery voltage</Text></TouchableOpacity>
+        <TouchableOpacity onPress={ () => navigation.navigate('VarsBatteryCurrent') }><Text>Battery current</Text></TouchableOpacity>
+        <TouchableOpacity onPress={ () => navigation.navigate('VarsBatterySoC') }><Text>Battery SoC</Text></TouchableOpacity>
+        <TouchableOpacity onPress={ () => navigation.navigate('VarsMotorCurrent') }><Text>Motor current</Text></TouchableOpacity>
+        <TouchableOpacity onPress={ () => navigation.navigate('VarsMotorTemperature') }><Text>Motor temperature</Text></TouchableOpacity>
+        <TouchableOpacity onPress={ () => navigation.navigate('VarsMotorSpeed') }><Text>Motor speed</Text></TouchableOpacity>
+        <TouchableOpacity onPress={ () => navigation.navigate('VarsMotorPWM') }><Text>Motor PWM</Text></TouchableOpacity>
+        <TouchableOpacity onPress={ () => navigation.navigate('VarsMotorFOC') }><Text>Motor FOC</Text></TouchableOpacity>
      </View>
    )
  }

@@ -2,20 +2,19 @@
  * Name:          TSDZ2 OSF Bike Head Unit
  * Author:        Gordon Moore
  * File:          about.js
- * Date:          11 August 2021
- * Description:   About this app
+ * Date:          13 August 2021
+ * Description:   Code for about drawer
  * Licence        The MIT License https://opensource.org/licenses/MIT 
  * 
  * Version history
- * 0.0.1    11 August 2021     Initial version
+ * 0.0.1    13 August 2021     Initial version
  */
-
 import React from 'react'
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
-import { global} from '../styles/global'
+import { Alert, View, Text } from 'react-native'
+import { global } from '../styles/global'
 
-
-export default function About( { route, navigation } ) {
+export default function About() {
+  
   return (
     <View>
       <Text>The TSDZ2 OpenSource Firmware Bike Head Unit</Text>
@@ -31,8 +30,6 @@ export default function About( { route, navigation } ) {
       <Text></Text>
       <Text></Text>
       <Text></Text>
-
-
     </View>
   )
 }

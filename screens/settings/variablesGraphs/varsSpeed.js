@@ -24,8 +24,6 @@
        <Text>Thresholds</Text>
        <Text>Max threshold Red</Text>
        <Text>Max threshold Yellow</Text>
-       <Text></Text>
-       <Text></Text>
      </View>
    )
  }

@@ -15,7 +15,7 @@
  import { global } from '../styles/global'
  
  
- export default function TorqueSensor ( { route, navigation } ) {
+ export default function TorqueSensor ( { navigation } ) {
    return (
      <View>
        <Text>Assist w/o pedal</Text>
