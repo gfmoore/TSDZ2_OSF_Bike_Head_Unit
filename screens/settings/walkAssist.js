@@ -10,12 +10,12 @@
  * 0.0.1    11 August 2021     Initial version
  */
 
- import React, { useState } from 'react'
- import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native'
- import { globalStyles } from '../styles/globalStyles'
+ import React from 'react'
+ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+ import { global } from '../styles/global'
  
  
- export default function WalkAssist ( { navigation } ) {
+ export default function WalkAssist ( { route, navigation } ) {
    return (
      <View>
        <Text>Level 1</Text>
@@ -24,7 +24,7 @@
        <Text>Level 4</Text>
        <Text>Level 5</Text>
        <Text>Level 6</Text>
-       <Text>Level 7>/Text>
+       <Text>Level 7</Text>
        <Text>Level 8</Text>
        <Text>Level 9</Text>
        <Text>Enable cruise feature</Text>

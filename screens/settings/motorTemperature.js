@@ -11,11 +11,11 @@
  */
 
  import React, { useState } from 'react'
- import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native'
- import { globalStyles } from '../styles/globalStyles'
+ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+ import { global } from '../styles/global'
  
  
- export default function MotorTemperature ( { navigation } ) {
+ export default function MotorTemperature ( { route, navigation } ) {
    return (
      <View>
        <Text>Feature</Text>

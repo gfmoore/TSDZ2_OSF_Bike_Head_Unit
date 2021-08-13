@@ -10,12 +10,12 @@
  * 0.0.1    11 August 2021     Initial version
  */
 
- import React, { useState } from 'react'
- import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native'
- import { globalStyles } from '../styles/globalStyles'
+ import React from 'react'
+ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+ import { global } from '../styles/global'
  
  
- export default function ErrorCodes ( { navigation } ) {
+ export default function ErrorCodes ( { route, navigation } ) {
    return (
      <View>
        <Text>E02 - ERROR_TORQUE_SENSOR</Text>

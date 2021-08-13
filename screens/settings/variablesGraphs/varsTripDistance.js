@@ -10,12 +10,12 @@
  * 0.0.1    11 August 2021     Initial version
  */
 
- import React, { useState } from 'react'
- import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native'
- import { globalStyles } from '../styles/globalStyles'
+ import React from 'react'
+ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+ import { global } from '../styles/global'
  
  
- export default function VarsTripDistance ( { navigation } ) {
+ export default function VarsTripDistance ( { route, navigation } ) {
    return (
      <View>
        <Text>Graph auto max min</Text>

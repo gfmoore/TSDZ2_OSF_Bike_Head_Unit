@@ -17,14 +17,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 const Stack = createNativeStackNavigator()
 
 import Home from '../screens/home'
-import Settings from '../screens/settings'
 
 export default function HomeStack( { navigation } ) {
 
   return (
     <Stack.Navigator initialRouteName="Home" >
       <Stack.Screen name="Home" component={ Home } />
-      <Stack.Screen name="Settings" component={ Settings } />
     </Stack.Navigator> 
   )
 }

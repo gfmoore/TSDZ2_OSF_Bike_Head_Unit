@@ -10,29 +10,30 @@
  * 0.0.1    11 August 2021     Initial version
  */
 
-import React, { useState } from 'react'
-import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native'
-import { globalStyles } from '../styles/globalStyles'
+import React from 'react'
+import { StyleSheet, View, Text,  TouchableOpacity } from 'react-native'
+import { global } from '../styles/global'
 
 
 export default function Settings( { navigation } ) {
+
   return (
     <View>
-      <Text>Motor</Text>
-      <Text>Motor Temperature</Text>
-      <Text>Torque</Text>
-      <Text>Battery</Text>
-      <Text>State of Charge (SoC)</Text>
-      <Text>Wheel</Text>
-      <Text>Trip Memories</Text>
-      <Text>Assist Level</Text>
-      <Text>Walk Assist</Text>
-      <Text>Startup Boost</Text>
-      <Text>Street Mode</Text>
-      <Text>Variable</Text>
-      <Text>Various</Text>
-      <Text>Display</Text>
-      <Text>Technical</Text>
+      <TouchableOpacity onPress={ () => navigation.navigate('Motor') }><Text>Motor</Text></TouchableOpacity>
+      <TouchableOpacity onPress={ () => navigation.navigate('MotorTemperature') }><Text>Motor Temperature</Text></TouchableOpacity>
+      <TouchableOpacity onPress={ () => navigation.navigate('TorqueSensor') }><Text>Torque Sensor</Text></TouchableOpacity>
+      <TouchableOpacity onPress={ () => navigation.navigate('Battery') }><Text>Battery</Text></TouchableOpacity>
+      <TouchableOpacity onPress={ () => navigation.navigate('SoC') }><Text>State of Charge (SoC)</Text></TouchableOpacity>
+      <TouchableOpacity onPress={ () => navigation.navigate('Wheel') }><Text>Wheel</Text></TouchableOpacity>
+      <TouchableOpacity onPress={ () => navigation.navigate('TripMemories') }><Text>Trip Memories</Text></TouchableOpacity>
+      <TouchableOpacity onPress={ () => navigation.navigate('AssistLevel') }><Text>Assist Level</Text></TouchableOpacity>
+      <TouchableOpacity onPress={ () => navigation.navigate('WalkAssist') }><Text>Walk Assist</Text></TouchableOpacity>
+      <TouchableOpacity onPress={ () => navigation.navigate('StartupBoost') }><Text>Startup Boost</Text></TouchableOpacity>
+      <TouchableOpacity onPress={ () => navigation.navigate('StreetMode') }><Text>Street Mode</Text></TouchableOpacity>
+      <TouchableOpacity onPress={ () => navigation.navigate('Variables') }><Text>Variable</Text></TouchableOpacity>
+      <TouchableOpacity onPress={ () => navigation.navigate('Various') }><Text>Various</Text></TouchableOpacity>
+      <TouchableOpacity onPress={ () => navigation.navigate('Display') }><Text>Display</Text></TouchableOpacity>
+      <TouchableOpacity onPress={ () => navigation.navigate('Technical') }><Text>Technical</Text></TouchableOpacity>
     </View>
   )
 }

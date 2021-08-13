@@ -21,7 +21,7 @@ import { NavigationContainer }        from '@react-navigation/native'
 import { createDrawerNavigator }      from '@react-navigation/drawer'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import { Text, View, Image, Button, TouchableOpacity, Alert } from 'react-native'
+import { Alert } from 'react-native'
 
 import Entype from 'react-native-vector-icons/Entypo'
 
@@ -39,8 +39,8 @@ export default function App() {
     <NavigationContainer>
       <Drawer.Navigator>
         <Drawer.Screen name="TSDZ2 OSF Bike Head Unit"  component={ HomeStack } />
-        <Drawer.Screen name="Settings"                  component={ SettingsStack } />
-        <Drawer.Screen name="About"                     component={ AboutStack } />
+        <Drawer.Screen name="Change Settings"           component={ SettingsStack } />
+        <Drawer.Screen name="About app"                 component={ AboutStack } />
       </Drawer.Navigator>
     </NavigationContainer>
   )
