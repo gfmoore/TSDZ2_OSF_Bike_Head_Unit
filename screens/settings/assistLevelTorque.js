@@ -10,23 +10,24 @@
  * 0.0.1    11 August 2021     Initial version
  */
 
- import React from 'react'
- import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
- import { global } from '../styles/global'
- 
- 
- export default function AssistLevelPower( { route navigation } ) {
-   return (
-     <View>
-       <Text>Level 1</Text>
-       <Text>Level 2</Text>
-       <Text>Level 3</Text>
-       <Text>Level 4</Text>
-       <Text>Level 5</Text>
-       <Text>Level 6</Text>
-       <Text>Level 7</Text>
-       <Text>Level 8</Text>
-       <Text>Level 9</Text>
-     </View>
-   )
- }
+import React from 'react'
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import { global } from '../styles/global'
+
+import DataEntry from '../components/dataentry'
+
+export default function AssistLevelTorque( { route, navigation } ) {
+  return (
+    <View style={global.root, global.app}>
+      <DataEntry label='1'  data='50'/>
+      <DataEntry label='2'  data='150'/>
+      <DataEntry label='3'  data='255'/>
+      <DataEntry label='4'  data='0'/>
+      <DataEntry label='5'  data='0'/>
+      <DataEntry label='6'  data='0'/>
+      <DataEntry label='7'  data='0'/>
+      <DataEntry label='8'  data='0'/>
+      <DataEntry label='9'  data='0'/>
+    </View>
+  )
+}

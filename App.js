@@ -29,18 +29,23 @@ import Entype from 'react-native-vector-icons/Entypo'
 const Drawer  = createDrawerNavigator()
 const Stack   = createNativeStackNavigator()
 
-import Home        from './screens/home.js'
-import Settings    from './screens/settings.js'
-import About       from './screens/about.js'
+import Home        from './screens/home'
+import Settings    from './screens/settings'
+import FlashOSF    from './screens/flashOSF'
+import About       from './screens/about'
 
+import Parameters  from './assets/data/parameters'
+
+let testvar = { gretting: 'Hello G!' }
 
 export default function App() { 
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="TSDZ2 OSF Bike Head Unit">
-        <Drawer.Screen name="TSDZ2 OSF Bike Head Unit"  component={ Home } />
-        <Drawer.Screen name="Change Settings"           component={ Settings } />
-        <Drawer.Screen name="About app"                 component={ About } /> 
+      <Drawer.Navigator initialRouteName="TSDZ2 OSF Bike Head Unit"  screenOptions={{ drawerStyle: { backgroundColor: 'white' } }}>
+        <Drawer.Screen name="TSDZ2 OSF Bike Head Unit"  component={ Home }      options={{ headerTitleStyle: { color: 'black' }, headerStyle: { backgroundColor: '#5c5c5c'} } }/>
+        <Drawer.Screen name="Change Settings"           component={ Settings }  options={{ headerTitleStyle: { color: 'black' }, headerStyle: { backgroundColor: '#5c5c5c'} } }/>
+        <Drawer.Screen name="Flash OSF"                 component={ FlashOSF }  options={{ headerTitleStyle: { color: 'black' }, headerStyle: { backgroundColor: '#5c5c5c'} } }/> 
+        <Drawer.Screen name="About app"                 component={ About }     options={{ headerTitleStyle: { color: 'black' }, headerStyle: { backgroundColor: '#5c5c5c'} } }/> 
       </Drawer.Navigator>
     </NavigationContainer>
   )

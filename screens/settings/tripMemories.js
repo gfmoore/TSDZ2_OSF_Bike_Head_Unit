@@ -10,20 +10,21 @@
  * 0.0.1    11 August 2021     Initial version
  */
 
- import React from 'react'
- import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
- import { global } from '../styles/global'
- 
- 
- export default function TripMemories ( { route, navigation } ) {
-   return (
-     <View>
-       <Text>A auto reset</Text>
-       <Text>A auto reset hours</Text>
-       <Text>B auto reset</Text>
-       <Text>B auto reset hours</Text>
-       <Text>Reset trip A</Text>
-       <Text>Reset trip B</Text>
-     </View>
-   )
- }
+import React from 'react'
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import { global } from '../styles/global'
+
+import DataEntry from '../components/dataentry'
+
+export default function TripMemories ( { route, navigation } ) {
+  return (
+    <View style={global.root, global.app}>
+      <DataEntry label='A auto reset'         data='Enable'/>
+      <DataEntry label='A auto reset hours'   data='24'/>
+      <DataEntry label='B auto reset'         data='Enable'/>
+      <DataEntry label='B auto reset hours'   data='1428'/>
+      <DataEntry label='Reset trip A'         data='No'/>
+      <DataEntry label='Reset trip B'         data='No'/>
+    </View>
+  )
+}

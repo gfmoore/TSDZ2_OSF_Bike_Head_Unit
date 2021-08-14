@@ -10,17 +10,18 @@
  * 0.0.1    11 August 2021     Initial version
  */
 
- import React from 'react'
- import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
- import { global } from '../styles/global'
- 
- 
- export default function MotorTemperature ( { route, navigation } ) {
-   return (
-     <View>
-       <Text>Feature</Text>
-       <Text>Min limit</Text>
-       <Text>Max limit</Text>
-     </View>
-   )
- }
+import React from 'react'
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import { global } from '../styles/global'
+
+import DataEntry from '../components/dataentry'
+
+export default function MotorTemperature ( { navigation } ) {
+  return (
+  <View style={global.root, global.app}>
+    <DataEntry label='Feature'      data='Enabled'/>
+    <DataEntry label='Min limit'      data='0'/>
+    <DataEntry label='Max limit'      data='80'/>
+    </View>
+  )
+}

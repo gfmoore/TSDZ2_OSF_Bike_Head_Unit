@@ -10,20 +10,21 @@
  * 0.0.1    13 August 2021     Initial version
  */
 
- import React from 'react'
- import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
- import { global } from '../styles/global'
- 
- 
- export default function Motor ( { navigation } ) {
-   return (
-     <View>
-       <Text>Motor voltage</Text>
-       <Text>Motor power max</Text>
-       <Text>Motor acceleration</Text>
-       <Text>Motor deceleration</Text>
-       <Text>Motor fast stop</Text>
-       <Text>Field weakening</Text>
-     </View>
-   )
- }
+import React from 'react'
+import { StyleSheet, View, Text, TextInput } from 'react-native'
+import { global } from '../styles/global'
+
+import DataEntry from '../components/dataentry'
+
+export default function Motor ( { navigation } ) {
+  return (
+    <View style={global.root, global.app}>
+      <DataEntry label='Motor voltage'      data='37'/>
+      <DataEntry label='Motor power max'    data='8'/>
+      <DataEntry label='Motor acceleration' data='21' />
+      <DataEntry label='Motor deceleration' data='0' />
+      <DataEntry label='Motor fast stop'    data='0' />
+      <DataEntry label='Field weakening'    data='100' />
+    </View>
+  )
+}

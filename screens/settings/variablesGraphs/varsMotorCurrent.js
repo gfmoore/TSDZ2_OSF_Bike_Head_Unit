@@ -10,20 +10,21 @@
  * 0.0.1    11 August 2021     Initial version
  */
 
- import React from 'react'
- import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
- import { global } from '../styles/global'
- 
- 
- export default function VarsMotorCurrent( { route, navigation } ) {
-   return (
-     <View>
-       <Text>Graph auto max min</Text>
-       <Text>Graph max</Text>
-       <Text>Graph min</Text>
-       <Text>Thresholds</Text>
-       <Text>Max threshold Red</Text>
-       <Text>Max threshold Yellow</Text>
-     </View>
-   )
- }
+import React from 'react'
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import { global } from '../../styles/global'
+
+import DataEntry from '../../components/dataentry'
+
+export default function VarsMotorCurrent( { route, navigation } ) {
+  return (
+  <View style={global.root, global.app}>
+    <DataEntry label='Graph auto max min' data=''/>
+    <DataEntry label='Graph max' data=''/>
+    <DataEntry label='Graph min' data=''/>
+    <DataEntry label='Thresholds' data=''/>
+    <DataEntry label='Max threshold Red' data=''/>
+    <DataEntry label='Max threshold Yellow' data=''/>
+  </View>
+  )
+}

@@ -10,25 +10,28 @@
  * 0.0.1    11 August 2021     Initial version
  */
 
- import React from 'react'
- import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
- import { global } from '../styles/global'
- 
- 
- export default function Technical ( { route, navigation } ) {
-   return (
-     <View>
-       <Text>ADC battery current</Text>
-       <Text>ADC throttle sensor</Text>
-       <Text>Throttle sensor</Text>
-       <Text>ADC torque sensor</Text>
-       <Text>ADC torque delta</Text>
-       <Text>ADC torque step calc</Text>
-       <Text>Pedal cadence</Text>
-       <Text>PWM duty cycle</Text>
-       <Text>Motor speed</Text>
-       <Text>Motor FOC</Text>
-       <Text>Hall sensors</Text>
-     </View>
-   )
- }
+import React from 'react'
+import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native'
+import { global } from '../styles/global'
+
+import DataEntry from '../components/dataentry'
+
+export default function Technical ( { navigation } ) {
+  return (
+    <View style={global.root, global.app}>
+      <ScrollView>
+        <DataEntry label='ADC battery current'  data=''/>
+        <DataEntry label='ADC throttle sensor'  data=''/>
+        <DataEntry label='Throttle sensor'  data=''/>
+        <DataEntry label='ADC torque sensor'  data=''/>
+        <DataEntry label='ADC torque delta'  data=''/>
+        <DataEntry label='ADC torque step calc'  data=''/>
+        <DataEntry label='Pedal cadence'  data=''/>
+        <DataEntry label='PWM duty cycle'  data=''/>
+        <DataEntry label='Motor speed'  data=''/>
+        <DataEntry label='Motor FOC'  data=''/>
+        <DataEntry label='Hall sensors'  data=''/>
+      </ScrollView>
+    </View>
+  )
+}

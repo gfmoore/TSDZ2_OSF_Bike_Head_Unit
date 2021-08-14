@@ -10,20 +10,21 @@
  * 0.0.1    11 August 2021     Initial version
  */
 
- import React from 'react'
- import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
- import { global } from '../styles/global'
- 
- 
- export default function Battery( { route, navigation } ) {
-   return (
-     <View>
-       <Text>Max current</Text>
-       <Text>Low Cut-off</Text>
-       <Text>Resistance</Text>
-       <Text>Voltage estimate</Text>
-       <Text>Resistance estimate</Text>
-       <Text>Power loss estimate</Text>
-     </View>
-   )
- }
+import React from 'react'
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import { global } from '../styles/global'
+
+import DataEntry from '../components/dataentry'
+
+export default function Battery( { navigation } ) {
+  return (
+    <View style={global.root, global.app}>
+      <DataEntry label='Max current'          data='0'/>
+      <DataEntry label='Low cutt-off'         data='0'/>
+      <DataEntry label='Resistance'           data='0'/>
+      <DataEntry label='Voltage estimate'     data='0'/>
+      <DataEntry label='Resistance estimate'  data='0'/>
+      <DataEntry label='Power loss estimate'  data='0'/>
+    </View>
+  )
+}

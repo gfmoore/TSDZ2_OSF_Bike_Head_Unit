@@ -10,19 +10,20 @@
  * 0.0.1    11 August 2021     Initial version
  */
 
- import React from 'react'
- import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
- import { global } from '../styles/global'
- 
- 
- export default function SoC ( { route, navigation } ) {
-   return (
-     <View>
-       <Text>Text</Text>
-       <Text>Reset at voltage</Text>
-       <Text>Battery total Wh</Text>
-       <Text>Used Wh</Text>
-       <Text>Manual reset</Text>
-     </View>
-   )
- }
+import React from 'react'
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import { global } from '../styles/global'
+
+import DataEntry from '../components/dataentry'
+
+export default function SoC ( { route, navigation } ) {
+  return (
+    <View style={global.root, global.app}>
+      <DataEntry label='Text'               data='SoC%'/>
+      <DataEntry label='Reset at voltage'   data='0'/>
+      <DataEntry label='Battery total Wh'   data='0'/>
+      <DataEntry label='Used Wh'            data='0'/>
+      <DataEntry label='Manual reset'       data='Disable'/>
+    </View>
+  )
+}

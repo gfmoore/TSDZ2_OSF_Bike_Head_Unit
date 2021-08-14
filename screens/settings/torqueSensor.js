@@ -10,25 +10,28 @@
  * 0.0.1    11 August 2021     Initial version
  */
 
- import React from 'react'
- import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
- import { global } from '../styles/global'
- 
- 
- export default function TorqueSensor ( { navigation } ) {
-   return (
-     <View>
-       <Text>Assist w/o pedal</Text>
-       <Text>Torque ADC threshold</Text>
-       <Text>Coast brake</Text>
-       <Text>Coast brake ADC</Text>
-       <Text>Calibration</Text>
-       <Text>Torque ADC step</Text>
-       <Text>Torque ADC offset</Text>
-       <Text>Torque ADC max</Text>
-       <Text>Weight on pedal</Text>
-       <Text>Torque adc on weight</Text>
-       <Text>Default weight</Text>
-     </View>
-   )
- }
+import React from 'react'
+import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native'
+import { global } from '../styles/global'
+
+import DataEntry from '../components/dataentry'
+
+export default function TorqueSensor ( { navigation } ) {
+  return (
+    <View style={global.root, global.app}>
+      <ScrollView>
+        <DataEntry label='Assist w/o pedal'       data='0'/>
+        <DataEntry label='Torque ADC threshold'   data='0'/>
+        <DataEntry label='Coast brake'            data='0'/>
+        <DataEntry label='Coast brake ADC'        data='0'/>
+        <DataEntry label='Calibration'            data='0'/>
+        <DataEntry label='Torque ADC step'        data='0'/>
+        <DataEntry label='Torque ADC offset'      data='0'/>
+        <DataEntry label='Torque ADC max'         data='0'/>
+        <DataEntry label='Weight on pedal'        data='0'/>
+        <DataEntry label='Torque adc on weight'   data='0'/>
+        <DataEntry label='Default weight'         data='0'/>
+      </ScrollView>
+    </View>
+  )
+}

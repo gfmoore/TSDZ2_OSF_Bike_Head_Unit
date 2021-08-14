@@ -9,17 +9,17 @@ export default function Parameters() {
       'Reset_Trip_A': false,
       'Reset_Trip_B': false
     },
-    'Wheel'{ 
+    'Wheel': { 
       'Max_Speed': 70,
       'Circumference': 2070
     },
-    'Battery' : {
+    'Battery': {
       'Max_current': 11,
       'Low_Cut_Off': 39.0,
       'Resistance': '200',
       'Voltage_Est': 0,
       'Power_Loss_Est': 0 
-    }
+    },
     'SoC': {
       'Text': 'SoC %',
       'Reset_At_Voltage': 54.1,
@@ -33,7 +33,7 @@ export default function Parameters() {
       'Motor_deceleration': 0,
       'Motor_Fast_Stop': false,
       'Field_Weakening': true
-    }
+    },
     'Torque_Sensor': {
       'Assist_wo_pedal': false,
       'Torque_ADC_Threshold': 10,
@@ -91,7 +91,7 @@ export default function Parameters() {
         'Level_7': 0,
         'Level_8': 0,
         'Level_9': 0
-      },
+      }
     },
     'Walk_Assist': {
       'Walk_Assist': true,
@@ -241,7 +241,7 @@ export default function Parameters() {
     'Various': {
       'Lights_Configuration': false,
       'Assist_With_Error': false,
-      'Virtual_Throttle_Step', 10,
+      'Virtual_Throttle_Step': 10,
       'Odometer': 41.3
     },
     'Display': {
@@ -263,7 +263,7 @@ export default function Parameters() {
       'PWM_Duty_Cycle': 0,
       'Motor_Speed': 0,
       'Motor_FOC': 0,
-      'Hall_SEnsors': 0
+      'Hall_Sensors': 0
     },
     'Error_Codes': {
       'E02': 'Error_Torque_sensor',

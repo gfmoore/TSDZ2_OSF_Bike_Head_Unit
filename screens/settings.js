@@ -16,6 +16,7 @@ import { global } from '../styles/global'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import SettingsList from './settings/settingsList'
+
 import Motor              from './settings/motor'
 import MotorTemperature   from './settings/motorTemperature'
 import TorqueSensor       from './settings/torqueSensor'
@@ -24,6 +25,10 @@ import SoC                from './settings/SoC'
 import Wheel              from './settings/wheel'
 import TripMemories       from './settings/tripMemories'
 import AssistLevel        from './settings/assistLevel'
+import AssistLevelPower   from './settings/assistLevelPower'
+import AssistLevelTorque  from './settings/assistLevelTorque'
+import AssistLevelCadence from './settings/assistLevelCadence'
+import AssistLeveleMTB    from './settings/assistLeveleMTB'
 import WalkAssist         from './settings/walkAssist'
 import StartupBoost       from './settings/startupBoost'
 import StreetMode         from './settings/streetMode'
@@ -51,38 +56,44 @@ const Stack = createNativeStackNavigator();
 
 export default function Settings() {
   return (
-    <Stack.Navigator initialRouteName="SettingsList">
-      <Stack.Screen name="SettingsList"       component={SettingsList} />
-      <Stack.Screen name="Motor"              component={Motor} />
-      <Stack.Screen name="MotorTemperature"   component={MotorTemperature} />
-      <Stack.Screen name="TorqueSensor"       component={TorqueSensor} />
-      <Stack.Screen name="Battery"            component={Battery} />
-      <Stack.Screen name="SoC"                component={SoC} />
-      <Stack.Screen name="Wheel"              component={Wheel} />
-      <Stack.Screen name="TripMemories"       component={TripMemories} />
-      <Stack.Screen name="AssistLevel"        component={AssistLevel} />
-      <Stack.Screen name="WalkAssist"         component={WalkAssist} />
-      <Stack.Screen name="StartupBoost"       component={StartupBoost} />
-      <Stack.Screen name="StreetMode"         component={StreetMode} />
-      <Stack.Screen name="Variables"          component={Variables} />
-      <Stack.Screen name="Various"            component={Various} />
-      <Stack.Screen name="Display"            component={Display} />
-      <Stack.Screen name="Technical"          component={Technical} />
+    <Stack.Navigator initialRouteName="SettingsList" >
+      <Stack.Screen name="SettingsList"            component={SettingsList}           options={{ title: 'Settings List', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="Motor"                   component={Motor}                  options={{ title: 'Motor', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="MotorTemperature"        component={MotorTemperature}       options={{ title: 'Motor Temperature', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="TorqueSensor"            component={TorqueSensor}           options={{ title: 'Torque Sensor', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="Battery"                 component={Battery}                options={{ title: 'Battery', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="SoC"                     component={SoC}                    options={{ title: 'SoC (State of Charge)', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="Wheel"                   component={Wheel}                  options={{ title: 'Wheel', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="TripMemories"            component={TripMemories}           options={{ title: 'Trip Memories', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="AssistLevel"             component={AssistLevel}            options={{ title: 'Assist Level', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="AssistLevelPower"        component={AssistLevelPower}       options={{ title: 'Assist Level Power', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="AssistLevelTorque"       component={AssistLevelTorque}      options={{ title: 'Assist Level Torque', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="AssistLevelCadence"      component={AssistLevelCadence}     options={{ title: 'Assist Level Cadence', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="AssistLeveleMTB"         component={AssistLeveleMTB}        options={{ title: 'Assist Level eMTB', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="WalkAssist"              component={WalkAssist}             options={{ title: 'Walk Assist', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="StartupBoost"            component={StartupBoost}           options={{ title: 'Startup Boost', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="StreetMode"              component={StreetMode}             options={{ title: 'Street Mode', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="Variables"               component={Variables}              options={{ title: 'Variables (for graphs)', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="Various"                 component={Various}                options={{ title: 'Various', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="Display"                 component={Display}                options={{ title: 'Display', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="Technical"               component={Technical}              options={{ title: 'Technical', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
 
-      <Stack.Screen name="VarsSpeed"              component={ VarsSpeed } />
-      <Stack.Screen name="VarsTripDistance"       component={ VarsTripDistance } />
-      <Stack.Screen name="VarsCadence"            component={ VarsCadence } />
-      <Stack.Screen name="VarsHumanPower"         component={ VarsHumanPower } />
-      <Stack.Screen name="VarsMotorPower"         component={ VarsMotorPower } />
-      <Stack.Screen name="VarsWattsKm"            component={ VarsWattsKm } />
-      <Stack.Screen name="VarsBatteryVoltage"     component={ VarsBatteryVoltage } />
-      <Stack.Screen name="VarsBatteryCurrent"     component={ VarsBatteryCurrent } />
-      <Stack.Screen name="VarsBatterySoC"         component={ VarsBatterySoC } />
-      <Stack.Screen name="VarsMotorCurrent"       component={ VarsMotorCurrent } />
-      <Stack.Screen name="VarsMotorTemperature"   component={ VarsMotorTemperature } />
-      <Stack.Screen name="VarsMotorSpeed"         component={ VarsMotorSpeed } />
-      <Stack.Screen name="VarsMotorPWM"           component={ VarsMotorPWM } />
-      <Stack.Screen name="VarsMotorFOC"           component={ VarsMotorFOC } />
+      <Stack.Screen name="VarsSpeed"               component={ VarsSpeed }            options={{ title: 'Speed  graph parameters', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="VarsTripDistance"        component={ VarsTripDistance }     options={{ title: 'Trip Distance  graph parameters', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }} />
+      <Stack.Screen name="VarsCadence"             component={ VarsCadence }          options={{ title: 'Cadence graph parameters', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="VarsHumanPower"          component={ VarsHumanPower }       options={{ title: 'Human Power graph parameters', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="VarsMotorPower"          component={ VarsMotorPower }       options={{ title: 'Motor Power graph parameters', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="VarsWattsKm"             component={ VarsWattsKm }          options={{ title: 'Watts/km graph parameters', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="VarsBatteryVoltage"      component={ VarsBatteryVoltage }   options={{ title: 'Battery Voltage graph parameters', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="VarsBatteryCurrent"      component={ VarsBatteryCurrent }   options={{ title: 'Battery Current graph parameters', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="VarsBatterySoC"          component={ VarsBatterySoC }       options={{ title: 'Battery SoC graph parameters', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="VarsMotorCurrent"        component={ VarsMotorCurrent }     options={{ title: 'Motor Current graph parameters', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="VarsMotorTemperature"    component={ VarsMotorTemperature } options={{ title: 'Motor Temperature graph parameters', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="VarsMotorSpeed"          component={ VarsMotorSpeed }       options={{ title: 'Motor Speed graph parameters', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="VarsMotorPWM"            component={ VarsMotorPWM }         options={{ title: 'Motors PWM graph parameters', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="VarsMotorFOC"            component={ VarsMotorFOC }         options={{ title: 'Motor FOC graph parameters', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
      </Stack.Navigator>
   )
 }
+
+
