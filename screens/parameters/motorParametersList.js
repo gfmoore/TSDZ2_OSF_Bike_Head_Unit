@@ -1,7 +1,7 @@
 /**
  * Name:          TSDZ2 OSF Bike Head Unit
  * Author:        Gordon Moore
- * File:          settingsList.js
+ * File:          parametersList.js
  * Date:          13 August 2021
  * Description:   Code for settings list, placeholder really
  * Licence        The MIT License https://opensource.org/licenses/MIT 
@@ -13,7 +13,7 @@ import React from 'react'
 import { Alert, View, Text, TouchableOpacity } from 'react-native'
 import { global } from '../styles/global'
 
-export default function SettingsList( { navigation } ) {
+export default function ParametersList( { navigation } ) {
   
   return (
     <View style={global.app}>
