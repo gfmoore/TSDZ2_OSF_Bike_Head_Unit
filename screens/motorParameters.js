@@ -57,7 +57,7 @@ const Stack = createNativeStackNavigator();
 export default function MotorParameters() {
   return (
     <Stack.Navigator initialRouteName="MotorParametersList" >
-      <Stack.Screen name="ParametersList"          component={MotorParametersList}           options={{ title: 'Motor Parameters List', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
+      <Stack.Screen name="ParametersList"          component={MotorParametersList}    options={{ title: 'Motor Parameters List', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
       <Stack.Screen name="Motor"                   component={Motor}                  options={{ title: 'Motor', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
       <Stack.Screen name="MotorTemperature"        component={MotorTemperature}       options={{ title: 'Motor Temperature', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>
       <Stack.Screen name="TorqueSensor"            component={TorqueSensor}           options={{ title: 'Torque Sensor', headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white' }}/>

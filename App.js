@@ -37,14 +37,31 @@ import FlashOSF         from './screens/flashOSF'
 import Settings         from './screens/settings'
 import About            from './screens/about'
 
-import Parameters  from './assets/data/parameters'
+import parameters  from './assets/data/parameters'
+//console.log(`App level parameters ${parameters}`)
+
+
+// const paramsx =  
+// {  'Motor': {
+//     'Motor_Voltage': 43,
+//     'Motor_Power_Max': 450,
+//     'Motor_Acceleration' : 5,
+//     'Motor_deceleration': 0,
+//     'Motor_Fast_Stop': false,
+//     'Field_Weakening': true
+//   },
+//   'Wheel': { 
+//     'Max_Speed': 70,
+//     'Circumference': 2070
+//   }
+// }
 
 export default function App() { 
   return (
     <NavigationContainer>
       {/* <Drawer.Navigator initialRouteName="TSDZ2 OSF Bike Head Unit"  screenOptions={{ drawerStyle: { backgroundColor: 'white' } }}> */}
       <Drawer.Navigator drawerContent={ props => <CustomDrawer {...props} /> }>
-        <Drawer.Screen name="Home"              component={ Home }              options={{ title: 'TSDZ2 OSF Bike Head Unit' }, { headerTitleStyle: { color: 'black' }, headerStyle: { backgroundColor: '#5c5c5c'} } }/>
+        <Drawer.Screen name="Home"  initialParams={ parameters }            component={ Home }              options={{ title: 'TSDZ2 OSF Bike Head Unit' }, { headerTitleStyle: { color: 'black' }, headerStyle: { backgroundColor: '#5c5c5c'} } }/>
         <Drawer.Screen name="MotorParameters"   component={ MotorParameters }   options={{ title: 'Motor Parameters' },         { headerTitleStyle: { color: 'black' }, headerStyle: { backgroundColor: '#5c5c5c'} } }/>
         <Drawer.Screen name="FlashOSF"          component={ FlashOSF }          options={{ title: 'Flash OSF to motor' },       { headerTitleStyle: { color: 'black' }, headerStyle: { backgroundColor: '#5c5c5c'} } }/> 
         <Drawer.Screen name="Settings"          component={ Settings }          options={{ title: 'Application settings' },     { headerTitleStyle: { color: 'black' }, headerStyle: { backgroundColor: '#5c5c5c'} } }/> 
