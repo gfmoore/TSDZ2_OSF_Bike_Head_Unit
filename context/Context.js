@@ -17,7 +17,7 @@ import parameters  from '../assets/data/parameters'  //get parameter data
 const Context = React.createContext()
 
 export const Provider = ( { children } ) => {   
-  return <Context.Provider value={0}>
+  return <Context.Provider value={''}>
     { children }
   </Context.Provider>
 }

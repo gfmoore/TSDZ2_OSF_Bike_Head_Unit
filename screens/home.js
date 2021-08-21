@@ -10,7 +10,7 @@
  * 0.0.1    13 August 2021     Initial version
  */
 import React, { useContext } from 'react'
-import { StyleSheet, Image, View, Text } from 'react-native'
+import { StyleSheet, Image, View, Text , TouchableOpacity} from 'react-native'
 import { global } from '../styles/global'
 
 import Context from '../context/Context'
@@ -21,8 +21,11 @@ const Home = ({route, navigation}) => {
 
   return (
     <View style={global.app}>
-      <Text style={global.appfont}>Start the motor {value}</Text>
+      {/* <Text style={global.appfont}>Start the motor</Text> */}
       <Image source={require('../assets/images/cycle.png')} style={global.appImage} />
+      <TouchableOpacity style={global.startButton} >
+        <Text style={global.startButtonText}>Start</Text>
+      </TouchableOpacity>
     </View>
   )
 }
