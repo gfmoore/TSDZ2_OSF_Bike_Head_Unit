@@ -38,23 +38,6 @@ import Settings         from './screens/settings'
 import About            from './screens/about'
 
 import parameters  from './assets/data/parameters'
-//console.log(`App level parameters ${parameters}`)
-
-
-// const paramsx =  
-// {  'Motor': {
-//     'Motor_Voltage': 43,
-//     'Motor_Power_Max': 450,
-//     'Motor_Acceleration' : 5,
-//     'Motor_deceleration': 0,
-//     'Motor_Fast_Stop': false,
-//     'Field_Weakening': true
-//   },
-//   'Wheel': { 
-//     'Max_Speed': 70,
-//     'Circumference': 2070
-//   }
-// }
 
 export default function App() { 
   return (

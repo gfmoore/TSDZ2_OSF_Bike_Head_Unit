@@ -16,18 +16,6 @@ import { global } from '../styles/global'
 
 import DataEntry from '../components/dataentry'
 
-//so how do I get data from Parameters.motor  to these data items
-// 'Motor': {
-//   'Motor_Voltage': 36,
-//   'Motor_Power_Max': 450,
-//   'Motor_Acceleration' : 5,
-//   'Motor_deceleration': 0,
-//   'Motor_Fast_Stop': false,
-//   'Field_Weakening': true
-// }, 
-
-
-
 export default function Motor ( { navigation } ) {
   //console.log(`Gordo ${{colour}}`)
   return (

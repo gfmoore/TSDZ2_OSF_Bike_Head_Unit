@@ -15,11 +15,6 @@ import { global } from '../styles/global'
 
 export default function Home({route, navigation}) {
 
-  // console.log(`Gordo says: ${route.params.myvar}`)
-  console.log(route.params.Variables.Battery_SoC.Graph_Auto_Max_Min)
-
-  
-
   return (
     <View style={global.app}>
       <Text style={global.appfont}>Start the motor</Text>
