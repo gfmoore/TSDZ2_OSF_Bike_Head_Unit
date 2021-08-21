@@ -9,16 +9,22 @@
  * Version history
  * 0.0.1    13 August 2021     Initial version
  */
-import React from 'react'
+import React, { useContext } from 'react'
 import { StyleSheet, Image, View, Text } from 'react-native'
 import { global } from '../styles/global'
 
-export default function Home({route, navigation}) {
+import Context from '../context/Context'
+
+const Home = ({route, navigation}) => {
+
+  const value = useContext(Context)
 
   return (
     <View style={global.app}>
-      <Text style={global.appfont}>Start the motor</Text>
+      <Text style={global.appfont}>Start the motor {value}</Text>
       <Image source={require('../assets/images/cycle.png')} style={global.appImage} />
     </View>
   )
 }
+
+export default Home
