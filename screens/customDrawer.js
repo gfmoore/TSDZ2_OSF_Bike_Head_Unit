@@ -52,14 +52,13 @@ export function CustomDrawer(props) {
 
             <DrawerItem 
               icon={ () => ( <Icon name='bike' color='white' size={24} onPress={() => { props.navigation.navigate('Home') }} /> )} 
-              label={ () => ( <Text style={{color: 'white', fontSize: 20}}>Start Motor</Text>) }
-              // onPress={() => { props.navigation.navigate('Home', { myvar: 'Its Gordo'}) }}          
+              label={ () => ( <Text style={{color: 'white', fontSize: 20}}>Start Motor</Text>) }        
               onPress={() => { props.navigation.navigate('Home') }}          
             />            
             <DrawerItem 
               icon={ () => (<Icon name='dots-vertical' color='white' size={24} onPress={() => {}} /> )} 
               label={ () => ( <Text style={{color: 'white', fontSize: 20}}>Motor Parameters</Text>) } 
-              onPress={() => { props.navigation.navigate('MotorParameters', {}) }}          
+              onPress={() => { props.navigation.navigate('MotorParametersStack', {}) }}          
             />            
             <DrawerItem 
               icon={ () => (<Icon name='flash-outline' color='white' size={24} onPress={() => {}} /> )} 

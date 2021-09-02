@@ -12,14 +12,9 @@
 
 import React from 'react'
 
-import parameters  from '../assets/data/parameters'  //get parameter data
+const ParameterContext = React.createContext()
 
-const Context = React.createContext()
+export const ParameterProvider = ParameterContext.Provider
+export const ParameterConsumer = ParameterContext.Consumer
 
-export const Provider = ( { children } ) => {   
-  return <Context.Provider value={''}>
-    { children }
-  </Context.Provider>
-}
-
-export default Context
+export default ParameterContext

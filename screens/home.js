@@ -9,7 +9,7 @@
  * Version history
  * 0.0.1    13 August 2021     Initial version
  */
-import React, { useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { StyleSheet, Image, View, Text , TouchableOpacity} from 'react-native'
 import { global } from '../styles/global'
 
