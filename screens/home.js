@@ -17,15 +17,16 @@ import Context from '../context/Context'
 
 const Home = ({route, navigation}) => {
 
-  const value = useContext(Context)
+  const ps = useContext(Context)
 
   return (
     <View style={global.app}>
-      {/* <Text style={global.appfont}>Start the motor</Text> */}
-      <Image source={require('../assets/images/cycle.png')} style={global.appImage} />
+      <Text style={{ fontSize: 30, color: 'white' }}>{ps.motor_Voltage}</Text>
+      <Text style={{ fontSize: 30, color: 'white' }}>{ps.motor_Fast_Stop.toString()}</Text>
+      {/* <Image source={require('../assets/images/cycle.png')} style={global.appImage} />
       <TouchableOpacity style={global.startButton} >
-        <Text style={global.startButtonText}>Start</Text>
-      </TouchableOpacity>
+        <Text style={global.startButtonText}>Start {user.user}</Text>
+      </TouchableOpacity> */}
     </View>
   )
 }

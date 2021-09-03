@@ -11,7 +11,7 @@ const DataEntry = ({label, data}) => {
                 maxLength={20} 
                 placeholderTextColor='yellow' 
                 placeholder={data} />
-      </View>
+    </View>
   )
 } 
 

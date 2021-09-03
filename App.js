@@ -12,7 +12,7 @@
  */
 
 import 'react-native-gesture-handler'
-import React, { useState, useContext } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 
 import { LogBox } from 'react-native'
 LogBox.ignoreLogs(['Remote debugger'])
@@ -21,12 +21,13 @@ import { NavigationContainer }        from '@react-navigation/native'
 import { createDrawerNavigator }      from '@react-navigation/drawer'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import { ParameterProvider } from './context/Context'
-
-import { CustomDrawer } from './screens/customDrawer'
-
 const Drawer  = createDrawerNavigator()
 const Stack   = createNativeStackNavigator()
+
+import { ParameterProvider } from './context/Context'
+
+
+import { CustomDrawer } from './screens/customDrawer'
 
 import Home                   from './screens/home'
 import MotorParameters        from './screens/motorParameters.js'
@@ -69,7 +70,6 @@ import VarsMotorSpeed         from './screens/parameters/variablesGraphs/varsMot
 import VarsMotorPWM           from './screens/parameters/variablesGraphs/varsMotorPWM'
 import VarsMotorFOC           from './screens/parameters/variablesGraphs/varsMotorFOC'
 
-import { Provider } from './context/Context'
 
 
 const MotorParametersStack = () => {
@@ -122,30 +122,56 @@ const VariablesStack = () => {
   )
 }
 
+const MainNavigator = () => {
+
+  const [motor_Voltage,   setMotor_Voltage]                 = useState(36)
+  const [motor_Power_Max, setMotor_Power_Max]               = useState(450)
+  const [motor_Acceleration, setMotor_Acceleration]         = useState(5)
+  const [motor_Deceleration, setMotor_Deceleration]         = useState(0)
+  const [motor_Fast_Stop, setMotor_Fast_Stop]               = useState(false)
+  const [motor_Field_Weakening, setMotor_Field_Weakening]   = useState(true)
+
+  const [motor_Temperature_Enable, setMotor_Temperature_Enable]       = useState('Throttle')
+  const [motor_Temperature_Min_Limit, setMotor_Temperature_Min_Limit] = useState(65)
+  const [motor_Temperature_Max_Limit, setMotor_Temperature_Max_Limit] = useState(85)
+
+  const ps = {
+    motor_Voltage,          setMotor_Voltage,
+    motor_Power_Max,        setMotor_Power_Max,
+    motor_Acceleration,     setMotor_Acceleration,
+    motor_Deceleration,     setMotor_Deceleration,
+    motor_Fast_Stop,        setMotor_Fast_Stop,
+    motor_Field_Weakening,  setMotor_Field_Weakening,
+
+    motor_Temperature_Enable,     setMotor_Temperature_Enable,
+    motor_Temperature_Min_Limit,  setMotor_Temperature_Min_Limit,
+    motor_Temperature_Max_Limit,  setMotor_Temperature_Max_Limit,
+
+  }
+
+  return (
+    <ParameterProvider value={ps}>
+      <Drawer.Navigator drawerContent={props => <CustomDrawer {...props} />} screenOptions={ { headerTintColor: 'black', headerStyle: { backgroundColor: 'gray'} } } >
+        <Drawer.Screen name="Home"                  component={Home}                  options={{ title: 'TSDZ2 OSF Bike Head Unit' }} />
+        <Drawer.Screen name="MotorParametersStack"  component={MotorParametersStack}  options={{ title: 'Motor Parameters' }} />
+        <Drawer.Screen name="FlashOSF"              component={FlashOSF}              options={{ title: 'Flash OSF'}  } />
+        <Drawer.Screen name="Settings"              component={Settings}              options={{ title: 'Application settings' }} />
+        <Drawer.Screen name="About"                 component={About}                 options={{ title: 'About this application' }} />
+      </Drawer.Navigator>
+    </ParameterProvider>
+  )
+}
+
 const App = () => {
   return (
     <>
       <NavigationContainer>
-        <Drawer.Navigator drawerContent={props => <CustomDrawer {...props} />} screenOptions={ { headerTintColor: 'black', headerStyle: { backgroundColor: 'gray'} } } >
-          <Drawer.Screen name="Home"                  component={Home}                  options={{ title: 'TSDZ2 OSF Bike Head Unit' }} />
-          <Drawer.Screen name="MotorParametersStack"  component={MotorParametersStack}  options={{ title: 'Motor Parameters' }} />
-          <Drawer.Screen name="FlashOSF"              component={FlashOSF}              options={{ title: 'Flash OSF'}  } />
-          <Drawer.Screen name="Settings"              component={Settings}              options={{ title: 'Application settings' }} />
-          <Drawer.Screen name="About"                 component={About}                 options={{ title: 'About this application' }} />
-        </Drawer.Navigator>
+        <MainNavigator />
       </NavigationContainer>
     </>
   )
 }
 
 export default App
-
-// export default () => {
-//   return (
-//     <ParameterProvider value={'hello'}>
-//       <App />
-//     </ParameterProvider>
-//   )
-// }
 
 

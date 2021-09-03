@@ -10,18 +10,25 @@
  * 0.0.1    11 August 2021     Initial version
  */
 
-import React from 'react'
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import React, { useState, useContext } from 'react'
+import { StyleSheet, View, Text, TextInput } from 'react-native'
 import { global } from '../styles/global'
 
-import DataEntry from '../components/dataentry'
+import Context from '../context/Context'
+
+import DataEntrySelect from '../components/dataentrySelect'
+import DataEntryNumeric from '../components/dataentryNumeric'
+import DataEntryBoolean from '../components/dataentryBoolean'
 
 export default function MotorTemperature ( { navigation } ) {
+
+  const pc = useContext(Context)
+
   return (
   <View style={global.root, global.app}>
-    <DataEntry label='Feature'      data='Enabled'/>
-    <DataEntry label='Min limit'      data='0'/>
-    <DataEntry label='Max limit'      data='80'/>
+      <DataEntrySelect label='Temperature Feature'  p={pc.motor_Temperature_Enable}     s={pc.setMotor_Temperature_Enable} />
+      <DataEntryNumeric label='Min limit'           p={pc.motor_Temperature_Min_Limit}  s={pc.setMotor_Temperature_Min_Limit} />
+      <DataEntryNumeric label='Max limit'           p={pc.motor_Temperature_Max_Limit}  s={pc.setMotor_Temperature_Max_Limit} />
     </View>
   )
 }

@@ -21,6 +21,7 @@
     color: 'white',
     fontSize: 20,
     marginLeft: 10,
+    marginTop: 10,
   },
   appImage: { 
     marginLeft: 10, 
@@ -37,14 +38,14 @@
     // backgroundColor: 'yellow',
     marginTop: 5, 
   },
+  listitems: {
+    marginTop: 20,
+  },
   label: {
     flex: 3,
     color: 'white',
     fontSize: 20,
     textAlignVertical: 'center',
-    // borderWidth: 0,
-    // borderColor: 'red',
-    // borderRadius: 10,
     marginLeft: 10,
     marginRight: 50,
   },
@@ -56,6 +57,7 @@
     borderWidth: 1,
     borderColor: 'blue',
     borderRadius: 10,
+    marginTop: 5,
     marginRight: 10,
     paddingLeft: 15,
   
@@ -74,5 +76,11 @@
   startButtonText: {
     fontSize: 36,
     color: 'white',
+  },
+  switch: {
+    marginTop: 20,
+    marginRight: 10,
+    width: 30,
   }
+
 })

@@ -1,18 +1,42 @@
-import React from 'react'
+import React, { useState, useContext } from 'react'
 import { StyleSheet, View, Text, TextInput } from 'react-native'
 import { global } from '../styles/global'
 
-const DataEntry = ({label, data}) => {
+import Context from '../context/Context'
+
+//p=the context value i.e. someValue, s=the setter i.e. setSomeValue
+const DataEntryNumeric = ( { label, p, s} ) => {
+
+  const pc = useContext(Context)
+  const [datax, setDatax] = useState(p.toString())
+
+  const change = (n) => {
+    //Check for valid number (is it possible to change some of this to regex?)
+    if ( /[a-z]/i.test(n) )   return                //if contains a-z or A-Z not allowed
+    if ( /[^.-\d]/.test(n) )  return                //if not 0-9 or . or - not allowed
+    for (let i = 1; i < n.length; i++) {            //if - is in anything but first position
+      if (n.charAt(i) === '-') return
+    }
+    if (n.length === 3 && n.charAt(0) === '-' && n.charAt(1) === '0' && n.charAt(2) !== '.') return  //only allow -0.
+    if (n.length === 2 && n.charAt(0) === '0' && n.charAt(1) !== '.') return //not allow 00, or 08 etc only 0.
+    if (n.split('.').length > 2) return             //don't allow more than one .
+
+    setDatax(n)
+    s(n)
+  }
+
   return (
     <View style={global.item}>
       <Text style={global.label}>{label}</Text>
       <TextInput style={global.data} 
-                keyboardType='numeric' 
-                maxLength={3} 
-                placeholderTextColor='yellow' 
-                placeholder={data} />
+        keyboardType='numeric' 
+        maxLength={5} 
+        // placeholderTextColor='yellow' 
+        // placeholder={data.toString()} 
+        value={datax}
+        onChangeText={ change }/>
       </View>
   )
 } 
 
-export default DataEntry
+export default DataEntryNumeric

@@ -4,7 +4,7 @@ import { global } from '../styles/global'
 
 import Context from '../context/Context'
 
-const DataEntryAlpha = ({ label, p, s }) => {
+const DataEntrySelect = ({ label, p, s }) => {
 
   const parameters = useContext(Context)
   const [datax, setDatax] = useState(p.toString())
@@ -17,12 +17,12 @@ const DataEntryAlpha = ({ label, p, s }) => {
   return (
     <View style={global.item}>
       <Text style={global.label}>{label}</Text>
-      <TextInput style={global.data}
-        maxLength={20}
+      <TextInput style={global.data} 
+        maxLength={20} 
         value={datax}
-        onChangeText={change} />
+        onChangeText={change}/>
     </View>
   )
-}
+} 
 
-export default DataEntryAlpha
+export default DataEntrySelect
