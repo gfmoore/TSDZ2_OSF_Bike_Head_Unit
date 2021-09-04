@@ -10,19 +10,27 @@
  * 0.0.1    11 August 2021     Initial version
  */
 
-import React from 'react'
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import React, { useState, useContext } from 'react'
+import { StyleSheet, View, Text, TextInput } from 'react-native'
 import { global } from '../styles/global'
 
-import DataEntry from '../components/dataentry'
+import Context from '../context/Context'
+
+import DataEntryAlpha   from '../components/dataentryAlpha'
+import DataEntrySelect  from '../components/dataentrySelect'
+import DataEntryNumeric from '../components/dataentryNumeric'
+import DataEntryBoolean from '../components/dataentryBoolean'
 
 export default function Various ( { route, navigation } ) {
+
+  const pc = useContext(Context)  //parameters pc =parametersContext
+
   return (
     <View style={global.root, global.app}>
-      <DataEntry label='Lights configuration'   data=''/>
-      <DataEntry label='Assist with error'      data=''/>
-      <DataEntry label='Virtual Throttle step'  data=''/>
-      <DataEntry label='Odometer'               data=''/>
+      <DataEntrySelect   label='Lights configuration'   p={pc.various_Lights_Configuration}   s={pc.setvarious_Lights_Configuration}/>
+      <DataEntryBoolean label='Assist with error'      p={pc.various_Assist_With_Error}      s={pc.setvarious_Assist_With_Error}/>
+      <DataEntryNumeric label='Virtual Throttle step'  p={pc.various_Virtual_Throttle_Step}  s={pc.setvarious_Virtual_Throttle_Step}/>
+      <DataEntryNumeric label='Odometer'               p={pc.various_Odometer}               s={pc.setvarious_Odometer}/>
     </View>
   )
 }

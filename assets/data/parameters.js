@@ -15,8 +15,9 @@ export default
       "Battery": {
         "Max_current": 11,
         "Low_Cut_Off": 39.0,
-        "Resistance": "200",
+        "Resistance": 200,
         "Voltage_Est": 0,
+        "Resistance_Est": 0,
         "Power_Loss_Est": 0 
       },
       "SoC": {
@@ -37,6 +38,7 @@ export default
         "Assist_wo_pedal": false,
         "Torque_ADC_Threshold": 10,
         "Coast_Brake": false,
+        "Coast_Brake_ADC": 10,
         "Calibration": true,
         "Torque_ADC_Step": 30,
         "Torque_ADC_Offset": 148,
@@ -102,7 +104,8 @@ export default
         "Level_6": 0,
         "Level_7": 0,
         "Level_8": 0,
-        "Level_9": 0
+        "Level_9": 0,
+        "Cruise_Feature": true, 
       },
       "Startup_Boost": {
         "Startup_Boost": true,

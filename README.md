@@ -1,7 +1,7 @@
 # TSDZ2 Bike Head Unit
 ## For the Tongshen TSDZ2 mid motor Open Source Firmware project 
 
-### Written in React_Native
+### Written in React-Native
 
 This is an attempt to create an Android iOS head unit on a mobile phone for controlling the Tongshen TSDZ2 bicycle motor created by Casainho, mspider66 mbrusa et al on The Endless Sphere webite.
 

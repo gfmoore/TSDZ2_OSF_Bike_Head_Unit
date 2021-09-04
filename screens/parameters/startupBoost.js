@@ -10,18 +10,25 @@
  * 0.0.1    11 August 2021     Initial version
  */
 
-import React from 'react'
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import React, { useState, useContext } from 'react'
+import { StyleSheet, View, Text, TextInput } from 'react-native'
 import { global } from '../styles/global'
 
-import DataEntry from '../components/dataentry'
+import Context from '../context/Context'
+
+import DataEntryAlpha from '../components/dataentryAlpha'
+import DataEntryNumeric from '../components/dataentryNumeric'
+import DataEntryBoolean from '../components/dataentryBoolean'
 
 export default function StartUpBoost ( { route, navigation } ) {
+
+  const pc = useContext(Context)  //parameters pc =parametersContext
+
   return (
     <View style={global.root, global.app}>
-      <DataEntry label='Startup boost enable'   data='Enabled'/>
-      <DataEntry label='Boost torque factor'    data=''/>
-      <DataEntry label='Boost cadence step'     data=''/>
+      <DataEntryBoolean label='Startup boost'       p={pc.startup_Boost}                s={pc.setStartup_Boost}/>
+      <DataEntryNumeric label='Boost torque factor' p={pc.startup_Boost_Torque_Factor}  s={pc.setStartup_Boost_Torque_Factor}/>
+      <DataEntryNumeric label='Boost cadence step'  p={pc.startup_Boost_Cadence_Step}   s={pc.setStartup_Boost_Cadence_Step}/>
     </View>
   )
 }

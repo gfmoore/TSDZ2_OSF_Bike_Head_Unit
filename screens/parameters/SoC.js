@@ -10,20 +10,28 @@
  * 0.0.1    11 August 2021     Initial version
  */
 
-import React from 'react'
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import React, { useState, useContext } from 'react'
+import { StyleSheet, View, Text, TextInput } from 'react-native'
 import { global } from '../styles/global'
 
-import DataEntry from '../components/dataentry'
+import Context from '../context/Context'
+
+import DataEntryAlpha   from '../components/dataentryAlpha'
+import DataEntryNumeric from '../components/dataentryNumeric'
+import DataEntryBoolean from '../components/dataentryBoolean'
+
 
 export default function SoC ( { route, navigation } ) {
+
+  const pc = useContext(Context)  //parameters pc =parametersContext
+
   return (
     <View style={global.root, global.app}>
-      <DataEntry label='Text'               data='SoC%'/>
-      <DataEntry label='Reset at voltage'   data='0'/>
-      <DataEntry label='Battery total Wh'   data='0'/>
-      <DataEntry label='Used Wh'            data='0'/>
-      <DataEntry label='Manual reset'       data='Disable'/>
+      <DataEntryAlpha label='Text'                 p={pc.soC_Text} s={pc.setSoC_Text}/>
+      <DataEntryNumeric label='Reset at voltage'   p={pc.soC_Reset_At_Voltage} s={pc.setSoC_Reset_At_Voltage}/>
+      <DataEntryNumeric label='Battery total Wh'   p={pc.soC_Battery_Total_Wh} s={pc.setSoC_Battery_Total_Wh}/>
+      <DataEntryNumeric label='Used Wh'            p={pc.soC_Used} s={pc.setSoC_Used}/>
+      <DataEntryBoolean label='Manual reset'       p={pc.soC_Manual_Reset} s={pc.setSoC_Manual_Reset}/>
     </View>
   )
 }

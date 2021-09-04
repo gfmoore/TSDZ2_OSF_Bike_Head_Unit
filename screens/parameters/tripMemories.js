@@ -10,21 +10,28 @@
  * 0.0.1    11 August 2021     Initial version
  */
 
-import React from 'react'
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import React, { useState, useContext } from 'react'
+import { StyleSheet, View, Text, TextInput } from 'react-native'
 import { global } from '../styles/global'
 
-import DataEntry from '../components/dataentry'
+import Context from '../context/Context'
+
+import DataEntryAlpha from '../components/dataentryAlpha'
+import DataEntryNumeric from '../components/dataentryNumeric'
+import DataEntryBoolean from '../components/dataentryBoolean'
 
 export default function TripMemories ( { route, navigation } ) {
+
+  const pc = useContext(Context)  //parameters pc =parametersContext
+
   return (
     <View style={global.root, global.app}>
-      <DataEntry label='A auto reset'         data='Enable'/>
-      <DataEntry label='A auto reset hours'   data='24'/>
-      <DataEntry label='B auto reset'         data='Enable'/>
-      <DataEntry label='B auto reset hours'   data='1428'/>
-      <DataEntry label='Reset trip A'         data='No'/>
-      <DataEntry label='Reset trip B'         data='No'/>
+      <DataEntryBoolean label='A auto reset'        p={pc.trip_A_Auto_Reset}        s={pc.setTrip_A_Auto_Reset} />
+      <DataEntryNumeric label='A auto reset hours'  p={pc.trip_A_Auto_Reset_Hours}  s={pc.setTrip_A_Auto_Reset_Hours} />
+      <DataEntryBoolean label='B auto reset'        p={pc.trip_B_Auto_Reset}        s={pc.setTrip_B_Auto_Reset} />
+      <DataEntryNumeric label='B auto reset hours'  p={pc.trip_B_Auto_Reset_Hours}  s={pc.setTrip_B_Auto_Reset_Hours} />
+      <DataEntryBoolean label='Reset trip A'        p={pc.trip_Reset_Trip_A}        s={pc.setTrip_Reset_Trip_A} />
+      <DataEntryBoolean label='Reset trip B'        p={pc.trip_Reset_Trip_B}        s={pc.setTrip_Reset_Trip_B} />
     </View>
   )
 }

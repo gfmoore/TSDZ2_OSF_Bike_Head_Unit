@@ -27,7 +27,7 @@ export default function MotorParameters({ route, navigation }) {
       <TouchableOpacity onPress={ () => navigation.navigate('WalkAssist') }><Text style={ global.appfont }>Walk Assist</Text></TouchableOpacity>
       <TouchableOpacity onPress={ () => navigation.navigate('StartupBoost') }><Text style={ global.appfont }>Startup Boost</Text></TouchableOpacity>
       <TouchableOpacity onPress={ () => navigation.navigate('StreetMode') }><Text style={ global.appfont }>Street Mode</Text></TouchableOpacity>
-      <TouchableOpacity onPress={ () => navigation.navigate('VariablesStack') }><Text style={ global.appfont }>Variables</Text></TouchableOpacity> 
+      <TouchableOpacity onPress={ () => navigation.navigate('VariablesStack') }><Text style={ global.appfont }>Variables for Graphs</Text></TouchableOpacity> 
       <TouchableOpacity onPress={ () => navigation.navigate('Various') }><Text style={ global.appfont }>Various</Text></TouchableOpacity>
       <TouchableOpacity onPress={ () => navigation.navigate('Display') }><Text style={ global.appfont }>Display</Text></TouchableOpacity>
       <TouchableOpacity onPress={ () => navigation.navigate('Technical') }><Text style={ global.appfont }>Technical</Text></TouchableOpacity>

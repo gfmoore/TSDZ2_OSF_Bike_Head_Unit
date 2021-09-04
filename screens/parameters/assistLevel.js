@@ -10,16 +10,21 @@
  * 0.0.1    11 August 2021     Initial version
  */
 
-import React from 'react'
+import React, { useState, useContext } from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import { global } from '../styles/global'
 
-import DataEntry from '../components/dataentry'
+import Context from '../context/Context'
+
+import DataEntryNumeric from '../components/dataentryNumeric'
 
 export default function AssistLevel( { route, navigation } ) {
+
+  const pc = useContext(Context)  //parameters pc =parametersContext
+
   return (
     <View style={global.root, global.app}>
-      <DataEntry label='Number of Assist levels'      data='3'/>
+      <DataEntryNumeric label='Number of Assist levels' p={pc.number_Assist_Levels} s={pc.setNumber_Assist_Levels}/>
       <TouchableOpacity onPress={ () => navigation.navigate('AssistLevelPower') }><Text style={global.appfont}>Power assist</Text></TouchableOpacity>
       <TouchableOpacity onPress={ () => navigation.navigate('AssistLevelTorque') }><Text style={global.appfont}>Torque assist</Text></TouchableOpacity>
       <TouchableOpacity onPress={ () => navigation.navigate('AssistLevelCadence') }><Text style={global.appfont}>Cadence assist</Text></TouchableOpacity>

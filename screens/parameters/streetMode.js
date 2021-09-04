@@ -10,21 +10,29 @@
  * 0.0.1    11 August 2021     Initial version
  */
 
-import React from 'react'
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import React, { useState, useContext } from 'react'
+import { StyleSheet, View, Text, TextInput } from 'react-native'
 import { global } from '../styles/global'
 
-import DataEntry from '../components/dataentry'
+import Context from '../context/Context'
+
+import DataEntryAlpha from '../components/dataentryAlpha'
+import DataEntryNumeric from '../components/dataentryNumeric'
+import DataEntryBoolean from '../components/dataentryBoolean'
 
 export default function StreetMode ( { route, navigation } ) {
+
+  const pc = useContext(Context)  //parameters pc =parametersContext
+
   return (
     <View style={global.root, global.app}>
-      <DataEntry label='Enable Street Mode'   data=''/>
-      <DataEntry label='Enable at Startup'    data=''/>
-      <DataEntry label='Speed Limit'          data=''/>
-      <DataEntry label='Motor power limit'    data=''/>
-      <DataEntry label='Throttle enable'      data=''/>
-      <DataEntry label='Cruise enable'        data=''/>
+      <DataEntryBoolean label='Enable Street Mode'  p={pc.street_Mode}                     s={pc.setStreet_Mode} />
+      <DataEntryBoolean label='Enable at Startup'   p={pc.street_Mode_Enable_At_Startup}   s={pc.setStreet_Mode_Enable_At_Startup} />
+      <DataEntryNumeric label='Speed Limit'         p={pc.street_Mode_Speed_Limit}         s={pc.setStreet_Mode_Speed_Limit} />
+      <DataEntryNumeric label='Motor power limit'   p={pc.street_Mode_Motor_Power_Limit}   s={pc.setStreet_Mode_Motor_Power_Limit} />
+      <DataEntryBoolean label='Throttle enable'     p={pc.street_Mode_Throttle_Enable}     s={pc.setStreet_Mode_Throttle_Enable} />
+      <DataEntryBoolean label='Cruise enable'       p={pc.street_Mode_Cruise_Enable}       s={pc.setStreet_Mode_Cruise_Enable} />
+      {/* <DataEntryBoolean label='Hotkey enable'       p={pc.street_Mode_Hotkey_Enable}   s={pc.setStreet_Mode_Hotkey_Enable} /> */}
     </View>
   )
 }

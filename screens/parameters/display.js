@@ -10,17 +10,25 @@
  * 0.0.1    11 August 2021     Initial version
  */
 
-import React from 'react'
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import React, { useState, useContext } from 'react'
+import { StyleSheet, View, Text, TextInput } from 'react-native'
 import { global } from '../styles/global'
 
-import DataEntry from '../components/dataentry'
+import Context from '../context/Context'
+
+import DataEntryAlpha   from '../components/dataentryAlpha'
+import DataEntrySelect  from '../components/dataentrySelect'
+import DataEntryNumeric from '../components/dataentryNumeric'
+import DataEntryBoolean from '../components/dataentryBoolean'
 
 export default function Display ( { route, navigation } ) {
+
+  const pc = useContext(Context)  //parameters pc =parametersContext
+
   return (
     <View style={global.root, global.app}>
-      <DataEntry label='Units'  data='SI'/>
-      <DataEntry label='Reset to defaults'  data='Disable'/>
+      <DataEntrySelect  label='Units'              p={pc.display_Units} s={pc.setDisplay_Units} />
+      <DataEntryBoolean label='Reset to defaults'  p={pc.display_Reset_To_Defaults} s={pc.setDisplay_Reset_To_Defaults} />
       {/* <Text>Clock hours</Text> */}
       {/* <Text>Clock minutes</Text> */}
       {/* <Text>Brightness on</Text> */}
