@@ -24,9 +24,9 @@
     marginTop: 10,
   },
   appImage: { 
-    marginLeft: 10, 
-    width: 400, 
-    height: 400 
+    marginLeft: 5, 
+    width: 380, 
+    height: 380 
   },
   root: {
     flex: 1,
@@ -60,8 +60,27 @@
     marginTop: 5,
     marginRight: 10,
     paddingLeft: 15,
-  
   },
+   labellist: {
+     flex: 5,
+     color: 'white',
+     fontSize: 20,
+     textAlignVertical: 'center',
+     marginLeft: 10,
+     marginRight: 50,
+   },
+   datalist: {
+     flex: 2,
+     color: 'yellow',
+     fontSize: 20,
+     backgroundColor: 'black',
+     borderWidth: 1,
+     borderColor: 'blue',
+     borderRadius: 10,
+     marginTop: 5,
+     marginRight: 10,
+     paddingLeft: 15,
+   },
   startButton: {
     width: 200,
     height: 200,
@@ -81,6 +100,19 @@
     marginTop: 20,
     marginRight: 10,
     width: 30,
+  },
+  settings: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    // borderWidth: 10,
+    // borderColor: 'red',
+  },
+  settingOption: {
+    color: 'white',
+    fontSize: 20,
+    marginTop: 10,
+    marginLeft: 10,
   }
 
 })

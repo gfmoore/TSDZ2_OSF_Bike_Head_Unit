@@ -68,7 +68,7 @@ export function CustomDrawer(props) {
             <DrawerItem 
               icon={ () => (<Icon name='cog-outline' color='white' size={24} onPress={() => {}} />  )} 
               label={ () => ( <Text style={{color: 'white', fontSize: 20}}>App settings</Text>) }
-              onPress={() => { props.navigation.navigate('Settings') }}          
+              onPress={() => { props.navigation.navigate('SettingsStack') }}          
             />            
             <DrawerItem 
               icon={ () => (<Icon name='information-outline' color='white' size={24}  onPress={() => {}} /> )} 

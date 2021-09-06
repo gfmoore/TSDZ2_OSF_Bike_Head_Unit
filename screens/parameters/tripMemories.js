@@ -16,7 +16,7 @@ import { global } from '../styles/global'
 
 import Context from '../context/Context'
 
-import DataEntryAlpha from '../components/dataentryAlpha'
+import DataEntryAlpha   from '../components/dataentryAlpha'
 import DataEntryNumeric from '../components/dataentryNumeric'
 import DataEntryBoolean from '../components/dataentryBoolean'
 

@@ -1,3 +1,15 @@
+/**
+ * Name:          TSDZ2 OSF Bike Head Unit
+ * Author:        Gordon Moore
+ * File:          dataentryNumeric.js
+ * Date:          13 August 2021
+ * Description:   Code for entering numbers (including -, 0, decimals)
+ * Licence        The MIT License https://opensource.org/licenses/MIT
+ *
+ * Version history
+ * 0.0.1    13 August 2021     Initial version
+ */
+
 import React, { useState, useContext } from 'react'
 import { StyleSheet, View, Text, TextInput } from 'react-native'
 import { global } from '../styles/global'

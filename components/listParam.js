@@ -1,9 +1,9 @@
 /**
  * Name:          TSDZ2 OSF Bike Head Unit
  * Author:        Gordon Moore
- * File:          dataentryAlpha.js
+ * File:          listParam.js
  * Date:          13 August 2021
- * Description:   Code for entering text
+ * Description:   Helper component for listing parameters (no editing)
  * Licence        The MIT License https://opensource.org/licenses/MIT
  *
  * Version history
@@ -16,25 +16,16 @@ import { global } from '../styles/global'
 
 import Context from '../context/Context'
 
-const DataEntryAlpha = ({ label, p, s }) => {
+const ListParam = ({ label, p }) => {
 
   const parameters = useContext(Context)
-  const [datax, setDatax] = useState(p.toString())
-
-  const change = (n) => {
-    setDatax(n)
-    s(n)
-  }
 
   return (
     <View style={global.item}>
-      <Text style={global.label}>{label}</Text>
-      <TextInput style={global.data}
-        maxLength={20}
-        value={datax}
-        onChangeText={change} />
+      <Text style={global.labellist}>{label}</Text>
+      <Text style={global.datalist}>{p.toString()}</Text>
     </View>
   )
 }
 
-export default DataEntryAlpha
+export default ListParam

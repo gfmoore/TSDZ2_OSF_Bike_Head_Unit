@@ -16,7 +16,7 @@ import { global } from '../styles/global'
 
 import Context from '../context/Context'
 
-import DataEntrySelect from '../components/dataentrySelect'
+import DataEntrySelect  from '../components/dataentrySelect'
 import DataEntryNumeric from '../components/dataentryNumeric'
 import DataEntryBoolean from '../components/dataentryBoolean'
 
