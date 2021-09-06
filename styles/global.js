@@ -64,15 +64,15 @@
    labellist: {
      flex: 5,
      color: 'white',
-     fontSize: 20,
+     fontSize: 15,
      textAlignVertical: 'center',
      marginLeft: 10,
      marginRight: 50,
    },
    datalist: {
      flex: 2,
-     color: 'yellow',
-     fontSize: 20,
+     color: 'orange',
+     fontSize: 15,
      backgroundColor: 'black',
      borderWidth: 1,
      borderColor: 'blue',
