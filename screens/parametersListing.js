@@ -32,7 +32,7 @@ export default function Settings() {
         <ListParam label='motor_Deceleration                       '  p={pc.motor_Deceleration} />                         
         <ListParam label='motor_Fast_Stop                          '  p={pc.motor_Fast_Stop} />                          
         <ListParam label='motor_Field_Weakening                    '  p={pc.motor_Field_Weakening} />                      
-        <ListParam label='motor_Temperature_Enable                 '  p={pc.motor_Temperature_Enable} />                   
+        <ListParam label='motor_Temperature_Feature                '  p={pc.motor_Temperature_Feature} />                   
         <ListParam label='motor_Temperature_Min_Limit              '  p={pc.motor_Temperature_Min_Limit} />                
         <ListParam label='motor_Temperature_Max_Limit              '  p={pc.motor_Temperature_Max_Limit} />
         <ListParam label='torque_Assist_wo_pedal                   '  p={pc.torque_Assist_wo_pedal} />                 

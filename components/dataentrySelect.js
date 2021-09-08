@@ -10,31 +10,40 @@
  * 0.0.1    13 August 2021     Initial version
  */
 
-//TODO
-
 import React, { useState, useContext } from 'react'
 import { StyleSheet, View, Text, TextInput } from 'react-native'
+
+import ModalDropdown from 'react-native-modal-dropdown'
+ 
 import { global } from '../styles/global'
 
 import Context from '../context/Context'
 
-const DataEntrySelect = ({ label, p, s }) => {
+const DataEntrySelect = ({ label, p, s, listitems }) => {
 
-  const parameters = useContext(Context)
-  const [datax, setDatax] = useState(p.toString())
+  const [datax, setDatax] = useState(p)
 
-  const change = (n) => {
-    setDatax(n)
-    s(n)
+  const pc = useContext(Context)
+
+  const change = (p) => {
+    setDatax(p)
+    s(p)
   }
 
   return (
     <View style={global.item}>
       <Text style={global.label}>{label}</Text>
-      <TextInput style={global.data} 
-        maxLength={20} 
-        value={datax}
-        onChangeText={change}/>
+      <ModalDropdown
+        options={listitems}
+        style={global.dropdownSelect}
+        textStyle={global.dropdownSelectedTextStyle}
+        dropdownStyle={global.dropdownStyle}
+        dropdownTextStyle={global.dropdownTextStyle}
+        dropdownTextHighlightStyle={global.dropdownTextHighlightStyle}
+        onSelect={(idx, value) => { change(value)  }}
+        defaultValue={p}
+      />
+
     </View>
   )
 } 

@@ -113,6 +113,32 @@
     fontSize: 20,
     marginTop: 10,
     marginLeft: 10,
-  }
-
+  },
+   dropdownSelect: {
+     fontSize: 20,
+     backgroundColor: 'black',
+     borderWidth: 1,
+     borderColor: 'blue',
+     width: 130,
+     marginRight: 20,
+   },
+   dropdownSelectedTextStyle: {
+     fontSize: 20,
+     backgroundColor: 'black',
+     color: 'yellow',
+     paddingTop: 10,
+     paddingBottom: 10,
+     paddingLeft: 10,
+   },
+   dropdownStyle: {
+    backgroundColor: 'black',
+   },
+   dropdownTextStyle: {
+     fontSize: 20,
+     backgroundColor: 'black',
+     color: 'white',
+   },
+   dropdownTextHighlightStyle: {
+     color: 'yellow',
+   },
 })

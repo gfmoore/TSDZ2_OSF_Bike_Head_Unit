@@ -19,8 +19,9 @@ import Context from '../context/Context'
 //p=the context value i.e. someValue, s=the setter i.e. setSomeValue
 const DataEntryNumeric = ( { label, p, s} ) => {
 
-  const pc = useContext(Context)
   const [datax, setDatax] = useState(p.toString())
+
+  const pc = useContext(Context)
 
   const change = (n) => {
     //Check for valid number (is it possible to change some of this to regex?)

@@ -18,8 +18,9 @@ import Context from '../context/Context'
 
 const DataEntryAlpha = ({ label, p, s }) => {
 
-  const parameters = useContext(Context)
-  const [datax, setDatax] = useState(p.toString())
+  const [datax, setDatax] = useState(p)
+
+  const pc = useContext(Context)
 
   const change = (n) => {
     setDatax(n)

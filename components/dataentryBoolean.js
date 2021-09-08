@@ -18,8 +18,9 @@ import Context from '../context/Context'
 
 const DataEntryBoolean = ({ label, p, s }) => {
 
-  const pc = useContext(Context)
   const [datax, setDatax] = useState(p)
+
+  const pc = useContext(Context)
 
   const change = (n) => {
     setDatax(n)
