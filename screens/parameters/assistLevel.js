@@ -24,7 +24,7 @@ export default function AssistLevel( { route, navigation } ) {
 
   return (
     <View style={global.root, global.app}>
-      <DataEntryNumeric label='Number of Assist levels' p={pc.number_Assist_Levels} s={pc.setNumber_Assist_Levels}/>
+      <DataEntryNumeric label='Number of Assist levels' p={pc.number_Assist_Levels} s={pc.setNumber_Assist_Levels} k='number_Assist_Levels' />
       <TouchableOpacity onPress={ () => navigation.navigate('AssistLevelPower') }><Text style={global.appfont}>Power assist</Text></TouchableOpacity>
       <TouchableOpacity onPress={ () => navigation.navigate('AssistLevelTorque') }><Text style={global.appfont}>Torque assist</Text></TouchableOpacity>
       <TouchableOpacity onPress={ () => navigation.navigate('AssistLevelCadence') }><Text style={global.appfont}>Cadence assist</Text></TouchableOpacity>

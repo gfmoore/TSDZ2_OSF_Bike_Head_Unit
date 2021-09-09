@@ -14,10 +14,12 @@ import React, { useState, useContext } from 'react'
 import { StyleSheet, View, Text, TextInput } from 'react-native'
 import { global } from '../styles/global'
 
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
 import Context from '../context/Context'
 
 //p=the context value i.e. someValue, s=the setter i.e. setSomeValue
-const DataEntryNumeric = ( { label, p, s} ) => {
+const DataEntryNumeric = ( { label, p, s, k} ) => {
 
   const [datax, setDatax] = useState(p.toString())
 
@@ -36,6 +38,19 @@ const DataEntryNumeric = ( { label, p, s} ) => {
 
     setDatax(n)
     s(n)
+
+    //update the async storage here? No where else seems reasonable
+    saveStateToAsyncStorage(k, n)
+  }
+
+  const saveStateToAsyncStorage = async (key, value) => {
+    console.log(key + ' --< ' + value)
+    try {
+      await AsyncStorage.setItem(key, value.toString())
+    }
+    catch (e) {
+      console.log(`GM Error saving data: ${e}`)
+    }
   }
 
   return (

@@ -26,9 +26,9 @@ export default function MotorTemperature ( { navigation } ) {
 
   return (
   <View style={global.root, global.app}>
-      <DataEntrySelect  label='Temperature Feature' p={pc.motor_Temperature_Feature}    s={pc.setMotor_Temperature_Feature}   listitems={['Throttle', 'Temperature']}/>
-      <DataEntryNumeric label='Min limit'           p={pc.motor_Temperature_Min_Limit}  s={pc.setMotor_Temperature_Min_Limit} />
-      <DataEntryNumeric label='Max limit'           p={pc.motor_Temperature_Max_Limit}  s={pc.setMotor_Temperature_Max_Limit} />
+      <DataEntrySelect  label='Temperature Feature' p={pc.motor_Temperature_Feature}    s={pc.setMotor_Temperature_Feature} listitems={['Throttle', 'Temperature']} k='motor_Temperature_Feature' />
+      <DataEntryNumeric label='Min limit'           p={pc.motor_Temperature_Min_Limit}  s={pc.setMotor_Temperature_Min_Limit} k='motor_Temperature_Min_Limit' />
+      <DataEntryNumeric label='Max limit'           p={pc.motor_Temperature_Max_Limit}  s={pc.setMotor_Temperature_Max_Limit} k='motor_Temperature_Max_Limit' />
     </View>
   )
 }

@@ -26,8 +26,8 @@ export default function Wheel ( { route, navigation } ) {
 
   return (
     <View style={global.root, global.app}>
-      <DataEntryNumeric label='Max speed'     p={pc.wheel_Max_Speed} s={pc.setWheel_Max_Speed}    />
-      <DataEntryNumeric label='Circumference' p={pc.wheel_Circumference} s={pc.setWheel_Circumference}/>
+      <DataEntryNumeric label='Max speed'     p={pc.wheel_Max_Speed}      s={pc.setWheel_Max_Speed}     k='wheel_Max_Speed'   />
+      <DataEntryNumeric label='Circumference' p={pc.wheel_Circumference}  s={pc.setWheel_Circumference} k='wheel_Circumference'/>
       {/* <DataEntryNumeric label='or radius'  p={pc.wheel_Radius}          s={pc.setWheel_Radius}    /> */}
     </View>
   )

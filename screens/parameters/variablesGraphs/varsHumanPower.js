@@ -27,12 +27,12 @@ export default function VarsSpeed ( { route, navigation } ) {
 
   return (
   <View style={global.root, global.app}>
-    <DataEntryBoolean label='Graph auto max min'    p={pc.vars_Human_Power_Graph_Auto_Max_Min}    s={pc.setVars_Human_Power_Graph_Auto_Max_Min}/>
-    <DataEntryNumeric label='Graph max'             p={pc.vars_Human_Power_Graph_Max}             s={pc.setVars_Human_Power_Graph_Max}/>
-    <DataEntryNumeric label='Graph min'             p={pc.vars_Human_Power_Graph_Min}             s={pc.setVars_Human_Power_Graph_Min}/>
-    <DataEntrySelect label='Thresholds'             p={pc.vars_Human_Power_Thresholds}            s={pc.setVars_Human_Power_Thresholds}/>
-    <DataEntryNumeric label='Max threshold Red'     p={pc.vars_Human_Power_Max_Threshold_Red}     s={pc.setVars_Human_Power_Max_Threshold_Red}/>
-    <DataEntryNumeric label='Max threshold Yellow'  p={pc.vars_Human_Power_Max_Threshold_Yellow}  s={pc.setVars_Human_Power_Max_Threshold_Yellow}/>
+    <DataEntrySelect  label='Graph auto max min'    p={pc.vars_Human_Power_Graph_Auto_Max_Min}    s={pc.setVars_Human_Power_Graph_Auto_Max_Min}   listitems={['Atomatic', 'Manual']}  k='vars_Human_Power_Graph_Auto_Max_Min'/>
+    <DataEntryNumeric label='Graph max'             p={pc.vars_Human_Power_Graph_Max}             s={pc.setVars_Human_Power_Graph_Max}            k='vars_Human_Power_Graph_Max'/>
+    <DataEntryNumeric label='Graph min'             p={pc.vars_Human_Power_Graph_Min}             s={pc.setVars_Human_Power_Graph_Min}            k='vars_Human_Power_Graph_Min'/>
+    <DataEntrySelect  label='Thresholds'            p={pc.vars_Human_Power_Thresholds}            s={pc.setVars_Human_Power_Thresholds}           listitems={['Automatic', 'Manual', 'Disable']} k='vars_Human_Power_Thresholds'/>
+    <DataEntryNumeric label='Max threshold Red'     p={pc.vars_Human_Power_Max_Threshold_Red}     s={pc.setVars_Human_Power_Max_Threshold_Red}    k='vars_Human_Power_Max_Threshold_Red'/>
+    <DataEntryNumeric label='Max threshold Yellow'  p={pc.vars_Human_Power_Max_Threshold_Yellow}  s={pc.setVars_Human_Power_Max_Threshold_Yellow} k='vars_Human_Power_Max_Threshold_Yellow'/>
   </View>
   )
 }

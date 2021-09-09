@@ -141,4 +141,18 @@
    dropdownTextHighlightStyle: {
      color: 'yellow',
    },
+   trips: {
+    flexDirection: 'row',
+   },
+   tripLabel: {
+     fontSize: 20,
+     color: 'white',
+     margin: 10,
+   },
+   tripValue: {
+     margin: 10,
+     marginLeft: 20,
+     fontSize: 25,
+     color: 'orange',
+   },
 })

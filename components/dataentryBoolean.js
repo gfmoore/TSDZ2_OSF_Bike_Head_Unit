@@ -11,21 +11,81 @@
  */
 
 import React, { useState, useContext } from 'react'
-import { StyleSheet, View, Text, Switch } from 'react-native'
+import { StyleSheet, Alert, View, Text, Switch } from 'react-native'
 import { global } from '../styles/global'
+
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import Context from '../context/Context'
 
-const DataEntryBoolean = ({ label, p, s }) => {
+const DataEntryBoolean = ({ label, p, s, k }) => {
 
-  const [datax, setDatax] = useState(p)
+  const [datax, setDatax] = useState(parseBool(p))
 
   const pc = useContext(Context)
 
   const change = (n) => {
-    setDatax(n)
-    s(n)
+    //need to pick up some specific items
+    if (label === 'Reset trip A') {
+      // saveStateToAsyncStorage('trip_Reset_Trip_A', 'false')
+      Alert.alert(
+        'Reset trip A.',
+        'Are you sure? There is no going back!',
+        [
+          {
+            text: 'Yes', onPress: async () => {
+              pc.setTrip_A(0)
+              setDatax(false)
+              saveStateToAsyncStorage('trip_A', '0')
+            }
+          },
+          {
+            text: 'No', onPress: () => { }
+          },
+        ],
+        { cancelable: true }
+      )
+    }
+    else if (label === 'Reset trip B') {
+      //saveStateToAsyncStorage('trip_Reset_Trip_B', 'false')
+      Alert.alert(
+        'Reset trip B.',
+        'Are you sure? There is no going back!',
+        [
+          {
+            text: 'Yes', onPress: async () => {
+              pc.setTrip_B(0)
+              setDatax(false)
+              saveStateToAsyncStorage('trip_B', '0')
+            }
+          },
+          {
+            text: 'No', onPress: () => { }
+          },
+        ],
+        { cancelable: true }
+      )
+    }
+    else { //standard set unset
+      setDatax(n)
+      s(n)
+      //update the async storage
+      saveStateToAsyncStorage(k, n)
+    }
+
   }
+
+  const saveStateToAsyncStorage = async (key, value) => {
+    //console.log(key + ' --> ' + value)
+    try {
+      await AsyncStorage.setItem(key, value.toString())
+    }
+    catch (e) {
+      console.log(`GM Error saving data: ${e}`)
+    }
+  }
+
+  function parseBool(val) { return val === true || val === "true" }
 
   return (
     <View style={global.item}>

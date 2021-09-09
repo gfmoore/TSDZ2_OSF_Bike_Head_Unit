@@ -39,10 +39,11 @@ export default function Various ( { route, navigation } ) {
           '7 - flashing and switched on when braking even with the light control OFF',
           '8 - flashing and fast flashing when braking even with the light control OFF'
         ]}
+        k='various_Lights_Configuration'
       />
-      <DataEntryBoolean label='Assist with error'      p={pc.various_Assist_With_Error}      s={pc.setvarious_Assist_With_Error}/>
-      <DataEntryNumeric label='Virtual Throttle step'  p={pc.various_Virtual_Throttle_Step}  s={pc.setvarious_Virtual_Throttle_Step}/>
-      <DataEntryNumeric label='Odometer'               p={pc.various_Odometer}               s={pc.setvarious_Odometer}/>
+      <DataEntryBoolean label='Assist with error'      p={pc.various_Assist_With_Error}      s={pc.setvarious_Assist_With_Error}      k='various_Assist_With_Error'/>
+      <DataEntryNumeric label='Virtual Throttle step'  p={pc.various_Virtual_Throttle_Step}  s={pc.setvarious_Virtual_Throttle_Step}  k='various_Virtual_Throttle_Step'/>
+      <DataEntryNumeric label='Odometer'               p={pc.various_Odometer}               s={pc.setvarious_Odometer}               k='various_Odometer'/>
     </View>
   )
 }

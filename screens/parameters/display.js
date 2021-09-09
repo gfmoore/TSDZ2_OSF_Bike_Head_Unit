@@ -27,8 +27,8 @@ export default function Display ( { route, navigation } ) {
 
   return (
     <View style={global.root, global.app}>
-      <DataEntrySelect  label='Units'              p={pc.display_Units} s={pc.setDisplay_Units} />
-      <DataEntryBoolean label='Reset to defaults'  p={pc.display_Reset_To_Defaults} s={pc.setDisplay_Reset_To_Defaults} />
+      <DataEntryAlpha   label='Units'              p={pc.display_Units}             s={pc.setDisplay_Units}             k='display_Units' />
+      <DataEntryBoolean label='Reset to defaults'  p={pc.display_Reset_To_Defaults} s={pc.setDisplay_Reset_To_Defaults} k='display_Reset_To_Defaults' />
       {/* <Text>Clock hours</Text> */}
       {/* <Text>Clock minutes</Text> */}
       {/* <Text>Brightness on</Text> */}

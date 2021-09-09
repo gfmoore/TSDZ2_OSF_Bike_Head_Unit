@@ -17,9 +17,11 @@ import ModalDropdown from 'react-native-modal-dropdown'
  
 import { global } from '../styles/global'
 
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
 import Context from '../context/Context'
 
-const DataEntrySelect = ({ label, p, s, listitems }) => {
+const DataEntrySelect = ({ label, p, s, listitems, k }) => {
 
   const [datax, setDatax] = useState(p)
 
@@ -28,6 +30,19 @@ const DataEntrySelect = ({ label, p, s, listitems }) => {
   const change = (p) => {
     setDatax(p)
     s(p)
+
+    //update the async storage
+    saveStateToAsyncStorage(k, p)
+  }
+
+  const saveStateToAsyncStorage = async (key, value) => {
+    console.log(key + ' --< ' + value)
+    try {
+      await AsyncStorage.setItem(key, value.toString())
+    }
+    catch (e) {
+      console.log(`GM Error saving data: ${e}`)
+    }
   }
 
   return (

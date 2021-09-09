@@ -14,9 +14,11 @@ import React, { useState, useContext } from 'react'
 import { StyleSheet, View, Text, TextInput } from 'react-native'
 import { global } from '../styles/global'
 
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
 import Context from '../context/Context'
 
-const DataEntryAlpha = ({ label, p, s }) => {
+const DataEntryAlpha = ({ label, p, s, k }) => {
 
   const [datax, setDatax] = useState(p)
 
@@ -25,6 +27,19 @@ const DataEntryAlpha = ({ label, p, s }) => {
   const change = (n) => {
     setDatax(n)
     s(n)
+
+    //update the async storage 
+    saveStateToAsyncStorage(k, n)
+  }
+
+  const saveStateToAsyncStorage = async (key, value) => {
+    console.log(key + ' --< ' + value)
+    try {
+      await AsyncStorage.setItem(key, value.toString())
+    }
+    catch (e) {
+      console.log(`GM Error saving data: ${e}`)
+    }
   }
 
   return (

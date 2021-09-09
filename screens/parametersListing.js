@@ -59,6 +59,8 @@ export default function Settings() {
         <ListParam label='soC_Manual_Reset                         '  p={pc.soC_Manual_Reset} />
         <ListParam label='wheel_Max_Speed                          '  p={pc.wheel_Max_Speed} />                            
         <ListParam label='wheel_Circumference                      '  p={pc.wheel_Circumference} />
+        <ListParam label='trip_A                                   '  p={pc.trip_A} />                         
+        <ListParam label='trip_B                                   '  p={pc.trip_B} />                         
         <ListParam label='trip_A_Auto_Reset                        '  p={pc.trip_A_Auto_Reset} />                         
         <ListParam label='trip_A_Auto_Reset_Hours                  '  p={pc.trip_A_Auto_Reset_Hours} />                    
         <ListParam label='trip_B_Auto_Reset                        '  p={pc.trip_B_Auto_Reset} />                     

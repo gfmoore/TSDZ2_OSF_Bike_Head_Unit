@@ -77,6 +77,7 @@ import VarsMotorFOC           from './screens/parameters/variablesGraphs/varsMot
 //#endregion
 
 const MotorParametersStack = () => {
+
   return (
     <Stack.Navigator initialRouteName="MotorParameters" >
       <Stack.Screen name="MotorParameters" component={MotorParameters} options={{ headerShown: false }} />
@@ -176,7 +177,9 @@ const MainNavigator = () => {
     
   const [wheel_Max_Speed,                           setWheel_Max_Speed]                               = useState(70)
   const [wheel_Circumference,                       setWheel_Circumference]                           = useState(207)
-    
+  
+  const [trip_A,                                    setTrip_A]                                        = useState(998)
+  const [trip_B,                                    setTrip_B]                                        = useState(999)
   const [trip_A_Auto_Reset,                         setTrip_A_Auto_Reset]                             = useState(true)
   const [trip_A_Auto_Reset_Hours,                   setTrip_A_Auto_Reset_Hours]                       = useState(24)
   const [trip_B_Auto_Reset,                         setTrip_B_Auto_Reset]                             = useState(true)
@@ -434,6 +437,8 @@ const MainNavigator = () => {
               setSoC_Manual_Reset(await AsyncStorage.getItem('soC_Manual_Reset'))
               setWheel_Max_Speed(await AsyncStorage.getItem('wheel_Max_Speed'))
               setWheel_Circumference(await AsyncStorage.getItem('wheel_Circumference'))
+              setTrip_A(await AsyncStorage.getItem('trip_A'))
+              setTrip_B(await AsyncStorage.getItem('trip_B'))
               setTrip_A_Auto_Reset(await AsyncStorage.getItem('trip_A_Auto_Reset'))
               setTrip_A_Auto_Reset_Hours(await AsyncStorage.getItem('trip_A_Auto_Reset_Hours'))
               setTrip_B_Auto_Reset(await AsyncStorage.getItem('trip_B_Auto_Reset'))
@@ -657,6 +662,8 @@ const MainNavigator = () => {
               await AsyncStorage.setItem('wheel_Max_Speed', wheel_Max_Speed.toString())
               await AsyncStorage.setItem('wheel_Circumference', wheel_Circumference.toString())
 
+              await AsyncStorage.setItem('trip_A', trip_A.toString())
+              await AsyncStorage.setItem('trip_B', trip_B.toString())
               await AsyncStorage.setItem('trip_A_Auto_Reset', trip_A_Auto_Reset.toString())
               await AsyncStorage.setItem('trip_A_Auto_Reset_Hours', trip_A_Auto_Reset_Hours.toString())
               await AsyncStorage.setItem('trip_B_Auto_Reset', trip_B_Auto_Reset.toString())
@@ -898,6 +905,8 @@ const MainNavigator = () => {
     wheel_Max_Speed, setWheel_Max_Speed,
     wheel_Circumference, setWheel_Circumference,
 
+    trip_A, setTrip_A,
+    trip_B, setTrip_B,
     trip_A_Auto_Reset, setTrip_A_Auto_Reset,
     trip_A_Auto_Reset_Hours, setTrip_A_Auto_Reset_Hours,
     trip_B_Auto_Reset, setTrip_B_Auto_Reset,
@@ -1099,7 +1108,7 @@ const MainNavigator = () => {
     technical_Hall_Sensors, setTechnical_Hall_Sensors
   }
   //#endregion
-  
+
   return (
     <ParameterProvider value={ps}>
       <Drawer.Navigator drawerContent={props => <CustomDrawer {...props} />} screenOptions={ { headerTintColor: 'black', headerStyle: { backgroundColor: 'gray'} } } >

@@ -78,6 +78,8 @@ export default function Settings({ route, navigation } ) {
             pc.setWheel_Max_Speed                           (70)
             pc.setWheel_Circumference                       (207)
 
+            pc.setTrip_A                                    (999)
+            pc.setTrip_B                                    (999)
             pc.setTrip_A_Auto_Reset                         (true)
             pc.setTrip_A_Auto_Reset_Hours                   (24)
             pc.setTrip_B_Auto_Reset                         (true)
@@ -320,6 +322,8 @@ export default function Settings({ route, navigation } ) {
                 await AsyncStorage.setItem('wheel_Max_Speed', pc.wheel_Max_Speed.toString())
                 await AsyncStorage.setItem('wheel_Circumference', pc.wheel_Circumference.toString())
 
+                await AsyncStorage.setItem('trip_A', pc.trip_A.toString())
+                await AsyncStorage.setItem('trip_B', pc.trip_B.toString())
                 await AsyncStorage.setItem('trip_A_Auto_Reset', pc.trip_A_Auto_Reset.toString())
                 await AsyncStorage.setItem('trip_A_Auto_Reset_Hours', pc.trip_A_Auto_Reset_Hours.toString())
                 await AsyncStorage.setItem('trip_B_Auto_Reset', pc.trip_B_Auto_Reset.toString())
@@ -525,6 +529,8 @@ export default function Settings({ route, navigation } ) {
               //#endregion
             }
             saveStateToAsyncStorage()
+
+            console.log('hello ' + pc.trip_A)
           }
 
           catch (e) {

@@ -27,11 +27,11 @@ export default function SoC ( { route, navigation } ) {
 
   return (
     <View style={global.root, global.app}>
-      <DataEntryAlpha label='Text'                 p={pc.soC_Text} s={pc.setSoC_Text}/>
-      <DataEntryNumeric label='Reset at voltage'   p={pc.soC_Reset_At_Voltage} s={pc.setSoC_Reset_At_Voltage}/>
-      <DataEntryNumeric label='Battery total Wh'   p={pc.soC_Battery_Total_Wh} s={pc.setSoC_Battery_Total_Wh}/>
-      <DataEntryNumeric label='Used Wh'            p={pc.soC_Used} s={pc.setSoC_Used}/>
-      <DataEntryBoolean label='Manual reset'       p={pc.soC_Manual_Reset} s={pc.setSoC_Manual_Reset}/>
+      <DataEntryAlpha   label='Text'               p={pc.soC_Text}              s={pc.setSoC_Text}             k='soC_Text'/>
+      <DataEntryNumeric label='Reset at voltage'   p={pc.soC_Reset_At_Voltage}  s={pc.setSoC_Reset_At_Voltage} k='soC_Reset_At_Voltage'/>
+      <DataEntryNumeric label='Battery total Wh'   p={pc.soC_Battery_Total_Wh}  s={pc.setSoC_Battery_Total_Wh} k='soC_Battery_Total_Wh'/>
+      <DataEntryNumeric label='Used Wh'            p={pc.soC_Used}              s={pc.setSoC_Used}             k='soC_Used'/>
+      <DataEntryBoolean label='Manual reset'       p={pc.soC_Manual_Reset}      s={pc.setSoC_Manual_Reset}     k='soC_Manual_Reset'/>
     </View>
   )
 }
