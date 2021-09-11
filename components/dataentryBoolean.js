@@ -66,6 +66,27 @@ const DataEntryBoolean = ({ label, p, s, k }) => {
         { cancelable: true }
       )
     }
+    else if (label === 'Reset Odometer') {
+      //saveStateToAsyncStorage('various_Odometer', 'false')
+      Alert.alert(
+        'Reset Odometer',
+        'Are you sure? There is no going back!',
+        [
+          {
+            text: 'Yes', onPress: async () => {
+              pc.setVarious_Odometer(0)
+              setDatax(false)
+              saveStateToAsyncStorage('various_Odometer', '0')
+            }
+          },
+          {
+            text: 'No', onPress: () => { }
+          },
+        ],
+        { cancelable: true }
+      )
+    }
+
     else { //standard set unset
       setDatax(n)
       s(n)
@@ -88,7 +109,7 @@ const DataEntryBoolean = ({ label, p, s, k }) => {
   function parseBool(val) { return val === true || val === "true" }
 
   return (
-    <View style={global.item}>
+    <View style={global.item2}>
       <Text style={global.label}>{label}</Text>
       <Switch style={global.switch}
         value={datax} 

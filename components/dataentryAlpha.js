@@ -33,7 +33,6 @@ const DataEntryAlpha = ({ label, p, s, k }) => {
   }
 
   const saveStateToAsyncStorage = async (key, value) => {
-    console.log(key + ' --< ' + value)
     try {
       await AsyncStorage.setItem(key, value.toString())
     }

@@ -16,23 +16,34 @@ import { global } from '../styles/global'
 
 import Context from '../context/Context'
 
-import DataEntryAlpha from '../components/dataentryAlpha'
+import DataEntryAssistLevels from '../components/dataentryAssistLevels'
 
 export default function AssistLevelPower({ route, navigation }) {
 
   const pc = useContext(Context)  //parameters pc =parametersContext
 
+  let enable1, enable2, enable3, enable4, enable5, enable6, enable7, enable8, enable9
+  parseInt(pc.number_Assist_Levels) >= 1 ? enable1 = 'true' : enable1 = 'false';
+  parseInt(pc.number_Assist_Levels) >= 2 ? enable2 = 'true' : enable2 = 'false';
+  parseInt(pc.number_Assist_Levels) >= 3 ? enable3 = 'true' : enable3 = 'false';
+  parseInt(pc.number_Assist_Levels) >= 4 ? enable4 = 'true' : enable4 = 'false';
+  parseInt(pc.number_Assist_Levels) >= 5 ? enable5 = 'true' : enable5 = 'false';
+  parseInt(pc.number_Assist_Levels) >= 6 ? enable6 = 'true' : enable6 = 'false';
+  parseInt(pc.number_Assist_Levels) >= 7 ? enable7 = 'true' : enable7 = 'false';
+  parseInt(pc.number_Assist_Levels) >= 8 ? enable8 = 'true' : enable8 = 'false';
+  parseInt(pc.number_Assist_Levels) >= 9 ? enable9 = 'true' : enable9 = 'false';
+
   return (
     <View style={global.root, global.app}>
-      <DataEntryAlpha label='1' p={pc.eMTB_Assist_Level_1} s={pc.setEMTB_Assist_Level_1} k='eMTB_Assist_Level_1' />
-      <DataEntryAlpha label='2' p={pc.eMTB_Assist_Level_2} s={pc.setEMTB_Assist_Level_2} k='eMTB_Assist_Level_2' />
-      <DataEntryAlpha label='3' p={pc.eMTB_Assist_Level_3} s={pc.setEMTB_Assist_Level_3} k='eMTB_Assist_Level_3' />
-      <DataEntryAlpha label='4' p={pc.eMTB_Assist_Level_4} s={pc.setEMTB_Assist_Level_4} k='eMTB_Assist_Level_4' />
-      <DataEntryAlpha label='5' p={pc.eMTB_Assist_Level_5} s={pc.setEMTB_Assist_Level_5} k='eMTB_Assist_Level_5' />
-      <DataEntryAlpha label='6' p={pc.eMTB_Assist_Level_6} s={pc.setEMTB_Assist_Level_6} k='eMTB_Assist_Level_6' />
-      <DataEntryAlpha label='7' p={pc.eMTB_Assist_Level_7} s={pc.setEMTB_Assist_Level_7} k='eMTB_Assist_Level_7' />
-      <DataEntryAlpha label='8' p={pc.eMTB_Assist_Level_8} s={pc.setEMTB_Assist_Level_8} k='eMTB_Assist_Level_8' />
-      <DataEntryAlpha label='9' p={pc.eMTB_Assist_Level_9} s={pc.setEMTB_Assist_Level_9} k='eMTB_Assist_Level_9' />
+      <DataEntryAssistLevels label='1' p={pc.eMTB_Assist_Level_1} s={pc.setEMTB_Assist_Level_1} k='eMTB_Assist_Level_1' low='0' high='20' enabled={enable1} />
+      <DataEntryAssistLevels label='2' p={pc.eMTB_Assist_Level_2} s={pc.setEMTB_Assist_Level_2} k='eMTB_Assist_Level_2' low='0' high='20' enabled={enable2} />
+      <DataEntryAssistLevels label='3' p={pc.eMTB_Assist_Level_3} s={pc.setEMTB_Assist_Level_3} k='eMTB_Assist_Level_3' low='0' high='20' enabled={enable3} />
+      <DataEntryAssistLevels label='4' p={pc.eMTB_Assist_Level_4} s={pc.setEMTB_Assist_Level_4} k='eMTB_Assist_Level_4' low='0' high='20' enabled={enable4} />
+      <DataEntryAssistLevels label='5' p={pc.eMTB_Assist_Level_5} s={pc.setEMTB_Assist_Level_5} k='eMTB_Assist_Level_5' low='0' high='20' enabled={enable5} />
+      <DataEntryAssistLevels label='6' p={pc.eMTB_Assist_Level_6} s={pc.setEMTB_Assist_Level_6} k='eMTB_Assist_Level_6' low='0' high='20' enabled={enable6} />
+      <DataEntryAssistLevels label='7' p={pc.eMTB_Assist_Level_7} s={pc.setEMTB_Assist_Level_7} k='eMTB_Assist_Level_7' low='0' high='20' enabled={enable7} />
+      <DataEntryAssistLevels label='8' p={pc.eMTB_Assist_Level_8} s={pc.setEMTB_Assist_Level_8} k='eMTB_Assist_Level_8' low='0' high='20' enabled={enable8} />
+      <DataEntryAssistLevels label='9' p={pc.eMTB_Assist_Level_9} s={pc.setEMTB_Assist_Level_9} k='eMTB_Assist_Level_9' low='0' high='20' enabled={enable9} />
     </View>
   )
 }

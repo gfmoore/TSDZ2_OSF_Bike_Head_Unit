@@ -25,7 +25,8 @@ export default function MotorTemperature ( { navigation } ) {
   const pc = useContext(Context)
 
   return (
-  <View style={global.root, global.app}>
+    <View style={global.root, global.app}>
+      <Text style={global.unitsdisplayed}>{pc.display_Temp_Units}</Text>
       <DataEntrySelect  label='Temperature Feature' p={pc.motor_Temperature_Feature}    s={pc.setMotor_Temperature_Feature} listitems={['Throttle', 'Temperature']} k='motor_Temperature_Feature' />
       <DataEntryNumeric label='Min limit'           p={pc.motor_Temperature_Min_Limit}  s={pc.setMotor_Temperature_Min_Limit} k='motor_Temperature_Min_Limit' />
       <DataEntryNumeric label='Max limit'           p={pc.motor_Temperature_Max_Limit}  s={pc.setMotor_Temperature_Max_Limit} k='motor_Temperature_Max_Limit' />

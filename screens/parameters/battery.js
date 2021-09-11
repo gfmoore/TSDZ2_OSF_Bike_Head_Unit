@@ -17,6 +17,7 @@ import { global } from '../styles/global'
 import Context from '../context/Context'
 
 import DataEntryNumeric from '../components/dataentryNumeric'
+import DataEntryUnsigned from '../components/dataentryUnsigned'
 import DataEntryBoolean from '../components/dataentryBoolean'
 
 export default function Battery( { navigation } ) {
@@ -25,12 +26,12 @@ export default function Battery( { navigation } ) {
 
   return (
     <View style={global.root, global.app}>
-      <DataEntryNumeric label='Max current'          p={pc.battery_Max_current}     s={pc.setBattery_Max_current}     k='battery_Max_current' />
-      <DataEntryNumeric label='Low cut off'          p={pc.battery_Low_Cut_Off}     s={pc.setBattery_Low_Cut_Off}     k='battery_Low_Cut_Off' />
-      <DataEntryNumeric label='Resistance'           p={pc.battery_Resistance}      s={pc.setBattery_Resistance}      k='battery_Resistance' />
-      <DataEntryNumeric label='Voltage estimate'     p={pc.battery_Voltage_Est}     s={pc.setBattery_Voltage_Est}     k='battery_Voltage_Est' />
-      <DataEntryNumeric label='Resistance estimate'  p={pc.battery_Resistance_Est}  s={pc.setBattery_Resistance_Est}  k='battery_Resistance_Est' />
-      <DataEntryNumeric label='Power loss estimate'  p={pc.battery_Power_Loss_Est}  s={pc.setBattery_Power_Loss_Est}  k='battery_Power_Loss_Est' />
+      <DataEntryUnsigned label='Max current'          p={pc.battery_Max_current}     s={pc.setBattery_Max_current}     k='battery_Max_current' />
+      <DataEntryUnsigned label='Low cut off'          p={pc.battery_Low_Cut_Off}     s={pc.setBattery_Low_Cut_Off}     k='battery_Low_Cut_Off' />
+      <DataEntryUnsigned label='Resistance'           p={pc.battery_Resistance}      s={pc.setBattery_Resistance}      k='battery_Resistance' />
+      <DataEntryUnsigned label='Voltage estimate'     p={pc.battery_Voltage_Est}     s={pc.setBattery_Voltage_Est}     k='battery_Voltage_Est' />
+      <DataEntryUnsigned label='Resistance estimate'  p={pc.battery_Resistance_Est}  s={pc.setBattery_Resistance_Est}  k='battery_Resistance_Est' />
+      <DataEntryUnsigned label='Power loss estimate'  p={pc.battery_Power_Loss_Est}  s={pc.setBattery_Power_Loss_Est}  k='battery_Power_Loss_Est' />
     </View>
   )
 }

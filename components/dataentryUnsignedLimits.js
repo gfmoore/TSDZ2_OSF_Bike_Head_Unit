@@ -1,9 +1,9 @@
 /**
  * Name:          TSDZ2 OSF Bike Head Unit
  * Author:        Gordon Moore
- * File:          dataentryNumeric.js
+ * File:          dataentryUnsignedLimits.js
  * Date:          13 August 2021
- * Description:   Code for entering numbers (including -, 0, decimals)
+ * Description:   Code for entering unsigned numbers with low and high limits
  * Licence        The MIT License https://opensource.org/licenses/MIT
  *
  * Version history
@@ -19,7 +19,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import Context from '../context/Context'
 
 //p=the context value i.e. someValue, s=the setter i.e. setSomeValue
-const DataEntryNumeric = ( { label, p, s, k} ) => {
+const DataEntryUnsignedLimits = ( { label, p, s, k, low, high} ) => {
 
   const [datax, setDatax] = useState(p.toString())
 
@@ -28,19 +28,36 @@ const DataEntryNumeric = ( { label, p, s, k} ) => {
   const change = (n) => {
     //Check for valid number (is it possible to change some of this to regex?)
     if ( /[a-z]/i.test(n) )   return                //if contains a-z or A-Z not allowed
-    if ( /[^.-\d]/.test(n) )  return                //if not 0-9 or . or - not allowed
-    for (let i = 1; i < n.length; i++) {            //if - is in anything but first position
-      if (n.charAt(i) === '-') return
-    }
-    if (n.length === 3 && n.charAt(0) === '-' && n.charAt(1) === '0' && n.charAt(2) !== '.') return  //only allow -0.
-    if (n.length === 2 && n.charAt(0) === '0' && n.charAt(1) !== '.') return //not allow 00, or 08 etc only 0.
-    if (n.split('.').length > 2) return             //don't allow more than one .
+    if ( /[^\d]/.test(n) )    return                  //only 0..9 allowed
+
+    if (parseInt(n) > parseInt(high)) n = high.toString()
 
     setDatax(n)
     s(n)
-
-    //update the async storage here? No where else seems reasonable
     saveStateToAsyncStorage(k, n)
+  }
+
+  const end = (e) => {
+    //note that setting setDatax to low changes the display, but not the datax at that point, don't understand the logic
+    if (datax === '' || datax === null) {
+      setDatax(low.toString())
+      s(low.toString())
+      saveStateToAsyncStorage(k, low.toString())
+      return
+    }
+    if (parseInt(datax) < parseInt(low))  {
+      setDatax(low.toString())
+      s(low.toString())
+      saveStateToAsyncStorage(k, low.toString())
+      return
+    }
+    //otherwise
+    s(datax)
+    saveStateToAsyncStorage(k, datax)
+  }
+
+  const submit = (e) => { //not used
+    //console.log('submit ' + e.nativeEvent.text)
   }
 
   const saveStateToAsyncStorage = async (key, value) => {
@@ -58,12 +75,13 @@ const DataEntryNumeric = ( { label, p, s, k} ) => {
       <TextInput style={global.data} 
         keyboardType='numeric' 
         maxLength={5} 
-        // placeholderTextColor='yellow' 
-        // placeholder={data.toString()} 
         value={datax}
-        onChangeText={ change }/>
+        onChangeText={ change }
+        onEndEditing={ end }
+        onSubmitEditing={ submit }
+      />
     </View>
   )
 } 
 
-export default DataEntryNumeric
+export default DataEntryUnsignedLimits

@@ -39,7 +39,7 @@ export default function Settings({ route, navigation } ) {
 
             //#region now reload all context data with defaults - these are mine, 
 //TODO Set to proper defaults
-            pc.setMotor_Voltage                             (36)
+            pc.setMotor_Voltage                             ('36V')
             pc.setMotor_Power_Max                           (450)
             pc.setMotor_Acceleration                        (5)
             pc.setMotor_Deceleration                        (0)
@@ -69,7 +69,7 @@ export default function Settings({ route, navigation } ) {
             pc.setBattery_Resistance_Est                    (0)
             pc.setBattery_Power_Loss_Est                    (0)
 
-            pc.setSoC_Text                                  ("SoC %")
+            pc.setSoC_Text                                  ("Volts")
             pc.setSoC_Reset_At_Voltage                      (54.1)
             pc.setSoC_Battery_Total_Wh                      (400)
             pc.setSoC_Used                                  (0.0)
@@ -78,8 +78,9 @@ export default function Settings({ route, navigation } ) {
             pc.setWheel_Max_Speed                           (70)
             pc.setWheel_Circumference                       (207)
 
-            pc.setTrip_A                                    (999)
-            pc.setTrip_B                                    (999)
+            pc.setVarious_Odometer                          (1241.3)
+            pc.setTrip_A                                    (0)
+            pc.setTrip_B                                    (0)
             pc.setTrip_A_Auto_Reset                         (true)
             pc.setTrip_A_Auto_Reset_Hours                   (24)
             pc.setTrip_B_Auto_Reset                         (true)
@@ -131,9 +132,9 @@ export default function Settings({ route, navigation } ) {
 
             pc.setWalk_Assist                               (true)               
             pc.setWalk_Assist_Cruise_Feature                (true)
-            pc.setWalk_Assist_Level_1                       (4)
-            pc.setWalk_Assist_Level_2                       (13)
-            pc.setWalk_Assist_Level_3                       (20)
+            pc.setWalk_Assist_Level_1                       (25)
+            pc.setWalk_Assist_Level_2                       (150)
+            pc.setWalk_Assist_Level_3                       (250)
             pc.setWalk_Assist_Level_4                       (0)
             pc.setWalk_Assist_Level_5                       (0)
             pc.setWalk_Assist_Level_6                       (0)
@@ -145,7 +146,7 @@ export default function Settings({ route, navigation } ) {
             pc.setStartup_Boost_Torque_Factor               (250)
             pc.setStartup_Boost_Cadence_Step                (25)
 
-            pc.setStreet_Mode                               (true)
+            pc.setStreet_Mode                               (false)
             pc.setStreet_Mode_Enable_At_Startup             (false)
             pc.setStreet_Mode_Speed_Limit                   (25)
             pc.setStreet_Mode_Motor_Power_Limit             (250)
@@ -252,10 +253,9 @@ export default function Settings({ route, navigation } ) {
             pc.setVars_Motor_FOC_Max_Threshold_Red          (0)
             pc.setVars_Motor_FOC_Max_Threshold_Yellow       (0)
 
-            pc.setVarious_Lights_Configuration              ("0 - on")
+            pc.setVarious_Lights_Configuration              ("0")
             pc.setVarious_Assist_With_Error                 (false)
             pc.setVarious_Virtual_Throttle_Step             (10)
-            pc.setVarious_Odometer                          (41.3)
 
             pc.setDisplay_Clock_Hours                       (0)
             pc.setDisplay_Clock_Minutes                     (0)
@@ -264,7 +264,8 @@ export default function Settings({ route, navigation } ) {
             pc.setDisplay_Auto_Power_Off                    (25)
             pc.setDisplay_LCD_Type                          ("850C")
             pc.setDisplay_860C_Shortcut_Key                 (false)
-            pc.setDisplay_Units                             (25)
+            pc.setDisplay_Units                             ('Metric (SI)')
+            pc.setDisplay_Temp_Units                        ('Celsius')
             pc.setDisplay_Reset_To_Defaults                 (false)
 
             pc.setTechnical_ADC_Battery_Current             (0)
@@ -322,6 +323,7 @@ export default function Settings({ route, navigation } ) {
                 await AsyncStorage.setItem('wheel_Max_Speed', pc.wheel_Max_Speed.toString())
                 await AsyncStorage.setItem('wheel_Circumference', pc.wheel_Circumference.toString())
 
+                await AsyncStorage.setItem('various_Odometer', pc.various_Odometer.toString())
                 await AsyncStorage.setItem('trip_A', pc.trip_A.toString())
                 await AsyncStorage.setItem('trip_B', pc.trip_B.toString())
                 await AsyncStorage.setItem('trip_A_Auto_Reset', pc.trip_A_Auto_Reset.toString())
@@ -498,7 +500,6 @@ export default function Settings({ route, navigation } ) {
                 await AsyncStorage.setItem('various_Lights_Configuration', pc.various_Lights_Configuration.toString())
                 await AsyncStorage.setItem('various_Assist_With_Error', pc.various_Assist_With_Error.toString())
                 await AsyncStorage.setItem('various_Virtual_Throttle_Step', pc.various_Virtual_Throttle_Step.toString())
-                await AsyncStorage.setItem('various_Odometer', pc.various_Odometer.toString())
 
                 await AsyncStorage.setItem('display_Clock_Hours', pc.display_Clock_Hours.toString())
                 await AsyncStorage.setItem('display_Clock_Minutes', pc.display_Clock_Minutes.toString())
@@ -508,6 +509,7 @@ export default function Settings({ route, navigation } ) {
                 await AsyncStorage.setItem('display_LCD_Type', pc.display_LCD_Type.toString())
                 await AsyncStorage.setItem('display_860C_Shortcut_Key', pc.display_860C_Shortcut_Key.toString())
                 await AsyncStorage.setItem('display_Units', pc.display_Units.toString())
+                await AsyncStorage.setItem('display_Temp_Units', pc.display_Temp_Units.toString())
                 await AsyncStorage.setItem('display_Reset_To_Defaults', pc.display_Reset_To_Defaults.toString())
 
                 await AsyncStorage.setItem('technical_ADC_Battery_Current', pc.technical_ADC_Battery_Current.toString())
@@ -529,8 +531,6 @@ export default function Settings({ route, navigation } ) {
               //#endregion
             }
             saveStateToAsyncStorage()
-
-            console.log('hello ' + pc.trip_A)
           }
 
           catch (e) {

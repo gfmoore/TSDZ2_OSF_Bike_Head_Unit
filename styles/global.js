@@ -35,8 +35,11 @@
   },
   item: {
     flexDirection: 'row',
-    // backgroundColor: 'yellow',
     marginTop: 5, 
+  },
+  item2: {
+    flexDirection: 'row',
+    marginTop: 25,
   },
   listitems: {
     marginTop: 20,
@@ -61,6 +64,18 @@
     marginRight: 10,
     paddingLeft: 15,
   },
+   datadisabled: {
+     flex: 2,
+     color: 'red',
+     fontSize: 20,
+     backgroundColor: 'black',
+     borderWidth: 1,
+     borderColor: 'blue',
+     borderRadius: 10,
+     marginTop: 5,
+     marginRight: 10,
+     paddingLeft: 15,
+   },
    labellist: {
      flex: 5,
      color: 'white',
@@ -121,6 +136,7 @@
      borderColor: 'blue',
      width: 130,
      marginRight: 20,
+     marginBottom: 5,
    },
    dropdownSelectedTextStyle: {
      fontSize: 20,
@@ -155,4 +171,55 @@
      fontSize: 25,
      color: 'orange',
    },
+   itemDiameter: {
+    //  flexDirection: 'row',
+     // backgroundColor: 'yellow',
+     marginTop: 20,
+     borderWidth: 1,
+     borderColor: 'red',
+   },
+   diameterUnits: {
+     flexDirection: 'row',
+    //  borderWidth: 2,
+    //  borderColor: 'red',
+     marginTop: 20,
+   },
+   labelUnits:{
+     color: 'red',
+     fontSize: 15,
+     marginLeft: 10,
+     marginRight: 20,
+   },
+   switchUnits: {
+
+   },
+   unitsdisplayed: {
+     fontSize: 15,
+     color: 'orange',
+     marginLeft: 10,
+   },
+   tripsScroll: {
+     backgroundColor: 'black',
+   },
+   resetPositive: {
+    //  marginTop: 5,
+     paddingBottom: 10,
+     borderWidth: 1,
+     borderColor: 'red',
+   },
+   itemReset: {
+     flexDirection: 'row',
+    //  marginTop: 0,
+    //  borderWidth: 1,
+    //  borderColor: 'red',
+   },
+   labelReset: {
+     flex: 3,
+     color: 'orange',
+     fontSize: 20,
+     textAlignVertical: 'center',
+     marginLeft: 10,
+     marginRight: 50,
+   },
+
 })

@@ -16,9 +16,12 @@ import { global } from '../styles/global'
 
 import Context from '../context/Context'
 
-import DataEntryAlpha   from '../components/dataentryAlpha'
-import DataEntryNumeric from '../components/dataentryNumeric'
-import DataEntryBoolean from '../components/dataentryBoolean'
+import DataEntryAlpha    from '../components/dataentryAlpha'
+import DataEntryNumeric  from '../components/dataentryNumeric'
+import DataEntryPositive from '../components/dataentryPositive'
+import DataEntryUnsigned from '../components/dataentryUnsigned'
+import DataEntryBoolean  from '../components/dataentryBoolean'
+import DataEntrySelect   from '../components/dataentrySelect'
 
 
 export default function SoC ( { route, navigation } ) {
@@ -27,11 +30,11 @@ export default function SoC ( { route, navigation } ) {
 
   return (
     <View style={global.root, global.app}>
-      <DataEntryAlpha   label='Text'               p={pc.soC_Text}              s={pc.setSoC_Text}             k='soC_Text'/>
-      <DataEntryNumeric label='Reset at voltage'   p={pc.soC_Reset_At_Voltage}  s={pc.setSoC_Reset_At_Voltage} k='soC_Reset_At_Voltage'/>
-      <DataEntryNumeric label='Battery total Wh'   p={pc.soC_Battery_Total_Wh}  s={pc.setSoC_Battery_Total_Wh} k='soC_Battery_Total_Wh'/>
-      <DataEntryNumeric label='Used Wh'            p={pc.soC_Used}              s={pc.setSoC_Used}             k='soC_Used'/>
-      <DataEntryBoolean label='Manual reset'       p={pc.soC_Manual_Reset}      s={pc.setSoC_Manual_Reset}     k='soC_Manual_Reset'/>
+      <DataEntrySelect   label='Text'               p={pc.soC_Text}              s={pc.setSoC_Text}              listitems={['Volts', 'SoC %', 'Disable']} k='soC_Text'/>
+      <DataEntryPositive label='Reset at voltage'   p={pc.soC_Reset_At_Voltage}  s={pc.setSoC_Reset_At_Voltage}  k='soC_Reset_At_Voltage'/>
+      <DataEntryPositive label='Battery total Wh'   p={pc.soC_Battery_Total_Wh}  s={pc.setSoC_Battery_Total_Wh}  k='soC_Battery_Total_Wh'/>
+      <DataEntryPositive label='Used Wh'            p={pc.soC_Used}              s={pc.setSoC_Used}              k='soC_Used'/>
+      <DataEntryBoolean  label='Manual reset'       p={pc.soC_Manual_Reset}      s={pc.setSoC_Manual_Reset}      k='soC_Manual_Reset'/>
     </View>
   )
 }

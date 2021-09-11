@@ -1,9 +1,9 @@
 /**
  * Name:          TSDZ2 OSF Bike Head Unit
  * Author:        Gordon Moore
- * File:          dataentrySelect.js
+ * File:          dataentrySelectTempUnits.js
  * Date:          13 August 2021
- * Description:   Code for choosing from items
+ * Description:   Code for choosing from items and change any temperature values that depend on it
  * Licence        The MIT License https://opensource.org/licenses/MIT
  *
  * Version history
@@ -23,18 +23,34 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import Context from '../context/Context'
 
-const DataEntrySelect = ({ label, p, s, listitems, k }) => {
+const DataEntrySelectTempUnits = ({ label, p, s, listitems, k }) => {
 
   const [datax, setDatax] = useState(p)
 
   const pc = useContext(Context)
 
-  const change = (p) => {
-    setDatax(p)
-    s(p)
+  let changed = false
+  const change = (x) => {
+    //only want to do this if actual change?
+    if ( x !== p) changed = true 
+    else changed = false
+
+    if (changed) {
+      if (x === 'Celsius' ) {
+        pc.setMotor_Temperature_Min_Limit(FtoC(pc.motor_Temperature_Min_Limit))
+        pc.setMotor_Temperature_Max_Limit(FtoC(pc.motor_Temperature_Max_Limit))
+      }
+      else {
+        pc.setMotor_Temperature_Min_Limit(CtoF(pc.motor_Temperature_Min_Limit))
+        pc.setMotor_Temperature_Max_Limit(CtoF(pc.motor_Temperature_Max_Limit))
+      }
+    }
+
+    setDatax(x)
+    s(x)
 
     //update the async storage
-    saveStateToAsyncStorage(k, p)
+    saveStateToAsyncStorage(k, x)
   }
 
   const saveStateToAsyncStorage = async (key, value) => {
@@ -44,6 +60,14 @@ const DataEntrySelect = ({ label, p, s, listitems, k }) => {
     catch (e) {
       console.log(`GM Error saving data: ${e}`)
     }
+  }
+
+  const CtoF = (x) => {
+    return ((parseInt(x) * 1.8) + 32).toString()
+  }
+
+  const FtoC = (x) => {
+    return ((parseInt(x) - 32) * 5 / 9).toString()
   }
 
   return (
@@ -67,4 +91,4 @@ const DataEntrySelect = ({ label, p, s, listitems, k }) => {
   )
 } 
 
-export default DataEntrySelect
+export default DataEntrySelectTempUnits

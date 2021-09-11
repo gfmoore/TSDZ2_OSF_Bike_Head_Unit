@@ -139,7 +139,7 @@ const SettingsStack = () => {
 const MainNavigator = () => {
   
   //#region set State To Defaults
-  const [motor_Voltage,                             setMotor_Voltage]                                 = useState(36)
+  const [motor_Voltage,                             setMotor_Voltage]                                 = useState('36V')
   const [motor_Power_Max,                           setMotor_Power_Max]                               = useState(450)
   const [motor_Acceleration,                        setMotor_Acceleration]                            = useState(5)
   const [motor_Deceleration,                        setMotor_Deceleration]                            = useState(0)
@@ -169,17 +169,18 @@ const MainNavigator = () => {
   const [battery_Resistance_Est,                    setBattery_Resistance_Est]                        = useState(0)
   const [battery_Power_Loss_Est,                    setBattery_Power_Loss_Est]                        = useState(0)
     
-  const [soC_Text,                                  setSoC_Text]                                      = useState("SoC %")
+  const [soC_Text,                                  setSoC_Text]                                      = useState("Volts")
   const [soC_Reset_At_Voltage,                      setSoC_Reset_At_Voltage]                          = useState(54.1)
   const [soC_Battery_Total_Wh,                      setSoC_Battery_Total_Wh]                          = useState(400)
   const [soC_Used,                                  setSoC_Used]                                      = useState(0.0)
   const [soC_Manual_Reset,                          setSoC_Manual_Reset]                              = useState(false)
     
   const [wheel_Max_Speed,                           setWheel_Max_Speed]                               = useState(70)
-  const [wheel_Circumference,                       setWheel_Circumference]                           = useState(207)
+  const [wheel_Circumference,                       setWheel_Circumference]                           = useState(2070)
   
-  const [trip_A,                                    setTrip_A]                                        = useState(998)
-  const [trip_B,                                    setTrip_B]                                        = useState(999)
+  const [various_Odometer,                          setVarious_Odometer]                              = useState(1241)
+  const [trip_A,                                    setTrip_A]                                        = useState(0)
+  const [trip_B,                                    setTrip_B]                                        = useState(0)
   const [trip_A_Auto_Reset,                         setTrip_A_Auto_Reset]                             = useState(true)
   const [trip_A_Auto_Reset_Hours,                   setTrip_A_Auto_Reset_Hours]                       = useState(24)
   const [trip_B_Auto_Reset,                         setTrip_B_Auto_Reset]                             = useState(true)
@@ -231,9 +232,9 @@ const MainNavigator = () => {
 
   const [walk_Assist,                               setWalk_Assist]                                   = useState(true)               
   const [walk_Assist_Cruise_Feature,                setWalk_Assist_Cruise_Feature]                    = useState(true)
-  const [walk_Assist_Level_1,                       setWalk_Assist_Level_1]                           = useState(4)
-  const [walk_Assist_Level_2,                       setWalk_Assist_Level_2]                           = useState(13)
-  const [walk_Assist_Level_3,                       setWalk_Assist_Level_3]                           = useState(20)
+  const [walk_Assist_Level_1,                       setWalk_Assist_Level_1]                           = useState(25)
+  const [walk_Assist_Level_2,                       setWalk_Assist_Level_2]                           = useState(150)
+  const [walk_Assist_Level_3,                       setWalk_Assist_Level_3]                           = useState(250)
   const [walk_Assist_Level_4,                       setWalk_Assist_Level_4]                           = useState(0)
   const [walk_Assist_Level_5,                       setWalk_Assist_Level_5]                           = useState(0)
   const [walk_Assist_Level_6,                       setWalk_Assist_Level_6]                           = useState(0)
@@ -245,7 +246,7 @@ const MainNavigator = () => {
   const [startup_Boost_Torque_Factor,               setStartup_Boost_Torque_Factor]                   = useState(250)
   const [startup_Boost_Cadence_Step,                setStartup_Boost_Cadence_Step]                    = useState(25)
 
-  const [street_Mode,                               setStreet_Mode]                                   = useState(true)
+  const [street_Mode,                               setStreet_Mode]                                   = useState(false)
   const [street_Mode_Enable_At_Startup,             setStreet_Mode_Enable_At_Startup]                 = useState(false)
   const [street_Mode_Speed_Limit,                   setStreet_Mode_Speed_Limit]                       = useState(25)
   const [street_Mode_Motor_Power_Limit,             setStreet_Mode_Motor_Power_Limit]                 = useState(250)
@@ -352,10 +353,9 @@ const MainNavigator = () => {
   const [vars_Motor_FOC_Max_Threshold_Red,          setVars_Motor_FOC_Max_Threshold_Red]              = useState(0)
   const [vars_Motor_FOC_Max_Threshold_Yellow,       setVars_Motor_FOC_Max_Threshold_Yellow]           = useState(0)
 
-  const [various_Lights_Configuration,              setVarious_Lights_Configuration]                  = useState("0 - on")
+  const [various_Lights_Configuration,              setVarious_Lights_Configuration]                  = useState("0")
   const [various_Assist_With_Error,                 setVarious_Assist_With_Error]                     = useState(false)
   const [various_Virtual_Throttle_Step,             setVarious_Virtual_Throttle_Step]                 = useState(10)
-  const [various_Odometer,                          setVarious_Odometer]                              = useState(41.3)
 
   const [display_Clock_Hours,                       setDisplay_Clock_Hours]                           = useState(0)
   const [display_Clock_Minutes,                     setDisplay_Clock_Minutes]                         = useState(0)
@@ -364,7 +364,8 @@ const MainNavigator = () => {
   const [display_Auto_Power_Off,                    setDisplay_Auto_Power_Off]                        = useState(25)
   const [display_LCD_Type,                          setDisplay_LCD_Type]                              = useState("850C")
   const [display_860C_Shortcut_Key,                 setDisplay_860C_Shortcut_Key]                     = useState(false)
-  const [display_Units,                             setDisplay_Units]                                 = useState(25)
+  const [display_Units,                             setDisplay_Units]                                 = useState('Metric (SI)')
+  const [display_Temp_Units,                        setDisplay_Temp_Units]                            = useState('Celsius')
   const [display_Reset_To_Defaults,                 setDisplay_Reset_To_Defaults]                     = useState(false)
 
   const [technical_ADC_Battery_Current,             setTechnical_ADC_Battery_Current]                 = useState(0)
@@ -379,6 +380,13 @@ const MainNavigator = () => {
   const [technical_Motor_Speed,                     setTechnical_Motor_Speed]                         = useState(0)
   const [technical_Motor_FOC,                       setTechnical_Motor_FOC]                           = useState(0)
   const [technical_Hall_Sensors,                    setTechnical_Hall_Sensors]                        = useState(0)
+  //#endregion
+
+  //#region temp to set an async storage variable
+  // const save = async () => {
+  //   await AsyncStorage.setItem('trip_B', '0')
+  // }
+  // save()
   //#endregion
 
   //first use the async storage should be empty, if so then fill it with default values and set state
@@ -599,6 +607,7 @@ const MainNavigator = () => {
               setDisplay_LCD_Type(await AsyncStorage.getItem('display_LCD_Type'))
               setDisplay_860C_Shortcut_Key(await AsyncStorage.getItem('display_860C_Shortcut_Key'))
               setDisplay_Units(await AsyncStorage.getItem('display_Units'))
+              setDisplay_Temp_Units(await AsyncStorage.getItem('display_Temp_Units'))
               setDisplay_Reset_To_Defaults(await AsyncStorage.getItem('display_Reset_To_Defaults'))
               setTechnical_ADC_Battery_Current(await AsyncStorage.getItem('technical_ADC_Battery_Current'))
               setTechnical_ADC_Throttle_Sensor(await AsyncStorage.getItem('technical_ADC_Throttle_Sensor'))
@@ -835,6 +844,7 @@ const MainNavigator = () => {
               await AsyncStorage.setItem('display_LCD_Type', display_LCD_Type.toString())
               await AsyncStorage.setItem('display_860C_Shortcut_Key', display_860C_Shortcut_Key.toString())
               await AsyncStorage.setItem('display_Units', display_Units.toString())
+              await AsyncStorage.setItem('display_Temp_Units', display_Temp_Units.toString())
               await AsyncStorage.setItem('display_Reset_To_Defaults', display_Reset_To_Defaults.toString())
 
               await AsyncStorage.setItem('technical_ADC_Battery_Current', technical_ADC_Battery_Current.toString())
@@ -863,6 +873,20 @@ const MainNavigator = () => {
     }
     getAllKeys()
   }, [])
+
+
+  //testing aync values
+  const getVal = async (key) => {
+    try {
+      let value = await AsyncStorage.getItem(key)
+      console.log('Async = '+ value + ' state = ' + trip_A)
+    } 
+    catch (e) {
+      console.log('GM Error getting key')
+    }
+  }
+  //getVal('trip_A')
+
 
   const ps = {
     //#region Set the Parameters Context  ps
@@ -905,6 +929,7 @@ const MainNavigator = () => {
     wheel_Max_Speed, setWheel_Max_Speed,
     wheel_Circumference, setWheel_Circumference,
 
+    various_Odometer, setVarious_Odometer,
     trip_A, setTrip_A,
     trip_B, setTrip_B,
     trip_A_Auto_Reset, setTrip_A_Auto_Reset,
@@ -1081,7 +1106,6 @@ const MainNavigator = () => {
     various_Lights_Configuration, setVarious_Lights_Configuration,
     various_Assist_With_Error, setVarious_Assist_With_Error,
     various_Virtual_Throttle_Step, setVarious_Virtual_Throttle_Step,
-    various_Odometer, setVarious_Odometer,
 
     display_Clock_Hours, setDisplay_Clock_Hours,
     display_Clock_Minutes, setDisplay_Clock_Minutes,
@@ -1091,6 +1115,7 @@ const MainNavigator = () => {
     display_LCD_Type, setDisplay_LCD_Type,
     display_860C_Shortcut_Key, setDisplay_860C_Shortcut_Key,
     display_Units, setDisplay_Units,
+    display_Temp_Units, setDisplay_Temp_Units,
     display_Reset_To_Defaults, setDisplay_Reset_To_Defaults,
 
 

@@ -221,6 +221,7 @@ export default function Settings() {
         <ListParam label='display_LCD_Type                         '  p={pc.display_LCD_Type} />                           
         <ListParam label='display_860C_Shortcut_Key                '  p={pc.display_860C_Shortcut_Key} />                  
         <ListParam label='display_Units                            '  p={pc.display_Units} />                              
+        <ListParam label='display_Temp_Units                       '  p={pc.display_Temp_Units} />                              
         <ListParam label='display_Reset_To_Defaults                '  p={pc.display_Reset_To_Defaults} />
         <ListParam label='technical_ADC_Battery_Current            '  p={pc.technical_ADC_Battery_Current} />              
         <ListParam label='technical_ADC_Throttle_Sensor            '  p={pc.technical_ADC_Throttle_Sensor} />              
@@ -234,8 +235,6 @@ export default function Settings() {
         <ListParam label='technical_Motor_Speed                    '  p={pc.technical_Motor_Speed} />                      
         <ListParam label='technical_Motor_FOC                      '  p={pc.technical_Motor_FOC} />                        
         <ListParam label='technical_Hall_Sensors                   '  p={pc.technical_Hall_Sensors} />
-
-
       </ScrollView>
     </View>
   )

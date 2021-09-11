@@ -16,9 +16,10 @@ import { global } from '../styles/global'
 
 import Context from '../context/Context'
 
-import DataEntryAlpha   from '../components/dataentryAlpha'
-import DataEntryNumeric from '../components/dataentryNumeric'
-import DataEntryBoolean from '../components/dataentryBoolean'
+import DataEntryAlpha    from '../components/dataentryAlpha'
+import DataEntryNumeric  from '../components/dataentryNumeric'
+import DataEntryDiameter from '../components/dataentryDiameter'
+import DataEntryBoolean  from '../components/dataentryBoolean'
 
 export default function Wheel ( { route, navigation } ) {
 
@@ -26,9 +27,9 @@ export default function Wheel ( { route, navigation } ) {
 
   return (
     <View style={global.root, global.app}>
-      <DataEntryNumeric label='Max speed'     p={pc.wheel_Max_Speed}      s={pc.setWheel_Max_Speed}     k='wheel_Max_Speed'   />
-      <DataEntryNumeric label='Circumference' p={pc.wheel_Circumference}  s={pc.setWheel_Circumference} k='wheel_Circumference'/>
-      {/* <DataEntryNumeric label='or radius'  p={pc.wheel_Radius}          s={pc.setWheel_Radius}    /> */}
+      <DataEntryNumeric label='Max speed'           p={pc.wheel_Max_Speed}      s={pc.setWheel_Max_Speed}     k='wheel_Max_Speed'   />
+      {/* <DataEntryNumeric label='Circumference (mm)'  p={pc.wheel_Circumference}  s={pc.setWheel_Circumference} k='wheel_Circumference'/> */}
+      <DataEntryDiameter label='Circumference (mm)' p={pc.wheel_Circumference}  s={pc.setWheel_Circumference} k='wheel_Circumference'/>
     </View>
   )
 }
