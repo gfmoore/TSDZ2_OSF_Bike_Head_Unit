@@ -221,5 +221,8 @@
      marginLeft: 10,
      marginRight: 50,
    },
+   map: {
+     height: 500,
+   }
 
 })

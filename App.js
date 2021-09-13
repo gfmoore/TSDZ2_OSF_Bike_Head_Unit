@@ -426,7 +426,7 @@ const MainNavigator = () => {
       let keys = []
       try {
         keys = await AsyncStorage.getAllKeys()
-        console.log(keys.length)
+        console.log('Parameters = ' + keys.length)
         if (keys.length !== 0) {  //so data in async storage
           const loadStateFromAsyncStorage = async () => {
             //#region load data from async storage

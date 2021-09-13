@@ -13,14 +13,13 @@ import React from 'react'
 import { Alert, View, Text } from 'react-native'
 import { global } from '../styles/global'
 
-import MapView from '../../components/mapview'
+import ViewMap from '../../components/viewmap'
 
 const Map = () => {
   
   return (
     <View style={global.app}>
-      <Text style={global.appfont}>Map</Text>
-      <MapView />
+      <ViewMap />
     </View>
   )
 }
