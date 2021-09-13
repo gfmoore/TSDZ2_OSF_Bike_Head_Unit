@@ -56,6 +56,11 @@ export function CustomDrawer(props) {
               onPress={() => { props.navigation.navigate('Home') }}          
             />            
             <DrawerItem 
+              icon={ () => (<Icon name='map' color='white' size={24} onPress={() => {}} /> )} 
+              label={ () => ( <Text style={{color: 'white', fontSize: 20}}>Map</Text>) } 
+              onPress={() => { props.navigation.navigate('Map', {}) }}          
+            />            
+            <DrawerItem 
               icon={ () => (<Icon name='dots-vertical' color='white' size={24} onPress={() => {}} /> )} 
               label={ () => ( <Text style={{color: 'white', fontSize: 20}}>Motor Parameters</Text>) } 
               onPress={() => { props.navigation.navigate('MotorParametersStack', {}) }}          

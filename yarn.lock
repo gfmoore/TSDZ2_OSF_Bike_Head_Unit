@@ -6044,10 +6044,10 @@
   dependencies:
     "prop-types" "^15.6.0"
 
-"react-native-pager-view@*", "react-native-pager-view@^5.4.0", "react-native-pager-view@>= 4.0.0":
-  "integrity" "sha512-P/aGuJqRe/HaocYd8o6TsO9YQMFPQrVnkjph9vZ+yg3HCCF/7XLRlntOLEs24Vmg4M+02MjpH557WACpBADi/A=="
-  "resolved" "https://registry.npmjs.org/react-native-pager-view/-/react-native-pager-view-5.4.1.tgz"
-  "version" "5.4.1"
+"react-native-pager-view@*", "react-native-pager-view@^5.4.3", "react-native-pager-view@>= 4.0.0":
+  "integrity" "sha512-mRXqjaLS6rkXTN2t+Hn+3mbu228aqQqIb+3jnK3KHUsfAK6Lvhwd4ddsz3qkRCZip+K2t4Y2OBDFi+y5O1R2iA=="
+  "resolved" "https://registry.npmjs.org/react-native-pager-view/-/react-native-pager-view-5.4.3.tgz"
+  "version" "5.4.3"
 
 "react-native-paper@^4.9.2":
   "integrity" "sha512-J7FRsd0YblQawtuj9I46F//apZHadsCKk6jWpc6njFTYdgUeCdkR8KgEto7cp2WxbcGNELx7KGwPQ4zAgX746A=="

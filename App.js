@@ -19,12 +19,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { LogBox } from 'react-native'
 LogBox.ignoreLogs(['Remote debugger'])
 
-import { NavigationContainer }        from '@react-navigation/native'
-import { createDrawerNavigator }      from '@react-navigation/drawer'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { NavigationContainer }            from '@react-navigation/native'
+import { createDrawerNavigator }          from '@react-navigation/drawer'
+import { createNativeStackNavigator }     from '@react-navigation/native-stack'
+import { createMaterialTopTabNavigator }  from '@react-navigation/material-top-tabs';
 
 const Drawer  = createDrawerNavigator()
 const Stack   = createNativeStackNavigator()
+const Tab     = createMaterialTopTabNavigator()
+
 
 import { ParameterProvider } from './context/Context'
 
@@ -34,7 +37,8 @@ import { setupInitialState } from './modules/manageState'
 import { CustomDrawer } from './screens/customDrawer'
 
 import Home                   from './screens/home'
-import MotorParameters        from './screens/motorParameters.js'
+import Map                    from './screens/map'
+import MotorParameters        from './screens/motorParameters'
 import FlashOSF               from './screens/flashOSF'
 import Settings               from './screens/settings'
 import ParametersListing      from './screens/parametersListing'
@@ -75,6 +79,18 @@ import VarsMotorSpeed         from './screens/parameters/variablesGraphs/varsMot
 import VarsMotorPWM           from './screens/parameters/variablesGraphs/varsMotorPWM'
 import VarsMotorFOC           from './screens/parameters/variablesGraphs/varsMotorFOC'
 //#endregion
+
+const HomeTabs = () => {
+  return (
+    <Tab.Navigator initialRouteName="Home" screenOptions={{ 
+      tabBarStyle: { backgroundColor: 'black'},
+      tabBarActiveTintColor: 'white'
+      }}>
+      <Tab.Screen name="Home" component={Home} options={{ title: 'Home', headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white' }} />
+      <Tab.Screen name="Map"  component={Map}  options={{ title: 'Map',  headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white' }} />
+    </Tab.Navigator>
+  )
+}
 
 const MotorParametersStack = () => {
 
@@ -408,6 +424,7 @@ const MainNavigator = () => {
       let keys = []
       try {
         keys = await AsyncStorage.getAllKeys()
+        console.log(keys.length)
         if (keys.length !== 0) {  //so data in async storage
           const loadStateFromAsyncStorage = async () => {
             //#region load data from async storage
@@ -888,8 +905,8 @@ const MainNavigator = () => {
   //getVal('trip_A')
 
 
-  const ps = {
-    //#region Set the Parameters Context  ps
+  const pc = {
+    //#region Set the Parameters Context  pc
     motor_Voltage, setMotor_Voltage,
     motor_Power_Max, setMotor_Power_Max,
     motor_Acceleration, setMotor_Acceleration,
@@ -1135,9 +1152,10 @@ const MainNavigator = () => {
   //#endregion
 
   return (
-    <ParameterProvider value={ps}>
+    <ParameterProvider value={pc}>
       <Drawer.Navigator drawerContent={props => <CustomDrawer {...props} />} screenOptions={ { headerTintColor: 'black', headerStyle: { backgroundColor: 'gray'} } } >
-        <Drawer.Screen name="Home"                  component={Home}                  options={{ title: 'TSDZ2 OSF Bike Head Unit' }} />
+        <Drawer.Screen name="HomeTabs"              component={HomeTabs}              options={{ title: 'TSDZ2 OSF Bike Head Unit' }} />
+        <Drawer.Screen name="Map"                   component={Map}                   options={{ title: 'Map' }} />
         <Drawer.Screen name="MotorParametersStack"  component={MotorParametersStack}  options={{ title: 'Motor Parameters' }} />
         <Drawer.Screen name="FlashOSF"              component={FlashOSF}              options={{ title: 'Flash OSF'}  } />
         <Drawer.Screen name="SettingsStack"         component={SettingsStack}         options={{ title: 'Application settings' }} />

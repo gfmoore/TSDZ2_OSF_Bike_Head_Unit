@@ -21,8 +21,6 @@ const Home = ({route, navigation}) => {
 
   return (
     <View style={global.app}>
-      {/* <Text style={{ fontSize: 30, color: 'white' }}>{ps.motor_Voltage}</Text>
-      <Text style={{ fontSize: 30, color: 'white' }}>{ps.motor_Fast_Stop.toString()}</Text> */}
       <Image source={require('../assets/images/cycle.png')} style={global.appImage} />
       <TouchableOpacity style={global.startButton} >
         <Text style={global.startButtonText}>Start</Text>
