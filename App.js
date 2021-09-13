@@ -13,6 +13,7 @@
 
 import 'react-native-gesture-handler'
 import React, { useEffect, useState, useContext } from 'react'
+import { StatusBar } from 'react-native'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -43,6 +44,7 @@ import FlashOSF               from './screens/flashOSF'
 import Settings               from './screens/settings'
 import ParametersListing      from './screens/parametersListing'
 import About                  from './screens/about'
+import StartUp                from './screens/startup'
 
 import Motor                  from './screens/parameters/motor'
 import MotorTemperature       from './screens/parameters/motorTemperature'
@@ -904,7 +906,6 @@ const MainNavigator = () => {
   }
   //getVal('trip_A')
 
-
   const pc = {
     //#region Set the Parameters Context  pc
     motor_Voltage, setMotor_Voltage,
@@ -1154,6 +1155,7 @@ const MainNavigator = () => {
   return (
     <ParameterProvider value={pc}>
       <Drawer.Navigator drawerContent={props => <CustomDrawer {...props} />} screenOptions={ { headerTintColor: 'black', headerStyle: { backgroundColor: 'gray'} } } >
+        {/* <Drawer.Screen name="StartUp"               component={StartUp}               options={{ title: 'Start up' }} /> */}
         <Drawer.Screen name="HomeTabs"              component={HomeTabs}              options={{ title: 'TSDZ2 OSF Bike Head Unit' }} />
         <Drawer.Screen name="Map"                   component={Map}                   options={{ title: 'Map' }} />
         <Drawer.Screen name="MotorParametersStack"  component={MotorParametersStack}  options={{ title: 'Motor Parameters' }} />
@@ -1166,8 +1168,12 @@ const MainNavigator = () => {
 }
 
 const App = () => {
+
   return (
     <>
+      <StatusBar backgroundColor='black'>
+
+      </StatusBar>
       <NavigationContainer>
         <MainNavigator />
       </NavigationContainer>

@@ -19,10 +19,17 @@ const Home = ({route, navigation}) => {
 
   const ps = useContext(Context)
 
+  const starting = () => {
+    console.log('starting...')
+    //connect to motor
+    //do some animation on start button
+    //bring up main display
+  }
+
   return (
     <View style={global.app}>
       <Image source={require('../assets/images/cycle.png')} style={global.appImage} />
-      <TouchableOpacity style={global.startButton} >
+      <TouchableOpacity style={global.startButton} onPress={starting}>
         <Text style={global.startButtonText}>Start</Text>
       </TouchableOpacity>
     </View>

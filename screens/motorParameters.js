@@ -13,7 +13,7 @@ import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import { global } from '../styles/global'
 
-export default function MotorParameters({ route, navigation }) {
+const MotorParameters = ({ route, navigation }) => {
   return (
     <View style={global.root, global.app}>
       <TouchableOpacity onPress={ () => navigation.navigate('Motor') }><Text style={ global.appfont }>Motor</Text></TouchableOpacity>                 
@@ -35,4 +35,4 @@ export default function MotorParameters({ route, navigation }) {
   )
 }
 
-
+export default MotorParameters
