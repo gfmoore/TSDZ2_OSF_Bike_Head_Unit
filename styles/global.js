@@ -222,7 +222,7 @@
      marginRight: 50,
    },
    map: {
-     height: 500,
+     height: 400,
    }
 
 })

@@ -84,7 +84,7 @@ import VarsMotorFOC           from './screens/parameters/variablesGraphs/varsMot
 
 const HomeTabs = () => {
   return (
-    <Tab.Navigator initialRouteName="Home" screenOptions={{ 
+    <Tab.Navigator initialRouteName="Map" screenOptions={{ 
       tabBarStyle: { backgroundColor: 'black'},
       tabBarActiveTintColor: 'white'
       }}>
