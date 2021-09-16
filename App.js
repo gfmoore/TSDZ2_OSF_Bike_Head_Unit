@@ -38,7 +38,8 @@ import { setupInitialState } from './modules/manageState'
 import { CustomDrawer } from './screens/customDrawer'
 
 import Home                   from './screens/home'
-import Map                    from './screens/map'
+import Map                    from './screens/map.js'
+import SaveTrack              from './screens/saveTrack'
 import MotorParameters        from './screens/motorParameters'
 import FlashOSF               from './screens/flashOSF'
 import Settings               from './screens/settings'
@@ -84,12 +85,12 @@ import VarsMotorFOC           from './screens/parameters/variablesGraphs/varsMot
 
 const HomeTabs = () => {
   return (
-    <Tab.Navigator initialRouteName="Map" screenOptions={{ 
+    <Tab.Navigator initialRouteName="MapStack" screenOptions={{ 
       tabBarStyle: { backgroundColor: 'black'},
       tabBarActiveTintColor: 'white'
       }}>
-      <Tab.Screen name="Home" component={Home} options={{ title: 'Home', headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white' }} />
-      <Tab.Screen name="Map"  component={Map}  options={{ title: 'Map',  headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white' }} />
+      <Tab.Screen name="Home"       component={Home}      options={{ title: 'Home', headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white' }} />
+      <Tab.Screen name="MapStack"   component={MapStack}  options={{ title: 'Map',  headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white' }} /> 
     </Tab.Navigator>
   )
 }
@@ -149,6 +150,15 @@ const SettingsStack = () => {
     <Stack.Navigator initialRouteName="Settings" screenOptions={{ headerShown: true }}>
       <Stack.Screen name="Settings"           component={Settings}          options={{ title: 'Settings',           headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white' }} />
       <Stack.Screen name="ParametersListing"  component={ParametersListing} options={{ title: 'Parameters Listing', headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white' }} />
+    </Stack.Navigator>
+  )
+}
+
+const MapStack = () => {
+  return (
+    <Stack.Navigator initialRouteName="Map" screenOptions={{ headerShown: true }}>
+      <Stack.Screen name="Map"        component={Map}       options={{ title: 'Map',        headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white' }} />
+      <Stack.Screen name="SaveTrack"  component={SaveTrack} options={{ title: 'Save Track', headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white' }} />
     </Stack.Navigator>
   )
 }
@@ -1157,7 +1167,7 @@ const MainNavigator = () => {
       <Drawer.Navigator drawerContent={props => <CustomDrawer {...props} />} screenOptions={ { headerTintColor: 'black', headerStyle: { backgroundColor: 'gray'} } } >
         {/* <Drawer.Screen name="StartUp"               component={StartUp}               options={{ title: 'Start up' }} /> */}
         <Drawer.Screen name="HomeTabs"              component={HomeTabs}              options={{ title: 'TSDZ2 OSF Bike Head Unit' }} />
-        <Drawer.Screen name="Map"                   component={Map}                   options={{ title: 'Map' }} />
+        <Drawer.Screen name="MapStack"              component={MapStack}              options={{ title: 'Map' }} />
         <Drawer.Screen name="MotorParametersStack"  component={MotorParametersStack}  options={{ title: 'Motor Parameters' }} />
         <Drawer.Screen name="FlashOSF"              component={FlashOSF}              options={{ title: 'Flash OSF'}  } />
         <Drawer.Screen name="SettingsStack"         component={SettingsStack}         options={{ title: 'Application settings' }} />

@@ -58,7 +58,7 @@ export function CustomDrawer(props) {
             <DrawerItem 
               icon={ () => (<Icon name='map' color='white' size={24} onPress={() => {}} /> )} 
               label={ () => ( <Text style={{color: 'white', fontSize: 20}}>Map</Text>) } 
-              onPress={() => { props.navigation.navigate('Map', {}) }}          
+              onPress={() => { props.navigation.navigate('MapStack', {}) }}          
             />            
             <DrawerItem 
               icon={ () => (<Icon name='dots-vertical' color='white' size={24} onPress={() => {}} /> )} 

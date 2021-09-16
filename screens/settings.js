@@ -17,7 +17,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import Context from '../context/Context'
 
-export default function Settings({ route, navigation } ) {
+const Settings = ( { route, navigation } ) => {
 
   const pc = useContext(Context)  //parameters pc =parametersContext
 
@@ -575,3 +575,4 @@ export default function Settings({ route, navigation } ) {
    )
  }
  
+ export default Settings

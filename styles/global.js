@@ -209,9 +209,6 @@
    },
    itemReset: {
      flexDirection: 'row',
-    //  marginTop: 0,
-    //  borderWidth: 1,
-    //  borderColor: 'red',
    },
    labelReset: {
      flex: 3,
@@ -223,6 +220,56 @@
    },
    map: {
      height: 400,
-   }
+   },
+   mapbuttoncontainer: {
+     flexDirection: 'row',
+     justifyContent: 'space-between',
+   },
+   mapbutton: {
+    borderWidth: 1,
+    borderColor: 'white',
+    borderRadius: 10,
+    width: 110,
+    marginLeft: 5,
+    marginRight: 10,
+    marginTop: 10,
+    marginBottom: 10,
+   },
+   mapbuttontext: {
+    color: 'white',
+    fontSize: 20,
+    padding: 10,
+   },
+   mapsScroll: {
+     backgroundColor: 'black',
+   },
+   mapinput: {
+    color: 'white',
+    borderWidth: 1,
+    borderColor: 'white',
+    borderRadius: 10,
+    fontSize: 20,
+    width: 250,
+    height: 50,
+    marginTop: 10,
+    marginRight: 10,
+   },
+   mapTracksList: {
 
+   },
+   mapTracksListText: {
+    color: 'white',
+    fontSize: 20,
+    marginLeft: 20,
+   },
+   mapbuttonerror: {
+     color:'orange',
+     fontSize: 20,
+   },
+   mapTracksListRowItem: {
+     flexDirection: 'row',
+     justifyContent: 'space-between',
+     marginRight: 20,
+     marginBottom: 10,
+   },
 })
