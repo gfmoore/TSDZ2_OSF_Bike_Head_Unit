@@ -10,7 +10,7 @@
  * 0.0.1    13 September 2021     Initial version
  */
 import React, { useState, useEffect } from 'react'
-import { PermissionsAndroid, StyleSheet, View, Text, Button, TouchableOpacity, ScrollView } from 'react-native'
+import { PermissionsAndroid, Dimensions, StyleSheet, View, Text, Button, TouchableOpacity, ScrollView } from 'react-native'
 import { global } from '../styles/global'
 
 import MapView, { Polyline, Marker } from 'react-native-maps'
@@ -24,6 +24,17 @@ let watchId
 
 
 const Map = ({ route, navigation }) => {
+
+  //where on the map do we focus - this needs to be fixed to our current location
+  const [region, setRegion] = useState(
+    {
+      latitude: 53.034323605173014,
+      longitude: -2.1510297861795857,
+      latitudeDelta: 0.1,
+      longitudeDelta: 0.1,
+      altitude: 148.1328,  //486 ft
+    }
+  )
 
   const [location, setLocation] = useState({
     latitude: 53.034323605173014,
@@ -39,12 +50,19 @@ const Map = ({ route, navigation }) => {
     mocked: true
   })
 
-  const [points, setPoints] = useState([])
+  const [points, setPoints] = useState([
+    { 
+      latitude: 53.034323605173014,
+      longitude: -2.1510297861795857
+    }
+  ])
 
   const [watching, setWatching] = useState(false)
 
   useEffect(() => {  //a one off
     requestLocationPermission()
+    getRegion()
+    setPoints([{ latitude: region.latitude , longitude: region.longitude}])  //initialise start of points array
   }, [])
 
   const requestLocationPermission = async () => {
@@ -72,14 +90,29 @@ const Map = ({ route, navigation }) => {
     }
   }
 
+  //use this to set the initial region based on our position, but then only change region by zoom or map move or when user location outside of bounds (how)
+  const getRegion = async () => {
+    if (permission) {
+      await Geolocation.getCurrentPosition(
+        (pos) => {
+          setRegion( { ...region, latitude: pos.coords.latitude, longitude: pos.coords.longitude } )
+          setLocation( { ...location, latitude: pos.coords.latitude, longitude: pos.coords.longitude, altitude: pos.coords.altitude, timestamp: pos.timestamp })
+        },
+        (err) => { console.log('GM error : Problem getting permission? ' + err) },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+      )
+    }
+    else {
+      console.log('GM error : You don\'t seem to have permission.')
+    }
+  }
+
+  //get location of device and use to show marker and polyline on map
   const getLocation = async () => {
     if (permission) {
       await Geolocation.getCurrentPosition(
         (pos) => {
-          console.log(pos)
           setLocation({ ...location, latitude: pos.coords.latitude, longitude: pos.coords.longitude, altitude: pos.coords.altitude, timestamp: pos.timestamp })
-          //console.log('Position ', pos.coords.latitude, pos.coords.longitude)
-          console.log('Location ', location.latitude, location.longitude)
         },
         (err) => { console.log('GM error : Problem getting permission? ' + err) },
         { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
@@ -102,40 +135,48 @@ const Map = ({ route, navigation }) => {
         if (permission) {
           watchId = await Geolocation.watchPosition(
             (pos) => {
-              //console.log('Watching : ' + pos.coords.latitude + '  ' + pos.coords.longitude)
               setLocation({ ...location, latitude: pos.coords.latitude, longitude: pos.coords.longitude, altitude: pos.coords.altitude, timestamp: pos.timestamp })
-              console.log(points)
+              //update the points array in the useEffect function below as set the state is asynchronous
             }, 
             (err) => { console.log('GM error : Problem getting permission? ' + err) },
             { enableHighAccuracy: true, distanceFilter: 0 }
           )
+          console.log(watchId)
         }
         else {
           console.log("GM error : You don't seem to have permission.")
         }
       }
       else {
-        console.log('Stopped Watching...')
+        console.log('Stopped Watching...' + watchId)
         Geolocation.clearWatch(watchId)
       }
     } 
     startWatching()
   }, [watching])
 
+  //have to watch for loction changing, but because it is asynchronous have to update points here
+  useEffect( () => {
+    console.log('location changed')
+    setPoints([...points, { latitude: location.latitude, longitude: location.longitude }])
+  }, [location])
+
   const saveTrack = () => {
-    //console.log(points)
     navigation.navigate('SaveTrack', {points: points} )
   }
 
-
-  const regionChanged = (r) => {
-    console.log('Region changed ' + r.latitude + '  ' + r.longitude)
-    setPoints([...points, { latitude: r.latitude, longitude: r.longitude }])
-
+  const regionChange = (r) => {
+    //console.log('Region changed ' + r.latitudeDelta + '  ' + r.longitudeDelta)
   }
 
-  const locationChanged = (c) => {
-    console.log('Location changed ' + c)
+  const regionChangedComplete = (r) => {
+    console.log('Region changed complete ' + r.latitude + '  ' + r.longitude)
+    setRegion({ ...region,  latitude: r.latitude, longitude: r.longitude, latitudeDelta: r.latitudeDelta, longitudeDelta: r.longitudeDelta, altitude: r.altitude  })
+  }
+
+  const userLocationChanged = (r) => {
+    console.log('User location changed ' + r.latitude + '  ' + r.longitude)
+    //setPoints([...points, { latitude: r.latitude, longitude: r.longitude }])
   }
 
   const press = (c) => {
@@ -150,16 +191,27 @@ const Map = ({ route, navigation }) => {
     console.log('Long press ' + c)
   }
 
+  const animate = () => {
+    console.log('here')
+  }
+
+
   return (
     <ScrollView style={global.mapsScroll}>
       <View style={global.app}>
         <MapView 
           style={global.map}
-          region={location}
+          region={region}
+          zoomControlEnabled={true}
+          scrollEnabled={true}
           mapType='standard' //'satellite' 'hybrid'
-          // showsUserLocation={true}
-          onUserLocationChange={ locationChanged }
-          onRegionChangeComplete={ regionChanged }
+          
+          onRegionChange={ regionChange }
+          onRegionChangeComplete={ regionChangedComplete }
+          
+          //showsUserLocation={true}
+          //onUserLocationChange={ userLocationChanged }
+
           onPress={ press }
           onDoublePress={ doublepress }
           onLongPress={ longpress }
@@ -168,10 +220,10 @@ const Map = ({ route, navigation }) => {
             coordinate={location} 
             pinColor='purple'  
           />
-          < Polyline coordinates={points} />
+          < Polyline coordinates={points} strokeColor='magenta' strokeWidth={4}/>
         </MapView>
         <View style={global.mapbuttoncontainer}>
-          <TouchableOpacity onPress={getLocation}     style={global.mapbutton}><Text style={global.mapbuttontext}>Get Location</Text></TouchableOpacity>
+          <TouchableOpacity onPress={getRegion}       style={global.mapbutton}><Text style={global.mapbuttontext}>Get Region</Text></TouchableOpacity>
           <TouchableOpacity onPress={changeWatching}  style={global.mapbutton}><Text style={global.mapbuttontext}>{watching ? 'Watching' : 'Not Watching'}</Text></TouchableOpacity>
           <TouchableOpacity onPress={saveTrack}       style={global.mapbutton}><Text style={global.mapbuttontext}>Save Track</Text></TouchableOpacity>
         </View>

@@ -157,7 +157,7 @@ const SettingsStack = () => {
 const MapStack = () => {
   return (
     <Stack.Navigator initialRouteName="Map" screenOptions={{ headerShown: true }}>
-      <Stack.Screen name="Map"        component={Map}       options={{ title: 'Map',        headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white' }} />
+      <Stack.Screen name="Map"        component={Map}       options={{ headerShown: false, title: 'Map',        headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white' }} />
       <Stack.Screen name="SaveTrack"  component={SaveTrack} options={{ title: 'Save Track', headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white' }} />
     </Stack.Navigator>
   )
