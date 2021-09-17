@@ -18,18 +18,15 @@ import Context from '../context/Context'
 import MapView, { Polyline, Marker } from 'react-native-maps'
 import Geolocation from '@react-native-community/geolocation'
 
-import SaveTrack from './saveTrack'
+import Tracks from './tracks'
 
 // let locationx
 let permission = false
 let watchId
 
-
 const Map = ({ route, navigation }) => {
 
-  const pc = useContext(Context)  //parameters pc =parametersContext
-
-
+  const pc = useContext(Context)  //parameters pc =parametersContext, includes points array
 
   //where on the map do we focus - this needs to be fixed to our current location
   const [region, setRegion] = useState(
@@ -55,26 +52,6 @@ const Map = ({ route, navigation }) => {
     altitudeAccuracy: 5,
     mocked: true
   })
-
-  useEffect(() => {
-    console.log('here')
-    pc.setPoints(
-      [
-        { 
-          latitude: 53.034323605173014,
-          longitude: -2.1510297861795857
-        }
-      ]
-    )
-  }, [])
-
-
-  // const [points, setPoints] = useState([
-  //   { 
-  //     latitude: 53.034323605173014,
-  //     longitude: -2.1510297861795857
-  //   }
-  // ])
 
   const [watching, setWatching] = useState(false)
 
@@ -115,16 +92,20 @@ const Map = ({ route, navigation }) => {
       await Geolocation.getCurrentPosition(
         (pos) => {
           setRegion( { ...region, latitude: pos.coords.latitude, longitude: pos.coords.longitude } )
-          setLocation( { ...location, latitude: pos.coords.latitude, longitude: pos.coords.longitude, altitude: pos.coords.altitude, timestamp: pos.timestamp })
+          //setLocation( { ...location, latitude: pos.coords.latitude, longitude: pos.coords.longitude, altitude: pos.coords.altitude, timestamp: pos.timestamp })
         },
         (err) => { console.log('GM error : Problem getting permission? ' + err) },
         { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
       )
     }
     else {
-      console.log('GM error : You don\'t seem to have permission.')
+      console.log("GM error : You don't seem to have permission.")
     }
   }
+
+  useEffect( () => {
+    setLocation({ ...location, latitude: region.latitude, longitude: region.longitude, altitude: region.altitude, timestamp: region.timestamp })
+  }, [region])
 
   //get location of device and use to show marker and polyline on map
   const getLocation = async () => {
@@ -138,7 +119,7 @@ const Map = ({ route, navigation }) => {
       )
     }
     else {
-      console.log('GM error : You don\'t seem to have permission.')
+      console.log("GM error : You don't seem to have permission.")
     }
   }
 
@@ -160,14 +141,13 @@ const Map = ({ route, navigation }) => {
             (err) => { console.log('GM error : Problem getting permission? ' + err) },
             { enableHighAccuracy: true, distanceFilter: 0 }
           )
-          console.log(watchId)
         }
         else {
           console.log("GM error : You don't seem to have permission.")
         }
       }
       else {
-        console.log('Stopped Watching...' + watchId)
+        console.log('Stopped Watching...')
         Geolocation.clearWatch(watchId)
       }
     } 
@@ -176,16 +156,14 @@ const Map = ({ route, navigation }) => {
 
   //have to watch for loction changing, but because it is asynchronous have to update points here
   useEffect( () => {
-    console.log('location changed')
     pc.setPoints([...pc.points, { latitude: location.latitude, longitude: location.longitude }])
   }, [location])
 
   const saveTrack = () => {
-    navigation.navigate('SaveTrack', { points: pc.points } )
+    navigation.navigate('Tracks', { points: pc.points } )
   }
 
   const clearTrack = () => {
-    console.log('clear track')
     pc.setPoints([])
   }
 
@@ -194,13 +172,12 @@ const Map = ({ route, navigation }) => {
   }
 
   const regionChangedComplete = (r) => {
-    console.log('Region changed complete ' + r.latitude + '  ' + r.longitude)
+    //console.log('Region changed complete ' + r.latitude + '  ' + r.longitude)
     setRegion({ ...region,  latitude: r.latitude, longitude: r.longitude, latitudeDelta: r.latitudeDelta, longitudeDelta: r.longitudeDelta, altitude: r.altitude  })
   }
 
   const userLocationChanged = (r) => {
-    console.log('User location changed ' + r.latitude + '  ' + r.longitude)
-    //setPoints([...points, { latitude: r.latitude, longitude: r.longitude }])
+    //console.log('User location changed ' + r.latitude + '  ' + r.longitude)
   }
 
   const press = (c) => {
@@ -214,11 +191,6 @@ const Map = ({ route, navigation }) => {
   const longpress = (c) => {
     console.log('Long press ' + c)
   }
-
-  const animate = () => {
-    console.log('here')
-  }
-
 
   return (
     <ScrollView style={global.mapsScroll}>
@@ -246,8 +218,8 @@ const Map = ({ route, navigation }) => {
           />
           < Polyline coordinates={pc.points} strokeColor='magenta' strokeWidth={4}/>
         </MapView>
+
         <View style={global.mapbuttoncontainer}>
-          {/* <TouchableOpacity onPress={getRegion}       style={global.mapbutton}><Text style={global.mapbuttontext}>Get Region</Text></TouchableOpacity> */}
           <TouchableOpacity onPress={changeWatching}  style={global.mapbutton}><Text style={global.mapbuttontext}>{watching ? 'Tracking Active' : 'Tracking Inactive'}</Text></TouchableOpacity>
           <TouchableOpacity onPress={saveTrack}       style={global.mapbutton}><Text style={global.mapbuttontext}>Save and List Tracks</Text></TouchableOpacity>
           <TouchableOpacity onPress={clearTrack}      style={global.mapbutton}><Text style={global.mapbuttontext}>Clear Track</Text></TouchableOpacity>

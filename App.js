@@ -39,7 +39,7 @@ import { CustomDrawer } from './screens/customDrawer'
 
 import Home                   from './screens/home'
 import Map                    from './screens/map.js'
-import SaveTrack              from './screens/saveTrack'
+import Tracks                 from './screens/tracks'
 import MotorParameters        from './screens/motorParameters'
 import FlashOSF               from './screens/flashOSF'
 import Settings               from './screens/settings'
@@ -85,7 +85,7 @@ import VarsMotorFOC           from './screens/parameters/variablesGraphs/varsMot
 
 const HomeTabs = () => {
   return (
-    <Tab.Navigator initialRouteName="MapStack" screenOptions={{ 
+    <Tab.Navigator initialRouteName="Home" screenOptions={{ 
       tabBarStyle: { backgroundColor: 'black'},
       tabBarActiveTintColor: 'white'
       }}>
@@ -157,8 +157,8 @@ const SettingsStack = () => {
 const MapStack = () => {
   return (
     <Stack.Navigator initialRouteName="Map" screenOptions={{ headerShown: true }}>
-      <Stack.Screen name="Map"        component={Map}       options={{ headerShown: false, title: 'Map',        headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white' }} />
-      <Stack.Screen name="SaveTrack"  component={SaveTrack} options={{ title: 'Save Track', headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white' }} />
+      <Stack.Screen name="Map"    component={Map}    options={{ headerShown: false, title: 'Map',        headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white' }} />
+      <Stack.Screen name="Tracks" component={Tracks} options={{                     title: 'Save Track', headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white' }} />
     </Stack.Navigator>
   )
 }
@@ -1184,7 +1184,6 @@ const MainNavigator = () => {
 }
 
 const App = () => {
-
   return (
     <>
       <StatusBar backgroundColor='black'></StatusBar>

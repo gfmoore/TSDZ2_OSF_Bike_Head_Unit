@@ -1,9 +1,9 @@
 /**
  * Name:          TSDZ2 OSF Bike Head Unit
  * Author:        Gordon Moore
- * File:          saveTrack.js
+ * File:          Tracks.js
  * Date:          13 August 2021
- * Description:   Code for map display
+ * Description:   Manage tracks
  * Licence        The MIT License https://opensource.org/licenses/MIT
  *
  * Version history
@@ -19,7 +19,7 @@ import Icon from 'react-native-vector-icons/Feather'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-const SaveTrack = ({ route, navigation }) => {
+const Tracks = ({ route, navigation }) => {
 
   const pc = useContext(Context)  //parameters pc =parametersContext to access points as used in Maps
 
@@ -41,13 +41,11 @@ const SaveTrack = ({ route, navigation }) => {
 
   const saveit = () => {
     if (trackname === '') {
-      //console.log('Please enter a track name')
       setSaveerror('Enter a name please')
       return
     }
     setSaveerror('')
-    let tracks = 'tracks' + trackname   //generateUUID()
-    //console.log(tracks)
+    let tracks = 'tracks' + trackname  
     //check if track name exists?
     const savetrack = async () => {
       if (await AsyncStorage.getItem(tracks) !== null) {
@@ -95,8 +93,7 @@ const SaveTrack = ({ route, navigation }) => {
       
       keys.forEach(key => {
         if (key.includes('tracks')) {
-          //console.log(key.substring(6)) //not word "tracks" at start
-          key = key.substring(6)
+          key = key.substring(6) //note key has "tracks" at start
           tracks.push({"track" : key})  //do this as no asynchronous behaviour here then set the state when finished
         }
       })
@@ -107,12 +104,8 @@ const SaveTrack = ({ route, navigation }) => {
     }
   }
 
-  useEffect( () => {
-    //console.log('trackslist changed')
-  }, [trackslist])
-
   const deleteTrack = (t) => {
-    //now delete item with key of track t and remove from tracklist?
+    //now delete item with key of 'track'+t and remove from tracklist?
     removeData(t)
     let remaining = []
     remaining = trackslist.filter(item => item.track != t)
@@ -129,7 +122,6 @@ const SaveTrack = ({ route, navigation }) => {
   }
 
   const displayTrack = (track) => {
-    console.log(track)
     //get the points, load the points array and return
     const loadtrack = async () => {
       let data = await AsyncStorage.getItem('tracks'+track)
@@ -171,13 +163,8 @@ const SaveTrack = ({ route, navigation }) => {
         <TouchableOpacity style={global.mapbutton} onPress={saveit}><Text style={global.mapbuttontext}>Save</Text></TouchableOpacity>
       </View>
       <Text style={global.mapbuttonerror}>{saveerror}</Text>
-      
-
     </View>
   )
 }
 
-export default SaveTrack
-
-{/* <Text style={global.appfont}>Save track?</Text> */ }
-{/* <TouchableOpacity style={global.mapbutton} onPress={discardit}><Text style={global.mapbuttontext}>No</Text></TouchableOpacity> */ }
+export default Tracks
