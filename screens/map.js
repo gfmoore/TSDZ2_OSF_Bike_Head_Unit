@@ -9,9 +9,11 @@
  * Version history
  * 0.0.1    13 September 2021     Initial version
  */
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { PermissionsAndroid, Dimensions, StyleSheet, View, Text, Button, TouchableOpacity, ScrollView } from 'react-native'
 import { global } from '../styles/global'
+
+import Context from '../context/Context'
 
 import MapView, { Polyline, Marker } from 'react-native-maps'
 import Geolocation from '@react-native-community/geolocation'
@@ -24,6 +26,10 @@ let watchId
 
 
 const Map = ({ route, navigation }) => {
+
+  const pc = useContext(Context)  //parameters pc =parametersContext
+
+
 
   //where on the map do we focus - this needs to be fixed to our current location
   const [region, setRegion] = useState(
@@ -50,19 +56,32 @@ const Map = ({ route, navigation }) => {
     mocked: true
   })
 
-  const [points, setPoints] = useState([
-    { 
-      latitude: 53.034323605173014,
-      longitude: -2.1510297861795857
-    }
-  ])
+  useEffect(() => {
+    console.log('here')
+    pc.setPoints(
+      [
+        { 
+          latitude: 53.034323605173014,
+          longitude: -2.1510297861795857
+        }
+      ]
+    )
+  }, [])
+
+
+  // const [points, setPoints] = useState([
+  //   { 
+  //     latitude: 53.034323605173014,
+  //     longitude: -2.1510297861795857
+  //   }
+  // ])
 
   const [watching, setWatching] = useState(false)
 
   useEffect(() => {  //a one off
     requestLocationPermission()
     getRegion()
-    setPoints([{ latitude: region.latitude , longitude: region.longitude}])  //initialise start of points array
+    pc.setPoints([{ latitude: region.latitude , longitude: region.longitude}])  //initialise start of points array
   }, [])
 
   const requestLocationPermission = async () => {
@@ -131,7 +150,7 @@ const Map = ({ route, navigation }) => {
     const startWatching = async () => {
       if (watching) {
         console.log('Watching...')
-        setPoints([])
+        pc.setPoints([])
         if (permission) {
           watchId = await Geolocation.watchPosition(
             (pos) => {
@@ -158,11 +177,16 @@ const Map = ({ route, navigation }) => {
   //have to watch for loction changing, but because it is asynchronous have to update points here
   useEffect( () => {
     console.log('location changed')
-    setPoints([...points, { latitude: location.latitude, longitude: location.longitude }])
+    pc.setPoints([...pc.points, { latitude: location.latitude, longitude: location.longitude }])
   }, [location])
 
   const saveTrack = () => {
-    navigation.navigate('SaveTrack', {points: points} )
+    navigation.navigate('SaveTrack', { points: pc.points } )
+  }
+
+  const clearTrack = () => {
+    console.log('clear track')
+    pc.setPoints([])
   }
 
   const regionChange = (r) => {
@@ -220,12 +244,13 @@ const Map = ({ route, navigation }) => {
             coordinate={location} 
             pinColor='purple'  
           />
-          < Polyline coordinates={points} strokeColor='magenta' strokeWidth={4}/>
+          < Polyline coordinates={pc.points} strokeColor='magenta' strokeWidth={4}/>
         </MapView>
         <View style={global.mapbuttoncontainer}>
-          <TouchableOpacity onPress={getRegion}       style={global.mapbutton}><Text style={global.mapbuttontext}>Get Region</Text></TouchableOpacity>
-          <TouchableOpacity onPress={changeWatching}  style={global.mapbutton}><Text style={global.mapbuttontext}>{watching ? 'Watching' : 'Not Watching'}</Text></TouchableOpacity>
-          <TouchableOpacity onPress={saveTrack}       style={global.mapbutton}><Text style={global.mapbuttontext}>Save Track</Text></TouchableOpacity>
+          {/* <TouchableOpacity onPress={getRegion}       style={global.mapbutton}><Text style={global.mapbuttontext}>Get Region</Text></TouchableOpacity> */}
+          <TouchableOpacity onPress={changeWatching}  style={global.mapbutton}><Text style={global.mapbuttontext}>{watching ? 'Tracking Active' : 'Tracking Inactive'}</Text></TouchableOpacity>
+          <TouchableOpacity onPress={saveTrack}       style={global.mapbutton}><Text style={global.mapbuttontext}>Save and List Tracks</Text></TouchableOpacity>
+          <TouchableOpacity onPress={clearTrack}      style={global.mapbutton}><Text style={global.mapbuttontext}>Clear Track</Text></TouchableOpacity>
         </View>
         <Text style={global.appfont}>Latitude   {location.latitude}  </Text>
         <Text style={global.appfont}>Longitude  {location.longitude} </Text>

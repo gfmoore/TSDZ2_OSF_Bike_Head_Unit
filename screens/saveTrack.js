@@ -9,9 +9,11 @@
  * Version history
  * 0.0.1    13 September 2021     Initial version
  */
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { StyleSheet, View, Text, TextInput, Button, TouchableOpacity, ScrollView, FlatList, Keyboard } from 'react-native'
 import { global } from '../styles/global'
+
+import Context from '../context/Context'
 
 import Icon from 'react-native-vector-icons/Feather'
 
@@ -19,16 +21,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const SaveTrack = ({ route, navigation }) => {
 
+  const pc = useContext(Context)  //parameters pc =parametersContext to access points as used in Maps
+
   const [trackname, setTrackname] = useState('')
-  //route.params.points.forEach(p => {console.log(p.latitude, p.longitude)})
+
   const [saveerror, setSaveerror] = useState('')
 
-  const [trackslist, setTrackslist] = useState([
-    // {'track': 'track 1'},
-    // {'track': 'track 2'},
-    // {'track': 'track 55'},
-    // {'track': 'track 4'}
-  ])
+  const [trackslist, setTrackslist] = useState([])
 
   //get a list of tracks
   useEffect( () => {
@@ -49,10 +48,20 @@ const SaveTrack = ({ route, navigation }) => {
     setSaveerror('')
     let tracks = 'tracks' + trackname   //generateUUID()
     //console.log(tracks)
-    storeData(tracks, route.params.points)
-    setTrackname('')
-    Keyboard.dismiss()
-    getAllkeys()
+    //check if track name exists?
+    const savetrack = async () => {
+      if (await AsyncStorage.getItem(tracks) !== null) {
+        setSaveerror('Track name exists, enter a different name please')
+      }
+      else {
+        setSaveerror('')
+        storeData(tracks, route.params.points)
+        setTrackname('')
+        Keyboard.dismiss()
+        getAllkeys()
+      }
+    }
+    savetrack()
   }
 
   const discardit = () => {
@@ -70,8 +79,8 @@ const SaveTrack = ({ route, navigation }) => {
 
   const getData = async (key) => {
     try {
-      let data = await AsyncStorage.getItem(key)
-      //console.log(JSON.parse(data)) 
+      //let data = await AsyncStorage.getItem(key)
+      return await AsyncStorage.getItem(key)
     }
     catch(e) {
       console.log(`GM Error: Getting data: ${e}`)
@@ -103,7 +112,6 @@ const SaveTrack = ({ route, navigation }) => {
   }, [trackslist])
 
   const deleteTrack = (t) => {
-    //console.log('Hello ' + t)
     //now delete item with key of track t and remove from tracklist?
     removeData(t)
     let remaining = []
@@ -120,22 +128,16 @@ const SaveTrack = ({ route, navigation }) => {
     }
   }
 
-  //guid/uuid https://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid
-  const generateUUID = () => {
-    let
-      d = new Date().getTime(),
-      d2 = (performance && performance.now && (performance.now() * 1000)) || 0
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
-      let r = Math.random() * 16
-      if (d > 0) {
-        r = (d + r) % 16 | 0
-        d = Math.floor(d / 16)
-      } else {
-        r = (d2 + r) % 16 | 0
-        d2 = Math.floor(d2 / 16)
-      }
-      return (c == 'x' ? r : (r & 0x7 | 0x8)).toString(16)
-    })
+  const displayTrack = (track) => {
+    console.log(track)
+    //get the points, load the points array and return
+    const loadtrack = async () => {
+      let data = await AsyncStorage.getItem('tracks'+track)
+      pc.setPoints(JSON.parse(data))
+    }
+    loadtrack()
+
+    navigation.goBack()
   }
 
   return (
@@ -147,7 +149,8 @@ const SaveTrack = ({ route, navigation }) => {
         renderItem={ ({item}) => {
           return (
             <View style={global.mapTracksListRowItem}>
-              <Text style={global.mapTracksListText}>{item.track}</Text> 
+              <TouchableOpacity onPress={ () => displayTrack(item.track) }><Text style={global.mapTracksListText}>{item.track}</Text></TouchableOpacity>
+              
               <Icon name='trash-2' color='white' size={24} onPress={ () => deleteTrack(item.track) } />
             </View>
           ) 
@@ -159,6 +162,7 @@ const SaveTrack = ({ route, navigation }) => {
           style={global.mapinput}
           autoCapitalize='none'
           autoCorrect={false}
+          onEndEditing={(text) => { saveit }}
           onChangeText={(text) => { changetext(text) }}
           value={trackname}
           placeholder="New track name here"

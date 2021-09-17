@@ -280,6 +280,8 @@ const Settings = ( { route, navigation } ) => {
             pc.setTechnical_Motor_Speed                     (0)
             pc.setTechnical_Motor_FOC                       (0)
             pc.setTechnical_Hall_Sensors                    (0)
+
+            pc.setPoints([])
             //#endregion
 
             //#region now save all context data to async-storage

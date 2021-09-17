@@ -408,6 +408,9 @@ const MainNavigator = () => {
   const [technical_Motor_Speed,                     setTechnical_Motor_Speed]                         = useState(0)
   const [technical_Motor_FOC,                       setTechnical_Motor_FOC]                           = useState(0)
   const [technical_Hall_Sensors,                    setTechnical_Hall_Sensors]                        = useState(0)
+
+  //for working with the Maps and SaveTracks screens
+  const [points, setPoints] = useState([])
   //#endregion
 
   //#region temp to set an async storage variable
@@ -1158,7 +1161,10 @@ const MainNavigator = () => {
     technical_PWM_Duty_Cycle, setTechnical_PWM_Duty_Cycle,
     technical_Motor_Speed, setTechnical_Motor_Speed,
     technical_Motor_FOC, setTechnical_Motor_FOC,
-    technical_Hall_Sensors, setTechnical_Hall_Sensors
+    technical_Hall_Sensors, setTechnical_Hall_Sensors,
+
+
+    points, setPoints
   }
   //#endregion
 
@@ -1181,9 +1187,7 @@ const App = () => {
 
   return (
     <>
-      <StatusBar backgroundColor='black'>
-
-      </StatusBar>
+      <StatusBar backgroundColor='black'></StatusBar>
       <NavigationContainer>
         <MainNavigator />
       </NavigationContainer>
