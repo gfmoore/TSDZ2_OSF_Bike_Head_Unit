@@ -32,7 +32,7 @@ const Tab     = createMaterialTopTabNavigator()
 
 import { ParameterProvider } from './context/Context'
 
-import { setupInitialState } from './modules/manageState'
+//import { setupInitialState } from './modules/manageState'
 
 //#region Import screens
 import { CustomDrawer } from './screens/customDrawer'
@@ -91,6 +91,7 @@ const HomeTabs = () => {
       }}>
       <Tab.Screen name="Home"       component={Home}      options={{ title: 'Home', headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white' }} />
       <Tab.Screen name="MapStack"   component={MapStack}  options={{ title: 'Map',  headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white' }} /> 
+      <Tab.Screen name="Tracks"     component={Tracks}    options={{ title: 'Tracks',  headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white' }} /> 
     </Tab.Navigator>
   )
 }

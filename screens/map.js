@@ -9,6 +9,12 @@
  * Version history
  * 0.0.1    13 September 2021     Initial version
  */
+
+//Things to check to avoid stale references lecture 260
+//in useEffect need to add any state, context or props to our dependency array, i.e. the {} }, [here]) 
+//don't need to add setX ( as a consistent function  memory, not created again and again). This is so that if they ever change we get access to them in our useEffect function
+//define helper functions inside of useeffect, not reference them as outside functions
+
 import React, { useState, useEffect, useContext } from 'react'
 import { PermissionsAndroid, Dimensions, StyleSheet, View, Text, Button, TouchableOpacity, ScrollView } from 'react-native'
 import { global } from '../styles/global'
@@ -20,15 +26,17 @@ import Geolocation from '@react-native-community/geolocation'
 
 import Tracks from './tracks'
 
-// let locationx
 let permission = false
 let watchId
+let cnt=0
 
 const Map = ({ route, navigation }) => {
 
-  const pc = useContext(Context)  //parameters pc =parametersContext, includes points array
+  const pc = useContext(Context)  //parameters includes "points" array, pc=parametersContext, 
 
-  //where on the map do we focus - this needs to be fixed to our current location
+  console.log('here ' + cnt++)
+
+  //where on the map do we focus - this needs to be set to our current location
   const [region, setRegion] = useState(
     {
       latitude: 53.034323605173014,
@@ -39,70 +47,80 @@ const Map = ({ route, navigation }) => {
     }
   )
 
-  const [location, setLocation] = useState({
-    latitude: 53.034323605173014,
-    longitude: -2.1510297861795857,
-    latitudeDelta: 0.1,
-    longitudeDelta: 0.1,
-    altitude: 148.1328,  //486 ft
-    timestamp: 0,
-    speed: 0,
-    heading: 0,
-    accuracy: 5,
-    altitudeAccuracy: 5,
-    mocked: true
-  })
+  const [location, setLocation] = useState(
+    {
+      latitude: 53.034323605173014,
+      longitude: -2.1510297861795857,
+      latitudeDelta: 0.1,
+      longitudeDelta: 0.1,
+      altitude: 148.1328,  //486 ft
+      timestamp: 0,
+      speed: 0,
+      heading: 0,
+      accuracy: 5,
+      altitudeAccuracy: 5,
+      mocked: true
+    }
+  )
 
   const [watching, setWatching] = useState(false)
 
   useEffect(() => {  //a one off
+    //set initial region and location, but will get updated.
+
+    console.log('here in useEffect')
+
+    const requestLocationPermission = async () => {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,  //or COARSE (note needed additional code in android/app/src/main/manifest.xml)
+          {
+            title: "TSDZ2 Location permission",
+            message:
+              "In order to show your current position on map we need permission for the location to be used. " +
+              "We do not send information anywhere.",
+            // buttonNeutral: "Ask Me Later",
+            buttonNegative: "Cancel",
+            buttonPositive: "OK"
+          }
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          console.log("GM: Location permission granted")
+          permission = true //granted
+        } else {
+          console.log("GM: Location permission denied")
+          permission = false
+        }
+      } catch (e) {
+        console.warn('GM error : Issue with permissions? ' + e)
+      }
+    }
+
+    //use this to set the initial region based on our position, but then only change region by zoom or map move or when user location outside of bounds (how)
+    const getRegion = async () => {
+      if (permission) {
+        await Geolocation.getCurrentPosition(
+          (position) => {
+            setRegion({ ...region, latitude: position.coords.latitude, longitude: position.coords.longitude })
+            //setLocation( { ...location, latitude: position.coords.latitude, longitude: position.coords.longitude, altitude: position.coords.altitude, timestamp: position.timestamp })
+            console.log('GM : You have set the current region')
+          },
+          (err) => { console.log('GM error : Problem getting permission? ' + err) },
+          { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+        )
+      }
+      else {
+        console.log("GM error : You don't seem to have permission.")
+      }
+    }
+
     requestLocationPermission()
     getRegion()
-    pc.setPoints([{ latitude: region.latitude , longitude: region.longitude}])  //initialise start of points array
+    pc.setPoints([{ latitude: region.latitude, longitude: region.longitude }])  //initialise start of points array
+
   }, [])
 
-  const requestLocationPermission = async () => {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,  //or COARSE (note needed additional code in android/app/src/main/manifest.xml)
-        {
-          title: "TSDZ2 Location permission",
-          message:
-            "In order to show your current position on map we need permission for the location to be used. " +
-            "We do not send information anywhere.",
-          // buttonNeutral: "Ask Me Later",
-          buttonNegative: "Cancel",
-          buttonPositive: "OK"
-        }
-      );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log("GM: Location permission granted");
-        permission = granted
-      } else {
-        console.log("GM: Location permission denied");
-      }
-    } catch (e) {
-      console.warn('GM error : Issue with permissions? ' + e);
-    }
-  }
-
-  //use this to set the initial region based on our position, but then only change region by zoom or map move or when user location outside of bounds (how)
-  const getRegion = async () => {
-    if (permission) {
-      await Geolocation.getCurrentPosition(
-        (pos) => {
-          setRegion( { ...region, latitude: pos.coords.latitude, longitude: pos.coords.longitude } )
-          //setLocation( { ...location, latitude: pos.coords.latitude, longitude: pos.coords.longitude, altitude: pos.coords.altitude, timestamp: pos.timestamp })
-        },
-        (err) => { console.log('GM error : Problem getting permission? ' + err) },
-        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-      )
-    }
-    else {
-      console.log("GM error : You don't seem to have permission.")
-    }
-  }
-
+  //if the region changes, because of map zoom or move?
   useEffect( () => {
     setLocation({ ...location, latitude: region.latitude, longitude: region.longitude, altitude: region.altitude, timestamp: region.timestamp })
   }, [region])
@@ -111,8 +129,8 @@ const Map = ({ route, navigation }) => {
   const getLocation = async () => {
     if (permission) {
       await Geolocation.getCurrentPosition(
-        (pos) => {
-          setLocation({ ...location, latitude: pos.coords.latitude, longitude: pos.coords.longitude, altitude: pos.coords.altitude, timestamp: pos.timestamp })
+        (position) => {
+          setLocation({ ...location, latitude: position.coords.latitude, longitude: position.coords.longitude, altitude: position.coords.altitude, timestamp: position.timestamp })
         },
         (err) => { console.log('GM error : Problem getting permission? ' + err) },
         { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
@@ -134,8 +152,8 @@ const Map = ({ route, navigation }) => {
         pc.setPoints([])
         if (permission) {
           watchId = await Geolocation.watchPosition(
-            (pos) => {
-              setLocation({ ...location, latitude: pos.coords.latitude, longitude: pos.coords.longitude, altitude: pos.coords.altitude, timestamp: pos.timestamp })
+            (position) => {
+              setLocation({ ...location, latitude: position.coords.latitude, longitude: position.coords.longitude, altitude: position.coords.altitude, timestamp: position.timestamp })
               //update the points array in the useEffect function below as set the state is asynchronous
             }, 
             (err) => { console.log('GM error : Problem getting permission? ' + err) },
@@ -220,8 +238,11 @@ const Map = ({ route, navigation }) => {
         </MapView>
 
         <View style={global.mapbuttoncontainer}>
-          <TouchableOpacity onPress={changeWatching}  style={global.mapbutton}><Text style={global.mapbuttontext}>{watching ? 'Tracking Active' : 'Tracking Inactive'}</Text></TouchableOpacity>
-          <TouchableOpacity onPress={saveTrack}       style={global.mapbutton}><Text style={global.mapbuttontext}>Save and List Tracks</Text></TouchableOpacity>
+          {watching 
+            ? <TouchableOpacity onPress={changeWatching} style={global.mapbuttonActive}><Text style={global.mapbuttontext}>Stop Tracking</Text></TouchableOpacity>
+            : <TouchableOpacity onPress={changeWatching} style={ global.mapbutton}><Text style={global.mapbuttontext}>Start Tracking</Text></TouchableOpacity>
+          }
+          <TouchableOpacity onPress={saveTrack}       style={global.mapbutton}><Text style={global.mapbuttontext}>Save Track</Text></TouchableOpacity>
           <TouchableOpacity onPress={clearTrack}      style={global.mapbutton}><Text style={global.mapbuttontext}>Clear Track</Text></TouchableOpacity>
         </View>
         <Text style={global.appfont}>Latitude   {location.latitude}  </Text>

@@ -228,12 +228,24 @@
    mapbutton: {
     borderWidth: 1,
     borderColor: 'white',
+    backgroundColor: 'black',
     borderRadius: 10,
     width: 120,
     marginLeft: 5,
     marginRight: 5,
     marginTop: 10,
     marginBottom: 10,
+   },
+   mapbuttonActive: {
+     borderWidth: 1,
+     borderColor: 'white',
+     backgroundColor: 'green',
+     borderRadius: 10,
+     width: 120,
+     marginLeft: 5,
+     marginRight: 5,
+     marginTop: 10,
+     marginBottom: 10,
    },
    mapbuttontext: {
     color: 'white',
@@ -255,7 +267,8 @@
     marginRight: 10,
    },
    mapTracksList: {
-
+    borderWidth: 3,
+    borderColor: 'red',
    },
    mapTracksListText: {
     color: 'white',

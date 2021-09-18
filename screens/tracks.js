@@ -21,6 +21,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Tracks = ({ route, navigation }) => {
 
+  console.log('in tracks screen')
+
   const pc = useContext(Context)  //parameters pc =parametersContext to access points as used in Maps
 
   const [trackname, setTrackname] = useState('')
@@ -29,63 +31,45 @@ const Tracks = ({ route, navigation }) => {
 
   const [trackslist, setTrackslist] = useState([])
 
-  //get a list of tracks
-  useEffect( () => {
-    getAllkeys()
 
+//TODO   
+  //get a list of tracks when we re-eneter the screen, but because of many multiple re-renders (from App.js?) I get a memory leak
+  useEffect( () => {
+    getTracks()
   }, [])
 
-  const changetext = (text) => {
-    setTrackname(text)
-  }
-
-  const saveit = () => {
+  const saveTrack = () => {
     if (trackname === '') {
       setSaveerror('Enter a name please')
       return
     }
     setSaveerror('')
-    let tracks = 'tracks' + trackname  
-    //check if track name exists?
+
     const savetrack = async () => {
-      if (await AsyncStorage.getItem(tracks) !== null) {
+      if (await AsyncStorage.getItem('tracks' + trackname ) !== null) {   //check if track name exists?
         setSaveerror('Track name exists, enter a different name please')
       }
       else {
         setSaveerror('')
-        storeData(tracks, route.params.points)
-        setTrackname('')
-        Keyboard.dismiss()
-        getAllkeys()
+        try {
+          await AsyncStorage.setItem('tracks' + trackname, JSON.stringify(route.params.points))
+          setTrackname('')
+          Keyboard.dismiss()
+        }
+        catch (e) {
+          console.log(`GM Error: Saving data: ${e}`)
+        }
       }
     }
     savetrack()
   }
 
-  const discardit = () => {
-    getData('tracks')
-  }
+  useEffect( () => {  //we've set the trackname to '' so hopefully the setItem has finished?
+    getTracks()
+  }, [trackname])
 
-  const storeData = async (key, value) => {
-    try {
-      await AsyncStorage.setItem(key, JSON.stringify(value))
-    }
-    catch (e) {
-      console.log(`GM Error: Saving data: ${e}`)
-    }
-  }
 
-  const getData = async (key) => {
-    try {
-      //let data = await AsyncStorage.getItem(key)
-      return await AsyncStorage.getItem(key)
-    }
-    catch(e) {
-      console.log(`GM Error: Getting data: ${e}`)
-    }
-  }
-
-  const getAllkeys = async () => {
+  const getTracks = async () => {
     let keys = []
     let tracks = []
     try {
@@ -104,36 +88,37 @@ const Tracks = ({ route, navigation }) => {
     }
   }
 
-  const deleteTrack = (t) => {
-    //now delete item with key of 'track'+t and remove from tracklist?
-    removeData(t)
-    let remaining = []
-    remaining = trackslist.filter(item => item.track != t)
-    setTrackslist(remaining)
-  }
-
-  const removeData = async (key) => {
+  const deleteTrack = async (t) => {
+    //now delete item with key of 'track'+t from async storage and remove from tracklist?
     try {
-      await AsyncStorage.removeItem('tracks' + key)
-    } 
+      await AsyncStorage.removeItem('tracks' + t)
+    }
     catch (e) {
       console.log(`GM Error: Removing key: ${e}`)
     }
+
+    setTrackslist(trackslist.filter(item => item.track != t))
   }
 
+
+  //get the points, load the points array and return
   const displayTrack = (track) => {
-    //get the points, load the points array and return
+
     const loadtrack = async () => {
-      let data = await AsyncStorage.getItem('tracks'+track)
-      pc.setPoints(JSON.parse(data))
+      try {
+        let data = await AsyncStorage.getItem('tracks'+track)
+        pc.setPoints(JSON.parse(data))  //the data for a track is stored in points which is a context object
+      }
+      catch (e) {
+        console.log('GM Error: Obtaining track data ' + e)
+      }
     }
     loadtrack()
-
-    navigation.goBack()
+    navigation.navigate('Map')   //.goBack()  //Will this keep adding to a component stack causing a memory leak?
   }
 
   return (
-    <View style={global.app}>
+    <View style={global.app} >
       <FlatList
         style={global.mapTracksList}
         data={trackslist}
@@ -141,26 +126,27 @@ const Tracks = ({ route, navigation }) => {
         renderItem={ ({item}) => {
           return (
             <View style={global.mapTracksListRowItem}>
-              <TouchableOpacity onPress={ () => displayTrack(item.track) }><Text style={global.mapTracksListText}>{item.track}</Text></TouchableOpacity>
-              
+              <TouchableOpacity onPress={ () => displayTrack(item.track) }><Text style={global.mapTracksListText}>{item.track}</Text></TouchableOpacity>              
               <Icon name='trash-2' color='white' size={24} onPress={ () => deleteTrack(item.track) } />
             </View>
           ) 
           } 
         }
       />
+
       <View style={global.mapbuttoncontainer} >
         <TextInput
           style={global.mapinput}
           autoCapitalize='none'
           autoCorrect={false}
-          onEndEditing={(text) => { saveit }}
-          onChangeText={(text) => { changetext(text) }}
-          value={trackname}
+          value={ trackname }
+
           placeholder="New track name here"
           placeholderTextColor='grey'
+
+          onChangeText={ setTrackname }
         />
-        <TouchableOpacity style={global.mapbutton} onPress={saveit}><Text style={global.mapbuttontext}>Save</Text></TouchableOpacity>
+        <TouchableOpacity style={global.mapbutton} onPress={ saveTrack }><Text style={global.mapbuttontext}>Save</Text></TouchableOpacity>
       </View>
       <Text style={global.mapbuttonerror}>{saveerror}</Text>
     </View>
@@ -168,3 +154,5 @@ const Tracks = ({ route, navigation }) => {
 }
 
 export default Tracks
+
+// onEndEditing={ saveit } //only for keyboard use and acts funny
