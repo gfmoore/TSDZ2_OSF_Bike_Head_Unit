@@ -32,8 +32,6 @@ const Tab     = createMaterialTopTabNavigator()
 
 import { ParameterProvider } from './context/Context'
 
-//import { setupInitialState } from './modules/manageState'
-
 //#region Import screens
 import { CustomDrawer } from './screens/customDrawer'
 
@@ -168,255 +166,321 @@ const MapStack = () => {
 const MainNavigator = () => {
   
   //#region set State To Defaults
-  const [motor_Voltage,                             setMotor_Voltage]                                 = useState('36V')
-  const [motor_Power_Max,                           setMotor_Power_Max]                               = useState(450)
-  const [motor_Acceleration,                        setMotor_Acceleration]                            = useState(5)
-  const [motor_Deceleration,                        setMotor_Deceleration]                            = useState(0)
-  const [motor_Fast_Stop,                           setMotor_Fast_Stop]                               = useState(false)
-  const [motor_Field_Weakening,                     setMotor_Field_Weakening]                         = useState(true)
+  const [motor, setMotor] = useState(
+    {
+      Voltage:                              '36V',
+      Power_Max:                            '450',
+      Acceleration:                         '5',
+      Deceleration:                         '0',
+      Fast_Stop:                            false,
+      Field_Weakening:                      'true',
+    }
+  )
 
-  const [motor_Temperature_Feature,                 setMotor_Temperature_Feature]                     = useState("Throttle")
-  const [motor_Temperature_Min_Limit,               setMotor_Temperature_Min_Limit]                   = useState(65)
-  const [motor_Temperature_Max_Limit,               setMotor_Temperature_Max_Limit]                   = useState(85)
+  const [motorTemperature, setMotorTemperature] = useState(
+    {
+      Feature:                              'Throttle',
+      Min_Limit:                            '65',
+      Max_Limit:                            '85',
+    }
+  )
 
-  const [torque_Assist_wo_pedal,                    setTorque_Assist_wo_pedal]                        = useState(false)
-  const [torque_ADC_Threshold,                      setTorque_ADC_Threshold]                          = useState(10)
-  const [torque_Coast_Brake,                        setTorque_Coast_Brake]                            = useState(false)
-  const [torque_Coast_Brake_ADC,                    setTorque_Coast_Brake_ADC]                        = useState(10)
-  const [torque_Calibration,                        setTorque_Calibration]                            = useState(true)
-  const [torque_ADC_Step,                           setTorque_ADC_Step]                               = useState(30)
-  const [torque_ADC_Offset,                         setTorque_ADC_Offset]                             = useState(148)
-  const [torque_ADC_Max,                            setTorque_ADC_Max]                                = useState(306)
-  const [torque_Weight_On_Pedal,                    setTorque_Weight_On_Pedal]                        = useState(20)
-  const [torque_ADC_On_Weight,                      setTorque_ADC_On_Weight]                          = useState(263)
-  const [torque_Default_Weight,                     setTorque_Default_Weight]                         = useState(false)
-    
-  const [battery_Max_current,                       setBattery_Max_current]                           = useState(11)
-  const [battery_Low_Cut_Off,                       setBattery_Low_Cut_Off]                           = useState(39)
-  const [battery_Resistance,                        setBattery_Resistance]                            = useState(200)
-  const [battery_Voltage_Est,                       setBattery_Voltage_Est]                           = useState(0)
-  const [battery_Resistance_Est,                    setBattery_Resistance_Est]                        = useState(0)
-  const [battery_Power_Loss_Est,                    setBattery_Power_Loss_Est]                        = useState(0)
-    
-  const [soC_Text,                                  setSoC_Text]                                      = useState("Volts")
-  const [soC_Reset_At_Voltage,                      setSoC_Reset_At_Voltage]                          = useState(54.1)
-  const [soC_Battery_Total_Wh,                      setSoC_Battery_Total_Wh]                          = useState(400)
-  const [soC_Used,                                  setSoC_Used]                                      = useState(0.0)
-  const [soC_Manual_Reset,                          setSoC_Manual_Reset]                              = useState(false)
-    
-  const [wheel_Max_Speed,                           setWheel_Max_Speed]                               = useState(70)
-  const [wheel_Circumference,                       setWheel_Circumference]                           = useState(2070)
+  const [torque, setTorque] = useState(
+    {
+      Assist_wo_pedal:                      'false',
+      ADC_Threshold:                        '10',
+      Coast_Brake:                          'false',
+      Coast_Brake_ADC:                      '10',
+      Calibration:                          'true',
+      ADC_Step:                             '30',
+      ADC_Offset:                           '148',
+      ADC_Max:                              '306',
+      Weight_On_Pedal:                      '20',
+      ADC_On_Weight:                        '263',
+      Default_Weight:                       'false',
+    }
+  )
+
+  const [battery, setBattery] = useState(
+    {
+      Max_current:                          '11',
+      Low_Cut_Off:                          '39',
+      Resistance:                           '200',
+      Voltage_Est:                          '0',
+      Resistance_Est:                       '0',
+      Power_Loss_Est:                       '0',
+    }
+  )
   
-  const [various_Odometer,                          setVarious_Odometer]                              = useState(1241)
-  const [trip_A,                                    setTrip_A]                                        = useState(0)
-  const [trip_B,                                    setTrip_B]                                        = useState(0)
-  const [trip_A_Auto_Reset,                         setTrip_A_Auto_Reset]                             = useState(true)
-  const [trip_A_Auto_Reset_Hours,                   setTrip_A_Auto_Reset_Hours]                       = useState(24)
-  const [trip_B_Auto_Reset,                         setTrip_B_Auto_Reset]                             = useState(true)
-  const [trip_B_Auto_Reset_Hours,                   setTrip_B_Auto_Reset_Hours]                       = useState(168) 
-  const [trip_Reset_Trip_A,                         setTrip_Reset_Trip_A]                             = useState(false)
-  const [trip_Reset_Trip_B,                         setTrip_Reset_Trip_B]                             = useState(false)
+  const [soC, setSoC] = useState(
+    {
+      Text:                                 "Volts",
+      Reset_At_Voltage:                     '54.1',
+      Battery_Total_Wh:                     '400',
+      Used:                                 '0.0',
+      Manual_Reset:                         'false',
+    }
+  )
+  
+  const [wheel, setWheel] = useState(
+    {
+      Max_Speed:                            '70',
+      Circumference:                        '2070',
+    }
+  )
+  
+  const [trip, setTrip] = useState(
+    {
+      Odometer:                             '1234',
+      A:                                    '0',
+      B:                                    '0',
+      A_Auto_Reset:                         'true',
+      A_Auto_Reset_Hours:                   '24',
+      B_Auto_Reset:                         'true',
+      B_Auto_Reset_Hours:                   '168', 
+    }
+  )
     
-  const [number_Assist_Levels,                      setNumber_Assist_Levels]                          = useState(3)
+  const [number_Assist_Levels, setNumber_Assist_Levels] = useState(
+    {
+      Levels: '3',
+    }
+  )
 
-  const [power_Assist_Level_1,                      setPower_Assist_Level_1]                          = useState(25)
-  const [power_Assist_Level_2,                      setPower_Assist_Level_2]                          = useState(160)
-  const [power_Assist_Level_3,                      setPower_Assist_Level_3]                          = useState(250)
-  const [power_Assist_Level_4,                      setPower_Assist_Level_4]                          = useState(0)
-  const [power_Assist_Level_5,                      setPower_Assist_Level_5]                          = useState(0)
-  const [power_Assist_Level_6,                      setPower_Assist_Level_6]                          = useState(0)
-  const [power_Assist_Level_7,                      setPower_Assist_Level_7]                          = useState(0)
-  const [power_Assist_Level_8,                      setPower_Assist_Level_8]                          = useState(0)
-  const [power_Assist_Level_9,                      setPower_Assist_Level_9]                          = useState(0)
+  const [power_Assist, setPower_Assist] = useState(
+    {
+      Level_1:                              '25',
+      Level_2:                              '160',
+      Level_3:                              '250',
+      Level_4:                              '0',
+      Level_5:                              '0',
+      Level_6:                              '0',
+      Level_7:                              '0',
+      Level_8:                              '0',
+      Level_9:                              '0',
+    }
+  )
 
-  const [torque_Assist_Level_1,                     setTorque_Assist_Level_1]                         = useState(25)
-  const [torque_Assist_Level_2,                     setTorque_Assist_Level_2]                         = useState(160)
-  const [torque_Assist_Level_3,                     setTorque_Assist_Level_3]                         = useState(250)
-  const [torque_Assist_Level_4,                     setTorque_Assist_Level_4]                         = useState(0)
-  const [torque_Assist_Level_5,                     setTorque_Assist_Level_5]                         = useState(0)
-  const [torque_Assist_Level_6,                     setTorque_Assist_Level_6]                         = useState(0)
-  const [torque_Assist_Level_7,                     setTorque_Assist_Level_7]                         = useState(0)
-  const [torque_Assist_Level_8,                     setTorque_Assist_Level_8]                         = useState(0)
-  const [torque_Assist_Level_9,                     setTorque_Assist_Level_9]                         = useState(0)
+  const [torque_Assist, setTorque_Assist] = useState(
+    {
+      Level_1:                              '25',
+      Level_2:                              '160',
+      Level_3:                              '250',
+      Level_4:                              '0',
+      Level_5:                              '0',
+      Level_6:                              '0',
+      Level_7:                              '0',
+      Level_8:                              '0',
+      Level_9:                              '0',
+    }
+  )
 
-  const [cadence_Assist_Level_1,                    setCadence_Assist_Level_1]                        = useState(100)
-  const [cadence_Assist_Level_2,                    setCadence_Assist_Level_2]                        = useState(200)
-  const [cadence_Assist_Level_3,                    setCadence_Assist_Level_3]                        = useState(250)
-  const [cadence_Assist_Level_4,                    setCadence_Assist_Level_4]                        = useState(0)
-  const [cadence_Assist_Level_5,                    setCadence_Assist_Level_5]                        = useState(0)
-  const [cadence_Assist_Level_6,                    setCadence_Assist_Level_6]                        = useState(0)
-  const [cadence_Assist_Level_7,                    setCadence_Assist_Level_7]                        = useState(0)
-  const [cadence_Assist_Level_8,                    setCadence_Assist_Level_8]                        = useState(0)
-  const [cadence_Assist_Level_9,                    setCadence_Assist_Level_9]                        = useState(0)
+  const [cadence_Assist, setCadence_Assist] = useState(
+    {
+      Level_1:                              '100',
+      Level_2:                              '200',
+      Level_3:                              '250',
+      Level_4:                              '0',
+      Level_5:                              '0',
+      Level_6:                              '0',
+      Level_7:                              '0',
+      Level_8:                              '0',
+      Level_9:                              '0',
+    }
+  )
 
-  const [eMTB_Assist_Level_1,                       setEMTB_Assist_Level_1]                           = useState(4)
-  const [eMTB_Assist_Level_2,                       setEMTB_Assist_Level_2]                           = useState(13)
-  const [eMTB_Assist_Level_3,                       setEMTB_Assist_Level_3]                           = useState(20)
-  const [eMTB_Assist_Level_4,                       setEMTB_Assist_Level_4]                           = useState(0)
-  const [eMTB_Assist_Level_5,                       setEMTB_Assist_Level_5]                           = useState(0)
-  const [eMTB_Assist_Level_6,                       setEMTB_Assist_Level_6]                           = useState(0)
-  const [eMTB_Assist_Level_7,                       setEMTB_Assist_Level_7]                           = useState(0)
-  const [eMTB_Assist_Level_8,                       setEMTB_Assist_Level_8]                           = useState(0)
-  const [eMTB_Assist_Level_9,                       setEMTB_Assist_Level_9]                           = useState(0)
+  const [eMTB_Assist, setEMTB_Assist] = useState(
+    {
+      Level_1:                              '4',
+      Level_2:                              '13',
+      Level_3:                              '20',
+      Level_4:                              '0',
+      Level_5:                              '0',
+      Level_6:                              '0',
+      Level_7:                              '0',
+      Level_8:                              '0',
+      Level_9:                              '0',
+    }
+  )
 
-  const [walk_Assist,                               setWalk_Assist]                                   = useState(true)               
-  const [walk_Assist_Cruise_Feature,                setWalk_Assist_Cruise_Feature]                    = useState(true)
-  const [walk_Assist_Level_1,                       setWalk_Assist_Level_1]                           = useState(25)
-  const [walk_Assist_Level_2,                       setWalk_Assist_Level_2]                           = useState(150)
-  const [walk_Assist_Level_3,                       setWalk_Assist_Level_3]                           = useState(250)
-  const [walk_Assist_Level_4,                       setWalk_Assist_Level_4]                           = useState(0)
-  const [walk_Assist_Level_5,                       setWalk_Assist_Level_5]                           = useState(0)
-  const [walk_Assist_Level_6,                       setWalk_Assist_Level_6]                           = useState(0)
-  const [walk_Assist_Level_7,                       setWalk_Assist_Level_7]                           = useState(0)
-  const [walk_Assist_Level_8,                       setWalk_Assist_Level_8]                           = useState(0)
-  const [walk_Assist_Level_9,                       setWalk_Assist_Level_9]                           = useState(0)
+  const [walk_Assist, setWalk_Assist] = useState(
+    {
+      Walk_Assist:                          'true',
+      Cruise_Feature:                       'true',
+      Level_1:                              '25',
+      Level_2:                              '160',
+      Level_3:                              '250',
+      Level_4:                              '0',
+      Level_5:                              '0',
+      Level_6:                              '0',
+      Level_7:                              '0',
+      Level_8:                              '0',
+      Level_9:                              '0',
+    }
+  )
 
-  const [startup_Boost,                             setStartup_Boost]                                 = useState(true)
-  const [startup_Boost_Torque_Factor,               setStartup_Boost_Torque_Factor]                   = useState(250)
-  const [startup_Boost_Cadence_Step,                setStartup_Boost_Cadence_Step]                    = useState(25)
+  const [startup_Boost, setStartup_Boost] = useState(
+    {
+      Startup_Boost:                        'true',
+      Torque_Factor:                        '250',
+      Cadence_Step:                         '25',
+    }
+  )
 
-  const [street_Mode,                               setStreet_Mode]                                   = useState(false)
-  const [street_Mode_Enable_At_Startup,             setStreet_Mode_Enable_At_Startup]                 = useState(false)
-  const [street_Mode_Speed_Limit,                   setStreet_Mode_Speed_Limit]                       = useState(25)
-  const [street_Mode_Motor_Power_Limit,             setStreet_Mode_Motor_Power_Limit]                 = useState(250)
-  const [street_Mode_Throttle_Enable,               setStreet_Mode_Throttle_Enable]                   = useState(true)
-  const [street_Mode_Cruise_Enable,                 setStreet_Mode_Cruise_Enable]                     = useState(false)
-  const [street_Mode_Hotkey_Enable,                 setStreet_Mode_Hotkey_Enable]                     = useState(false)
+  const [street_Mode, setStreet_Mode] = useState(
+    {
+      Street_Mode:                          'false',
+      Enable_At_Startup:                    'false',
+      Speed_Limit:                          '25',
+      Motor_Power_Limit:                    '250',
+      Throttle_Enable:                      'true',
+      Cruise_Enable:                        'false',
+      Hotkey_Enable:                        'false',
+    }
+  )
 
-  const [vars_Speed_Graph_Auto_Max_Min,             setVars_Speed_Graph_Auto_Max_Min]                 = useState("Automatic")
-  const [vars_Speed_Graph_Max,                      setVars_Speed_Graph_Max]                          = useState(0)
-  const [vars_Speed_Graph_Min,                      setVars_Speed_Graph_Min]                          = useState(0)
-  const [vars_Speed_Thresholds,                     setVars_Speed_Thresholds]                         = useState("Automatic")
-  const [vars_Speed_Max_Threshold_Red,              setVars_Speed_Max_Threshold_Red]                  = useState(0)
-  const [vars_Speed_Max_Threshold_Yellow,           setVars_Speed_Max_Threshold_Yellow]               = useState(0)
+  const [display, setDisplay] = useState(
+    {
+      Units:                                'Metric (SI)',
+      Temp_Units:                           'Celsius',
+    }
+  )
 
-  const [vars_Trip_Dist_Graph_Auto_Max_Min,         setVars_Trip_Dist_Graph_Auto_Max_Min]             = useState("Automatic")
-  const [vars_Trip_Dist_Graph_Max,                  setVars_Trip_Dist_Graph_Max]                      = useState(0)
-  const [vars_Trip_Dist_Graph_Min,                  setVars_Trip_Dist_Graph_Min]                      = useState(0)
-  const [vars_Trip_Dist_Thresholds,                 setVars_Trip_Dist_Thresholds]                     = useState("Automatic")
-  const [vars_Trip_Dist_Max_Threshold_Red,          setVars_Trip_Dist_Max_Threshold_Red]              = useState(0)
-  const [vars_Trip_Dist_Max_Threshold_Yellow,       setVars_Trip_Dist_Max_Threshold_Yellow]           = useState(0)
+  const [various, setVarious] = useState(
+    {
+      Lights_Configuration:                 "0",
+      Assist_With_Error:                    'false',
+      Virtual_Throttle_Step:                '10',
+    }
+  )
 
-  const [vars_Cadence_Graph_Auto_Max_Min,           setVars_Cadence_Graph_Auto_Max_Min]               = useState("Automatic")
-  const [vars_Cadence_Graph_Max,                    setVars_Cadence_Graph_Max]                        = useState(0)
-  const [vars_Cadence_Graph_Min,                    setVars_Cadence_Graph_Min]                        = useState(0)
-  const [vars_Cadence_Thresholds,                   setVars_Cadence_Thresholds]                       = useState("Automatic")
-  const [vars_Cadence_Max_Threshold_Red,            setVars_Cadence_Max_Threshold_Red]                = useState(0)
-  const [vars_Cadence_Max_Threshold_Yellow,         setVars_Cadence_Max_Threshold_Yellow]             = useState(0)
+  const [technical, setTechnical] = useState(
+    {
+      ADC_Battery_Current:                  '0',
+      ADC_Throttle_Sensor:                  '0',
+      Throttle_Sensor:                      '0',
+      ADC_Torque_Sensor:                    '148',
+      ADC_Torque_Delta:                     '0',
+      ADC_Torque_Boost:                     '0',
+      ADC_Torque_Step_Calc:                 '29',
+      Pedal_Cadence:                        '0',
+      PWM_Duty_Cycle:                       '0',
+      Motor_Speed:                          '0',
+      Motor_FOC:                            '0',
+      Hall_Sensors:                         '0',
 
-  const [vars_Human_Power_Graph_Auto_Max_Min,       setVars_Human_Power_Graph_Auto_Max_Min]           = useState("Automatic")
-  const [vars_Human_Power_Graph_Max,                setVars_Human_Power_Graph_Max]                    = useState(0)
-  const [vars_Human_Power_Graph_Min,                setVars_Human_Power_Graph_Min]                    = useState(0)
-  const [vars_Human_Power_Thresholds,               setVars_Human_Power_Thresholds]                   = useState("Automatic")
-  const [vars_Human_Power_Max_Threshold_Red,        setVars_Human_Power_Max_Threshold_Red]            = useState(0)
-  const [vars_Human_Power_Max_Threshold_Yellow,     setVars_Human_Power_Max_Threshold_Yellow]         = useState(0)
+    }
+  )
 
+  const [vars, setVars] = useState(
+    {
+      Speed_Graph_Auto_Max_Min:             "Automatic",
+      Speed_Graph_Max:                      '0',
+      Speed_Graph_Min:                      '0',
+      Speed_Thresholds:                     "Automatic",
+      Speed_Max_Threshold_Red:              '0',
+      Speed_Max_Threshold_Yellow:           '0',
 
-  const [vars_Motor_Power_Graph_Auto_Max_Min,       setVars_Motor_Power_Graph_Auto_Max_Min]           = useState("Automatic")
-  const [vars_Motor_Power_Graph_Max,                setVars_Motor_Power_Graph_Max]                    = useState(0)
-  const [vars_Motor_Power_Graph_Min,                setVars_Motor_Power_Graph_Min]                    = useState(0)
-  const [vars_Motor_Power_Thresholds,               setVars_Motor_Power_Thresholds]                   = useState("Automatic")
-  const [vars_Motor_Power_Max_Threshold_Red,        setVars_Motor_Power_Max_Threshold_Red]            = useState(0)
-  const [vars_Motor_Power_Max_Threshold_Yellow,     setVars_Motor_Power_Max_Threshold_Yellow]         = useState(0)
+      Trip_Dist_Graph_Auto_Max_Min:         "Automatic",
+      Trip_Dist_Graph_Max:                  '0',
+      Trip_Dist_Graph_Min:                  '0',
+      Trip_Dist_Thresholds:                 "Automatic",
+      Trip_Dist_Max_Threshold_Red:          '0',
+      Trip_Dist_Max_Threshold_Yellow:       '0',
 
-  const [vars_Watts_Km_Graph_Auto_Max_Min,          setVars_Watts_Km_Graph_Auto_Max_Min]              = useState("Automatic")
-  const [vars_Watts_Km_Graph_Max,                   setVars_Watts_Km_Graph_Max]                       = useState(0)
-  const [vars_Watts_Km_Graph_Min,                   setVars_Watts_Km_Graph_Min]                       = useState(0)
-  const [vars_Watts_Km_Thresholds,                  setVars_Watts_Km_Thresholds]                      = useState("Automatic")
-  const [vars_Watts_Km_Max_Threshold_Red,           setVars_Watts_Km_Max_Threshold_Red]               = useState(0)
-  const [vars_Watts_Km_Max_Threshold_Yellow,        setVars_Watts_Km_Max_Threshold_Yellow]            = useState(0)
+      Cadence_Graph_Auto_Max_Min:           "Automatic",
+      Cadence_Graph_Max:                    '0',
+      Cadence_Graph_Min:                    '0',
+      Cadence_Thresholds:                   "Automatic",
+      Cadence_Max_Threshold_Red:            '0',
+      Cadence_Max_Threshold_Yellow:         '0',
 
-  const [vars_Battery_Voltage_Graph_Auto_Max_Min,   setVars_Battery_Voltage_Graph_Auto_Max_Min]       = useState("Automatic")
-  const [vars_Battery_Voltage_Graph_Max,            setVars_Battery_Voltage_Graph_Max]                = useState(0)
-  const [vars_Battery_Voltage_Graph_Min,            setVars_Battery_Voltage_Graph_Min]                = useState(0)
-  const [vars_Battery_Voltage_Thresholds,           setVars_Battery_Voltage_Thresholds]               = useState("Automatic")
-  const [vars_Battery_Voltage_Max_Threshold_Red,    setVars_Battery_Voltage_Max_Threshold_Red]        = useState(0)
-  const [vars_Battery_Voltage_Max_Threshold_Yellow, setVars_Battery_Voltage_Max_Threshold_Yellow]     = useState(0)
+      Human_Power_Graph_Auto_Max_Min:       "Automatic",
+      Human_Power_Graph_Max:                '0',
+      Human_Power_Graph_Min:                '0',
+      Human_Power_Thresholds:               "Automatic",
+      Human_Power_Max_Threshold_Red:        '0',
+      Human_Power_Max_Threshold_Yellow:     '0',
 
-  const [vars_Battery_Current_Graph_Auto_Max_Min,   setVars_Battery_Current_Graph_Auto_Max_Min]       = useState("Automatic")
-  const [vars_Battery_Current_Graph_Max,            setVars_Battery_Current_Graph_Max]                = useState(0)
-  const [vars_Battery_Current_Graph_Min,            setVars_Battery_Current_Graph_Min]                = useState(0)
-  const [vars_Battery_Current_Thresholds,           setVars_Battery_Current_Thresholds]               = useState("Automatic")
-  const [vars_Battery_Current_Max_Threshold_Red,    setVars_Battery_Current_Max_Threshold_Red]        = useState(0)
-  const [vars_Battery_Current_Max_Threshold_Yellow, setVars_Battery_Current_Max_Threshold_Yellow]     = useState(0)
+      Motor_Power_Graph_Auto_Max_Min:       "Automatic",
+      Motor_Power_Graph_Max:                '0',
+      Motor_Power_Graph_Min:                '0',
+      Motor_Power_Thresholds:               "Automatic",
+      Motor_Power_Max_Threshold_Red:        '0',
+      Motor_Power_Max_Threshold_Yellow:     '0',
 
-  const [vars_Battery_SoC_Graph_Auto_Max_Min,       setVars_Battery_SoC_Graph_Auto_Max_Min]           = useState("Automatic")
-  const [vars_Battery_SoC_Graph_Max,                setVars_Battery_SoC_Graph_Max]                    = useState(0)
-  const [vars_Battery_SoC_Graph_Min,                setVars_Battery_SoC_Graph_Min]                    = useState(0)
-  const [vars_Battery_SoC_Thresholds,               setVars_Battery_SoC_Thresholds]                   = useState("Automatic")
-  const [vars_Battery_SoC_Max_Threshold_Red,        setVars_Battery_SoC_Max_Threshold_Red]            = useState(0)
-  const [vars_Battery_SoC_Max_Threshold_Yellow,     setVars_Battery_SoC_Max_Threshold_Yellow]         = useState(0)
+      Watts_Km_Graph_Auto_Max_Min:          "Automatic",
+      Watts_Km_Graph_Max:                   '0',
+      Watts_Km_Graph_Min:                   '0',
+      Watts_Km_Thresholds:                  "Automatic",
+      Watts_Km_Max_Threshold_Red:           '0',
+      Watts_Km_Max_Threshold_Yellow:        '0',
 
-  const [vars_Motor_Current_Graph_Auto_Max_Min,     setVars_Motor_Current_Graph_Auto_Max_Min]         = useState("Automatic")
-  const [vars_Motor_Current_Graph_Max,              setVars_Motor_Current_Graph_Max]                  = useState(0)
-  const [vars_Motor_Current_Graph_Min,              setVars_Motor_Current_Graph_Min]                  = useState(0)
-  const [vars_Motor_Current_Thresholds,             setVars_Motor_Current_Thresholds]                 = useState("Automatic")
-  const [vars_Motor_Current_Max_Threshold_Red,      setVars_Motor_Current_Max_Threshold_Red]          = useState(0)
-  const [vars_Motor_Current_Max_Threshold_Yellow,   setVars_Motor_Current_Max_Threshold_Yellow]       = useState(0)
+      Battery_Voltage_Graph_Auto_Max_Min:   "Automatic",
+      Battery_Voltage_Graph_Max:            '0',
+      Battery_Voltage_Graph_Min:            '0',
+      Battery_Voltage_Thresholds:           "Automatic",
+      Battery_Voltage_Max_Threshold_Red:    '0',
+      Battery_Voltage_Max_Threshold_Yellow: '0',
 
-  const [vars_Motor_Temp_Graph_Auto_Max_Min,        setVars_Motor_Temp_Graph_Auto_Max_Min]            = useState("Automatic")
-  const [vars_Motor_Temp_Graph_Max,                 setVars_Motor_Temp_Graph_Max]                     = useState(0)
-  const [vars_Motor_Temp_Graph_Min,                 setVars_Motor_Temp_Graph_Min]                     = useState(0)
-  const [vars_Motor_Temp_Thresholds,                setVars_Motor_Temp_Thresholds]                    = useState("Automatic")
-  const [vars_Motor_Temp_Max_Threshold_Red,         setVars_Motor_Temp_Max_Threshold_Red]             = useState(0)
-  const [vars_Motor_Temp_Max_Threshold_Yellow,      setVars_Motor_Temp_Max_Threshold_Yellow]          = useState(0)
+      Battery_Current_Graph_Auto_Max_Min:   "Automatic",
+      Battery_Current_Graph_Max:            '0',
+      Battery_Current_Graph_Min:            '0',
+      Battery_Current_Thresholds:           "Automatic",
+      Battery_Current_Max_Threshold_Red:    '0',
+      Battery_Current_Max_Threshold_Yellow: '0',
+      Battery_SoC_Graph_Auto_Max_Min:       "Automatic",
+      Battery_SoC_Graph_Max:                '0',
+      Battery_SoC_Graph_Min:                '0',
+      Battery_SoC_Thresholds:               "Automatic",
+      Battery_SoC_Max_Threshold_Red:        '0',
+      Battery_SoC_Max_Threshold_Yellow:     '0',
 
-  const [vars_Motor_Speed_Graph_Auto_Max_Min,       setVars_Motor_Speed_Graph_Auto_Max_Min]           = useState("Automatic")
-  const [vars_Motor_Speed_Graph_Max,                setVars_Motor_Speed_Graph_Max]                    = useState(0)
-  const [vars_Motor_Speed_Graph_Min,                setVars_Motor_Speed_Graph_Min]                    = useState(0)
-  const [vars_Motor_Speed_Thresholds,               setVars_Motor_Speed_Thresholds]                   = useState("Automatic")
-  const [vars_Motor_Speed_Max_Threshold_Red,        setVars_Motor_Speed_Max_Threshold_Red]            = useState(0)
-  const [vars_Motor_Speed_Max_Threshold_Yellow,     setVars_Motor_Speed_Max_Threshold_Yellow]         = useState(0)
+      Motor_Current_Graph_Auto_Max_Min:     "Automatic",
+      Motor_Current_Graph_Max:              '0',
+      Motor_Current_Graph_Min:              '0',
+      Motor_Current_Thresholds:             "Automatic",
+      Motor_Current_Max_Threshold_Red:      '0',
+      Motor_Current_Max_Threshold_Yellow:   '0',
 
-  const [vars_Motor_PWM_Graph_Auto_Max_Min,         setVars_Motor_PWM_Graph_Auto_Max_Min]             = useState("Automatic")
-  const [vars_Motor_PWM_Graph_Max,                  setVars_Motor_PWM_Graph_Max]                      = useState(0)
-  const [vars_Motor_PWM_Graph_Min,                  setVars_Motor_PWM_Graph_Min]                      = useState(0)
-  const [vars_Motor_PWM_Thresholds,                 setVars_Motor_PWM_Thresholds]                     = useState("Automatic")
-  const [vars_Motor_PWM_Max_Threshold_Red,          setVars_Motor_PWM_Max_Threshold_Red]              = useState(0)
-  const [vars_Motor_PWM_Max_Threshold_Yellow,       setVars_Motor_PWM_Max_Threshold_Yellow]           = useState(0)
+      Motor_Temp_Graph_Auto_Max_Min:        "Automatic",
+      Motor_Temp_Graph_Max:                 '0',
+      Motor_Temp_Graph_Min:                 '0',
+      Motor_Temp_Thresholds:                "Automatic",
+      Motor_Temp_Max_Threshold_Red:         '0',
+      Motor_Temp_Max_Threshold_Yellow:      '0',
 
-  const [vars_Motor_FOC_Graph_Auto_Max_Min,         setVars_Motor_FOC_Graph_Auto_Max_Min]             = useState("Automatic")
-  const [vars_Motor_FOC_Graph_Max,                  setVars_Motor_FOC_Graph_Max]                      = useState(0)
-  const [vars_Motor_FOC_Graph_Min,                  setVars_Motor_FOC_Graph_Min]                      = useState(0)
-  const [vars_Motor_FOC_Thresholds,                 setVars_Motor_FOC_Thresholds]                     = useState("Automatic")
-  const [vars_Motor_FOC_Max_Threshold_Red,          setVars_Motor_FOC_Max_Threshold_Red]              = useState(0)
-  const [vars_Motor_FOC_Max_Threshold_Yellow,       setVars_Motor_FOC_Max_Threshold_Yellow]           = useState(0)
+      Motor_Speed_Graph_Auto_Max_Min:       "Automatic",
+      Motor_Speed_Graph_Max:                '0',
+      Motor_Speed_Graph_Min:                '0',
+      Motor_Speed_Thresholds:               "Automatic",
+      Motor_Speed_Max_Threshold_Red:        '0',
+      Motor_Speed_Max_Threshold_Yellow:     '0',
 
-  const [various_Lights_Configuration,              setVarious_Lights_Configuration]                  = useState("0")
-  const [various_Assist_With_Error,                 setVarious_Assist_With_Error]                     = useState(false)
-  const [various_Virtual_Throttle_Step,             setVarious_Virtual_Throttle_Step]                 = useState(10)
+      Motor_PWM_Graph_Auto_Max_Min:         "Automatic",
+      Motor_PWM_Graph_Max:                  '0',
+      Motor_PWM_Graph_Min:                  '0',
+      Motor_PWM_Thresholds:                 "Automatic",
+      Motor_PWM_Max_Threshold_Red:          '0',
+      Motor_PWM_Max_Threshold_Yellow:       '0',
 
-  const [display_Clock_Hours,                       setDisplay_Clock_Hours]                           = useState(0)
-  const [display_Clock_Minutes,                     setDisplay_Clock_Minutes]                         = useState(0)
-  const [display_Brightness_On,                     setDisplay_Brightness_On]                         = useState(100)
-  const [display_Brightness_Off,                    setDisplay_Brightness_Off]                        = useState(30)
-  const [display_Auto_Power_Off,                    setDisplay_Auto_Power_Off]                        = useState(25)
-  const [display_LCD_Type,                          setDisplay_LCD_Type]                              = useState("850C")
-  const [display_860C_Shortcut_Key,                 setDisplay_860C_Shortcut_Key]                     = useState(false)
-  const [display_Units,                             setDisplay_Units]                                 = useState('Metric (SI)')
-  const [display_Temp_Units,                        setDisplay_Temp_Units]                            = useState('Celsius')
-  const [display_Reset_To_Defaults,                 setDisplay_Reset_To_Defaults]                     = useState(false)
-
-  const [technical_ADC_Battery_Current,             setTechnical_ADC_Battery_Current]                 = useState(0)
-  const [technical_ADC_Throttle_Sensor,             setTechnical_ADC_Throttle_Sensor]                 = useState(0)
-  const [technical_Throttle_Sensor,                 setTechnical_Throttle_Sensor]                     = useState(0)
-  const [technical_ADC_Torque_Sensor,               setTechnical_ADC_Torque_Sensor]                   = useState(148)
-  const [technical_ADC_Torque_Delta,                setTechnical_ADC_Torque_Delta]                    = useState(0)
-  const [technical_ADC_Torque_Boost,                setTechnical_ADC_Torque_Boost]                    = useState(0)
-  const [technical_ADC_Torque_Step_Calc,            setTechnical_ADC_Torque_Step_Calc]                = useState(29)
-  const [technical_Pedal_Cadence,                   setTechnical_Pedal_Cadence]                       = useState(0)
-  const [technical_PWM_Duty_Cycle,                  setTechnical_PWM_Duty_Cycle]                      = useState(0)
-  const [technical_Motor_Speed,                     setTechnical_Motor_Speed]                         = useState(0)
-  const [technical_Motor_FOC,                       setTechnical_Motor_FOC]                           = useState(0)
-  const [technical_Hall_Sensors,                    setTechnical_Hall_Sensors]                        = useState(0)
-
+      Motor_FOC_Graph_Auto_Max_Min:         "Automatic",
+      Motor_FOC_Graph_Max:                  '0',
+      Motor_FOC_Graph_Min:                  '0',
+      Motor_FOC_Thresholds:                 "Automatic",
+      Motor_FOC_Max_Threshold_Red:          '0',
+      Motor_FOC_Max_Threshold_Yellow:       '0',
+    }
+  )
+ 
   //for working with the Maps and SaveTracks screens
   const [points, setPoints] = useState([])
+
   //#endregion
 
   //#region temp to set an async storage variable
   // const save = async () => {
-  //   await AsyncStorage.setItem('trip_B', '0')
+  //   await AsyncStorage.setItem('motor.motor_Power_Max', '0')
   // }
   // save()
   //#endregion
@@ -424,16 +488,16 @@ const MainNavigator = () => {
   //first use the async storage should be empty, if so then fill it with default values and set state
   useEffect(async () => {
     //#region clear async storage if required
-    // const clearAll = async () => {
-    //   try {
-    //     await AsyncStorage.clear()
-    //     console.log('All data cleared')
-    //   }
-    //   catch (e) {
-    //     console.log(`GM Error clearing all data ${e}`)
-    //   }
-    // }
-    // clearAll()
+    const clearAll = async () => {
+      try {
+        await AsyncStorage.clear()
+        console.log('All data cleared')
+      }
+      catch (e) {
+        console.log(`GM Error clearing all data ${e}`)
+      }
+    }
+    //clearAll()
     //#endregion
 
     getAllKeys = async () => {
@@ -445,218 +509,321 @@ const MainNavigator = () => {
           const loadStateFromAsyncStorage = async () => {
             //#region load data from async storage
             try {
-              setMotor_Voltage(await AsyncStorage.getItem('motor_Voltage'))
-              setMotor_Power_Max(await AsyncStorage.getItem('motor_Power_Max'))
-              setMotor_Acceleration(await AsyncStorage.getItem('motor_Acceleration'))
-              setMotor_Deceleration(await AsyncStorage.getItem('motor_Deceleration'))
-              setMotor_Fast_Stop(await AsyncStorage.getItem('motor_Fast_Stop'))
-              setMotor_Field_Weakening(await AsyncStorage.getItem('motor_Field_Weakening'))
-              setMotor_Temperature_Feature(await AsyncStorage.getItem('motor_Temperature_Feature'))
-              setMotor_Temperature_Min_Limit(await AsyncStorage.getItem('motor_Temperature_Min_Limit'))
-              setMotor_Temperature_Max_Limit(await AsyncStorage.getItem('motor_Temperature_Max_Limit'))
-              setTorque_Assist_wo_pedal(await AsyncStorage.getItem('torque_Assist_wo_pedal'))
-              setTorque_ADC_Threshold(await AsyncStorage.getItem('torque_ADC_Threshold'))
-              setTorque_Coast_Brake(await AsyncStorage.getItem('torque_Coast_Brake'))
-              setTorque_Coast_Brake_ADC(await AsyncStorage.getItem('torque_Coast_Brake_ADC'))
-              setTorque_Calibration(await AsyncStorage.getItem('torque_Calibration'))
-              setTorque_ADC_Step(await AsyncStorage.getItem('torque_ADC_Step'))
-              setTorque_ADC_Offset(await AsyncStorage.getItem('torque_ADC_Offset'))
-              setTorque_ADC_Max(await AsyncStorage.getItem('torque_ADC_Max'))
-              setTorque_Weight_On_Pedal(await AsyncStorage.getItem('torque_Weight_On_Pedal'))
-              setTorque_ADC_On_Weight(await AsyncStorage.getItem('torque_ADC_On_Weight'))
-              setTorque_Default_Weight(await AsyncStorage.getItem('torque_Default_Weight'))
-              setBattery_Max_current(await AsyncStorage.getItem('battery_Max_current'))
-              setBattery_Low_Cut_Off(await AsyncStorage.getItem('battery_Low_Cut_Off'))
-              setBattery_Resistance(await AsyncStorage.getItem('battery_Resistance'))
-              setBattery_Voltage_Est(await AsyncStorage.getItem('battery_Voltage_Est'))
-              setBattery_Resistance_Est(await AsyncStorage.getItem('battery_Resistance_Est'))
-              setBattery_Power_Loss_Est(await AsyncStorage.getItem('battery_Power_Loss_Est'))
-              setSoC_Text(await AsyncStorage.getItem('soC_Text'))
-              setSoC_Reset_At_Voltage(await AsyncStorage.getItem('soC_Reset_At_Voltage'))
-              setSoC_Battery_Total_Wh(await AsyncStorage.getItem('soC_Battery_Total_Wh'))
-              setSoC_Used(await AsyncStorage.getItem('soC_Used'))
-              setSoC_Manual_Reset(await AsyncStorage.getItem('soC_Manual_Reset'))
-              setWheel_Max_Speed(await AsyncStorage.getItem('wheel_Max_Speed'))
-              setWheel_Circumference(await AsyncStorage.getItem('wheel_Circumference'))
-              setTrip_A(await AsyncStorage.getItem('trip_A'))
-              setTrip_B(await AsyncStorage.getItem('trip_B'))
-              setTrip_A_Auto_Reset(await AsyncStorage.getItem('trip_A_Auto_Reset'))
-              setTrip_A_Auto_Reset_Hours(await AsyncStorage.getItem('trip_A_Auto_Reset_Hours'))
-              setTrip_B_Auto_Reset(await AsyncStorage.getItem('trip_B_Auto_Reset'))
-              setTrip_B_Auto_Reset_Hours(await AsyncStorage.getItem('trip_B_Auto_Reset_Hours'))
-              setTrip_Reset_Trip_A(await AsyncStorage.getItem('trip_Reset_Trip_A'))
-              setTrip_Reset_Trip_B(await AsyncStorage.getItem('trip_Reset_Trip_B'))
-              setNumber_Assist_Levels(await AsyncStorage.getItem('number_Assist_Levels'))
-              setPower_Assist_Level_1(await AsyncStorage.getItem('power_Assist_Level_1'))
-              setPower_Assist_Level_2(await AsyncStorage.getItem('power_Assist_Level_2'))
-              setPower_Assist_Level_3(await AsyncStorage.getItem('power_Assist_Level_3'))
-              setPower_Assist_Level_4(await AsyncStorage.getItem('power_Assist_Level_4'))
-              setPower_Assist_Level_5(await AsyncStorage.getItem('power_Assist_Level_5'))
-              setPower_Assist_Level_6(await AsyncStorage.getItem('power_Assist_Level_6'))
-              setPower_Assist_Level_7(await AsyncStorage.getItem('power_Assist_Level_7'))
-              setPower_Assist_Level_8(await AsyncStorage.getItem('power_Assist_Level_8'))
-              setPower_Assist_Level_9(await AsyncStorage.getItem('power_Assist_Level_9'))
-              setTorque_Assist_Level_1(await AsyncStorage.getItem('torque_Assist_Level_1'))
-              setTorque_Assist_Level_2(await AsyncStorage.getItem('torque_Assist_Level_2'))
-              setTorque_Assist_Level_3(await AsyncStorage.getItem('torque_Assist_Level_3'))
-              setTorque_Assist_Level_4(await AsyncStorage.getItem('torque_Assist_Level_4'))
-              setTorque_Assist_Level_5(await AsyncStorage.getItem('torque_Assist_Level_5'))
-              setTorque_Assist_Level_6(await AsyncStorage.getItem('torque_Assist_Level_6'))
-              setTorque_Assist_Level_7(await AsyncStorage.getItem('torque_Assist_Level_7'))
-              setTorque_Assist_Level_8(await AsyncStorage.getItem('torque_Assist_Level_8'))
-              setTorque_Assist_Level_9(await AsyncStorage.getItem('torque_Assist_Level_9'))
-              setCadence_Assist_Level_1(await AsyncStorage.getItem('cadence_Assist_Level_1'))
-              setCadence_Assist_Level_2(await AsyncStorage.getItem('cadence_Assist_Level_2'))
-              setCadence_Assist_Level_3(await AsyncStorage.getItem('cadence_Assist_Level_3'))
-              setCadence_Assist_Level_4(await AsyncStorage.getItem('cadence_Assist_Level_4'))
-              setCadence_Assist_Level_5(await AsyncStorage.getItem('cadence_Assist_Level_5'))
-              setCadence_Assist_Level_6(await AsyncStorage.getItem('cadence_Assist_Level_6'))
-              setCadence_Assist_Level_7(await AsyncStorage.getItem('cadence_Assist_Level_7'))
-              setCadence_Assist_Level_8(await AsyncStorage.getItem('cadence_Assist_Level_8'))
-              setCadence_Assist_Level_9(await AsyncStorage.getItem('cadence_Assist_Level_9'))
-              setEMTB_Assist_Level_1(await AsyncStorage.getItem('eMTB_Assist_Level_1'))
-              setEMTB_Assist_Level_2(await AsyncStorage.getItem('eMTB_Assist_Level_2'))
-              setEMTB_Assist_Level_3(await AsyncStorage.getItem('eMTB_Assist_Level_3'))
-              setEMTB_Assist_Level_4(await AsyncStorage.getItem('eMTB_Assist_Level_4'))
-              setEMTB_Assist_Level_5(await AsyncStorage.getItem('eMTB_Assist_Level_5'))
-              setEMTB_Assist_Level_6(await AsyncStorage.getItem('eMTB_Assist_Level_6'))
-              setEMTB_Assist_Level_7(await AsyncStorage.getItem('eMTB_Assist_Level_7'))
-              setEMTB_Assist_Level_8(await AsyncStorage.getItem('eMTB_Assist_Level_8'))
-              setEMTB_Assist_Level_9(await AsyncStorage.getItem('eMTB_Assist_Level_9'))
-              setWalk_Assist(await AsyncStorage.getItem('walk_Assist'))
-              setWalk_Assist_Cruise_Feature(await AsyncStorage.getItem('walk_Assist_Cruise_Feature'))
-              setWalk_Assist_Level_1(await AsyncStorage.getItem('walk_Assist_Level_1'))
-              setWalk_Assist_Level_2(await AsyncStorage.getItem('walk_Assist_Level_2'))
-              setWalk_Assist_Level_3(await AsyncStorage.getItem('walk_Assist_Level_3'))
-              setWalk_Assist_Level_4(await AsyncStorage.getItem('walk_Assist_Level_4'))
-              setWalk_Assist_Level_5(await AsyncStorage.getItem('walk_Assist_Level_5'))
-              setWalk_Assist_Level_6(await AsyncStorage.getItem('walk_Assist_Level_6'))
-              setWalk_Assist_Level_7(await AsyncStorage.getItem('walk_Assist_Level_7'))
-              setWalk_Assist_Level_8(await AsyncStorage.getItem('walk_Assist_Level_8'))
-              setWalk_Assist_Level_9(await AsyncStorage.getItem('walk_Assist_Level_9'))
-              setStartup_Boost(await AsyncStorage.getItem('startup_Boost'))
-              setStartup_Boost_Torque_Factor(await AsyncStorage.getItem('startup_Boost_Torque_Factor'))
-              setStartup_Boost_Cadence_Step(await AsyncStorage.getItem('startup_Boost_Cadence_Step'))
-              setStreet_Mode(await AsyncStorage.getItem('street_Mode'))
-              setStreet_Mode_Enable_At_Startup(await AsyncStorage.getItem('street_Mode_Enable_At_Startup'))
-              setStreet_Mode_Speed_Limit(await AsyncStorage.getItem('street_Mode_Speed_Limit'))
-              setStreet_Mode_Motor_Power_Limit(await AsyncStorage.getItem('street_Mode_Motor_Power_Limit'))
-              setStreet_Mode_Throttle_Enable(await AsyncStorage.getItem('street_Mode_Throttle_Enable'))
-              setStreet_Mode_Cruise_Enable(await AsyncStorage.getItem('street_Mode_Cruise_Enable'))
-              setStreet_Mode_Hotkey_Enable(await AsyncStorage.getItem('street_Mode_Hotkey_Enable'))
-              setVars_Speed_Graph_Auto_Max_Min(await AsyncStorage.getItem('vars_Speed_Graph_Auto_Max_Min'))
-              setVars_Speed_Graph_Max(await AsyncStorage.getItem('vars_Speed_Graph_Max'))
-              setVars_Speed_Graph_Min(await AsyncStorage.getItem('vars_Speed_Graph_Min'))
-              setVars_Speed_Thresholds(await AsyncStorage.getItem('vars_Speed_Thresholds'))
-              setVars_Speed_Max_Threshold_Red(await AsyncStorage.getItem('vars_Speed_Max_Threshold_Red'))
-              setVars_Speed_Max_Threshold_Yellow(await AsyncStorage.getItem('vars_Speed_Max_Threshold_Yellow'))
-              setVars_Trip_Dist_Graph_Auto_Max_Min(await AsyncStorage.getItem('vars_Trip_Dist_Graph_Auto_Max_Min'))
-              setVars_Trip_Dist_Graph_Max(await AsyncStorage.getItem('vars_Trip_Dist_Graph_Max'))
-              setVars_Trip_Dist_Graph_Min(await AsyncStorage.getItem('vars_Trip_Dist_Graph_Min'))
-              setVars_Trip_Dist_Thresholds(await AsyncStorage.getItem('vars_Trip_Dist_Thresholds'))
-              setVars_Trip_Dist_Max_Threshold_Red(await AsyncStorage.getItem('vars_Trip_Dist_Max_Threshold_Red'))
-              setVars_Trip_Dist_Max_Threshold_Yellow(await AsyncStorage.getItem('vars_Trip_Dist_Max_Threshold_Yellow'))
-              setVars_Cadence_Graph_Auto_Max_Min(await AsyncStorage.getItem('vars_Cadence_Graph_Auto_Max_Min'))
-              setVars_Cadence_Graph_Max(await AsyncStorage.getItem('vars_Cadence_Graph_Max'))
-              setVars_Cadence_Graph_Min(await AsyncStorage.getItem('vars_Cadence_Graph_Min'))
-              setVars_Cadence_Thresholds(await AsyncStorage.getItem('vars_Cadence_Thresholds'))
-              setVars_Cadence_Max_Threshold_Red(await AsyncStorage.getItem('vars_Cadence_Max_Threshold_Red'))
-              setVars_Cadence_Max_Threshold_Yellow(await AsyncStorage.getItem('vars_Cadence_Max_Threshold_Yellow'))
-              setVars_Human_Power_Graph_Auto_Max_Min(await AsyncStorage.getItem('vars_Human_Power_Graph_Auto_Max_Min'))
-              setVars_Human_Power_Graph_Max(await AsyncStorage.getItem('vars_Human_Power_Graph_Max'))
-              setVars_Human_Power_Graph_Min(await AsyncStorage.getItem('vars_Human_Power_Graph_Min'))
-              setVars_Human_Power_Thresholds(await AsyncStorage.getItem('vars_Human_Power_Thresholds'))
-              setVars_Human_Power_Max_Threshold_Red(await AsyncStorage.getItem('vars_Human_Power_Max_Threshold_Red'))
-              setVars_Human_Power_Max_Threshold_Yellow(await AsyncStorage.getItem('vars_Human_Power_Max_Threshold_Yellow'))
-              setVars_Motor_Power_Graph_Auto_Max_Min(await AsyncStorage.getItem('vars_Motor_Power_Graph_Auto_Max_Min'))
-              setVars_Motor_Power_Graph_Max(await AsyncStorage.getItem('vars_Motor_Power_Graph_Max'))
-              setVars_Motor_Power_Graph_Min(await AsyncStorage.getItem('vars_Motor_Power_Graph_Min'))
-              setVars_Motor_Power_Thresholds(await AsyncStorage.getItem('vars_Motor_Power_Thresholds'))
-              setVars_Motor_Power_Max_Threshold_Red(await AsyncStorage.getItem('vars_Motor_Power_Max_Threshold_Red'))
-              setVars_Motor_Power_Max_Threshold_Yellow(await AsyncStorage.getItem('vars_Motor_Power_Max_Threshold_Yellow'))
-              setVars_Watts_Km_Graph_Auto_Max_Min(await AsyncStorage.getItem('vars_Watts_Km_Graph_Auto_Max_Min'))
-              setVars_Watts_Km_Graph_Max(await AsyncStorage.getItem('vars_Watts_Km_Graph_Max'))
-              setVars_Watts_Km_Graph_Min(await AsyncStorage.getItem('vars_Watts_Km_Graph_Min'))
-              setVars_Watts_Km_Thresholds(await AsyncStorage.getItem('vars_Watts_Km_Thresholds'))
-              setVars_Watts_Km_Max_Threshold_Red(await AsyncStorage.getItem('vars_Watts_Km_Max_Threshold_Red'))
-              setVars_Watts_Km_Max_Threshold_Yellow(await AsyncStorage.getItem('vars_Watts_Km_Max_Threshold_Yellow'))
-              setVars_Battery_Voltage_Graph_Auto_Max_Min(await AsyncStorage.getItem('vars_Battery_Voltage_Graph_Auto_Max_Min'))
-              setVars_Battery_Voltage_Graph_Max(await AsyncStorage.getItem('vars_Battery_Voltage_Graph_Max'))
-              setVars_Battery_Voltage_Graph_Min(await AsyncStorage.getItem('vars_Battery_Voltage_Graph_Min'))
-              setVars_Battery_Voltage_Thresholds(await AsyncStorage.getItem('vars_Battery_Voltage_Thresholds'))
-              setVars_Battery_Voltage_Max_Threshold_Red(await AsyncStorage.getItem('vars_Battery_Voltage_Max_Threshold_Red'))
-              setVars_Battery_Voltage_Max_Threshold_Yellow(await AsyncStorage.getItem('vars_Battery_Voltage_Max_Threshold_Yellow'))
-              setVars_Battery_Current_Graph_Auto_Max_Min(await AsyncStorage.getItem('vars_Battery_Current_Graph_Auto_Max_Min'))
-              setVars_Battery_Current_Graph_Max(await AsyncStorage.getItem('vars_Battery_Current_Graph_Max'))
-              setVars_Battery_Current_Graph_Min(await AsyncStorage.getItem('vars_Battery_Current_Graph_Min'))
-              setVars_Battery_Current_Thresholds(await AsyncStorage.getItem('vars_Battery_Current_Thresholds'))
-              setVars_Battery_Current_Max_Threshold_Red(await AsyncStorage.getItem('vars_Battery_Current_Max_Threshold_Red'))
-              setVars_Battery_Current_Max_Threshold_Yellow(await AsyncStorage.getItem('vars_Battery_Current_Max_Threshold_Yellow'))
-              setVars_Battery_SoC_Graph_Auto_Max_Min(await AsyncStorage.getItem('vars_Battery_SoC_Graph_Auto_Max_Min'))
-              setVars_Battery_SoC_Graph_Max(await AsyncStorage.getItem('vars_Battery_SoC_Graph_Max'))
-              setVars_Battery_SoC_Graph_Min(await AsyncStorage.getItem('vars_Battery_SoC_Graph_Min'))
-              setVars_Battery_SoC_Thresholds(await AsyncStorage.getItem('vars_Battery_SoC_Thresholds'))
-              setVars_Battery_SoC_Max_Threshold_Red(await AsyncStorage.getItem('vars_Battery_SoC_Max_Threshold_Red'))
-              setVars_Battery_SoC_Max_Threshold_Yellow(await AsyncStorage.getItem('vars_Battery_SoC_Max_Threshold_Yellow'))
-              setVars_Motor_Current_Graph_Auto_Max_Min(await AsyncStorage.getItem('vars_Motor_Current_Graph_Auto_Max_Min'))
-              setVars_Motor_Current_Graph_Max(await AsyncStorage.getItem('vars_Motor_Current_Graph_Max'))
-              setVars_Motor_Current_Graph_Min(await AsyncStorage.getItem('vars_Motor_Current_Graph_Min'))
-              setVars_Motor_Current_Thresholds(await AsyncStorage.getItem('vars_Motor_Current_Thresholds'))
-              setVars_Motor_Current_Max_Threshold_Red(await AsyncStorage.getItem('vars_Motor_Current_Max_Threshold_Red'))
-              setVars_Motor_Current_Max_Threshold_Yellow(await AsyncStorage.getItem('vars_Motor_Current_Max_Threshold_Yellow'))
-              setVars_Motor_Temp_Graph_Auto_Max_Min(await AsyncStorage.getItem('vars_Motor_Temp_Graph_Auto_Max_Min'))
-              setVars_Motor_Temp_Graph_Max(await AsyncStorage.getItem('vars_Motor_Temp_Graph_Max'))
-              setVars_Motor_Temp_Graph_Min(await AsyncStorage.getItem('vars_Motor_Temp_Graph_Min'))
-              setVars_Motor_Temp_Thresholds(await AsyncStorage.getItem('vars_Motor_Temp_Thresholds'))
-              setVars_Motor_Temp_Max_Threshold_Red(await AsyncStorage.getItem('vars_Motor_Temp_Max_Threshold_Red'))
-              setVars_Motor_Temp_Max_Threshold_Yellow(await AsyncStorage.getItem('vars_Motor_Temp_Max_Threshold_Yellow'))
-              setVars_Motor_Speed_Graph_Auto_Max_Min(await AsyncStorage.getItem('vars_Motor_Speed_Graph_Auto_Max_Min'))
-              setVars_Motor_Speed_Graph_Max(await AsyncStorage.getItem('vars_Motor_Speed_Graph_Max'))
-              setVars_Motor_Speed_Graph_Min(await AsyncStorage.getItem('vars_Motor_Speed_Graph_Min'))
-              setVars_Motor_Speed_Thresholds(await AsyncStorage.getItem('vars_Motor_Speed_Thresholds'))
-              setVars_Motor_Speed_Max_Threshold_Red(await AsyncStorage.getItem('vars_Motor_Speed_Max_Threshold_Red'))
-              setVars_Motor_Speed_Max_Threshold_Yellow(await AsyncStorage.getItem('vars_Motor_Speed_Max_Threshold_Yellow'))
-              setVars_Motor_PWM_Graph_Auto_Max_Min(await AsyncStorage.getItem('vars_Motor_PWM_Graph_Auto_Max_Min'))
-              setVars_Motor_PWM_Graph_Max(await AsyncStorage.getItem('vars_Motor_PWM_Graph_Max'))
-              setVars_Motor_PWM_Graph_Min(await AsyncStorage.getItem('vars_Motor_PWM_Graph_Min'))
-              setVars_Motor_PWM_Thresholds(await AsyncStorage.getItem('vars_Motor_PWM_Thresholds'))
-              setVars_Motor_PWM_Max_Threshold_Red(await AsyncStorage.getItem('vars_Motor_PWM_Max_Threshold_Red'))
-              setVars_Motor_PWM_Max_Threshold_Yellow(await AsyncStorage.getItem('vars_Motor_PWM_Max_Threshold_Yellow'))
-              setVars_Motor_FOC_Graph_Auto_Max_Min(await AsyncStorage.getItem('vars_Motor_FOC_Graph_Auto_Max_Min'))
-              setVars_Motor_FOC_Graph_Max(await AsyncStorage.getItem('vars_Motor_FOC_Graph_Max'))
-              setVars_Motor_FOC_Graph_Min(await AsyncStorage.getItem('vars_Motor_FOC_Graph_Min'))
-              setVars_Motor_FOC_Thresholds(await AsyncStorage.getItem('vars_Motor_FOC_Thresholds'))
-              setVars_Motor_FOC_Max_Threshold_Red(await AsyncStorage.getItem('vars_Motor_FOC_Max_Threshold_Red'))
-              setVars_Motor_FOC_Max_Threshold_Yellow(await AsyncStorage.getItem('vars_Motor_FOC_Max_Threshold_Yellow'))
-              setVarious_Lights_Configuration(await AsyncStorage.getItem('various_Lights_Configuration'))
-              setVarious_Assist_With_Error(await AsyncStorage.getItem('various_Assist_With_Error'))
-              setVarious_Virtual_Throttle_Step(await AsyncStorage.getItem('various_Virtual_Throttle_Step'))
-              setVarious_Odometer(await AsyncStorage.getItem('various_Odometer'))
-              setDisplay_Clock_Hours(await AsyncStorage.getItem('display_Clock_Hours'))
-              setDisplay_Clock_Minutes(await AsyncStorage.getItem('display_Clock_Minutes'))
-              setDisplay_Brightness_On(await AsyncStorage.getItem('display_Brightness_On'))
-              setDisplay_Brightness_Off(await AsyncStorage.getItem('display_Brightness_Off'))
-              setDisplay_Auto_Power_Off(await AsyncStorage.getItem('display_Auto_Power_Off'))
-              setDisplay_LCD_Type(await AsyncStorage.getItem('display_LCD_Type'))
-              setDisplay_860C_Shortcut_Key(await AsyncStorage.getItem('display_860C_Shortcut_Key'))
-              setDisplay_Units(await AsyncStorage.getItem('display_Units'))
-              setDisplay_Temp_Units(await AsyncStorage.getItem('display_Temp_Units'))
-              setDisplay_Reset_To_Defaults(await AsyncStorage.getItem('display_Reset_To_Defaults'))
-              setTechnical_ADC_Battery_Current(await AsyncStorage.getItem('technical_ADC_Battery_Current'))
-              setTechnical_ADC_Throttle_Sensor(await AsyncStorage.getItem('technical_ADC_Throttle_Sensor'))
-              setTechnical_Throttle_Sensor(await AsyncStorage.getItem('technical_Throttle_Sensor'))
-              setTechnical_ADC_Torque_Sensor(await AsyncStorage.getItem('technical_ADC_Torque_Sensor'))
-              setTechnical_ADC_Torque_Delta(await AsyncStorage.getItem('technical_ADC_Torque_Delta'))
-              setTechnical_ADC_Torque_Boost(await AsyncStorage.getItem('technical_ADC_Torque_Boost'))
-              setTechnical_ADC_Torque_Step_Calc(await AsyncStorage.getItem('technical_ADC_Torque_Step_Calc'))
-              setTechnical_Pedal_Cadence(await AsyncStorage.getItem('technical_Pedal_Cadence'))
-              setTechnical_PWM_Duty_Cycle(await AsyncStorage.getItem('technical_PWM_Duty_Cycle'))
-              setTechnical_Motor_Speed(await AsyncStorage.getItem('technical_Motor_Speed'))
-              setTechnical_Motor_FOC(await AsyncStorage.getItem('technical_Motor_FOC'))
-              setTechnical_Hall_Sensors(await AsyncStorage.getItem('technical_Hall_Sensors'))
+
+              setMotor(
+                {
+                  Voltage:          await AsyncStorage.getItem('Motor_Voltage'),
+                  Power_Max:        await AsyncStorage.getItem('Motor_Power_Max'),
+                  Acceleration:     await AsyncStorage.getItem('Motor_Acceleration'),
+                  Deceleration:     await AsyncStorage.getItem('Motor_Deceleration'),
+                  Fast_Stop:        await AsyncStorage.getItem('Motor_Fast_Stop'),
+                  Field_Weakening:  await AsyncStorage.getItem('Motor_Field_Weakening'),
+                }
+              )
+
+              setMotorTemperature(
+                {
+                  Feature:    await AsyncStorage.getItem('MotorTemperature_Feature'),
+                  Min_Limit:  await AsyncStorage.getItem('MotorTemperature_Min_Limit'),
+                  Max_Limit:  await AsyncStorage.getItem('MotorTemperature_Max_Limit'),
+                }
+              )
+
+              setTorque(
+                {
+                  Assist_wo_pedal: await AsyncStorage.getItem('Torque_Assist_wo_pedal'),
+                  ADC_Threshold:   await AsyncStorage.getItem('Torque_ADC_Threshold'),
+                  Coast_Brake:     await AsyncStorage.getItem('Torque_Coast_Brake'),
+                  Coast_Brake_ADC: await AsyncStorage.getItem('Torque_Coast_Brake_ADC'),
+                  Calibration:     await AsyncStorage.getItem('Torque_Calibration'),
+                  ADC_Step:        await AsyncStorage.getItem('Torque_ADC_Step'),
+                  ADC_Offset:      await AsyncStorage.getItem('Torque_ADC_Offset'),
+                  ADC_Max:         await AsyncStorage.getItem('Torque_ADC_Max'),
+                  Weight_On_Pedal: await AsyncStorage.getItem('Torque_Weight_On_Pedal'),
+                  ADC_On_Weight:   await AsyncStorage.getItem('Torque_ADC_On_Weight'),
+                  Default_Weight:  await AsyncStorage.getItem('Torque_Default_Weight'),
+                }
+              )
+
+              setBattery(
+                {
+                  Max_current:      await AsyncStorage.getItem('Battery_Max_current'),
+                  Low_Cut_Off:      await AsyncStorage.getItem('Battery_Low_Cut_Off'),
+                  Resistance:       await AsyncStorage.getItem('Battery_Resistance'),
+                  Voltage_Est:      await AsyncStorage.getItem('Battery_Voltage_Est'),
+                  Resistance_Est:   await AsyncStorage.getItem('Battery_Resistance_Est'),
+                  Power_Loss_Est:   await AsyncStorage.getItem('Battery_Power_Loss_Est'),                 
+                }
+              )
+
+              setSoC(
+                {
+                  Text:               await AsyncStorage.getItem('SoC_Text'),
+                  Reset_At_Voltage:   await AsyncStorage.getItem('SoC_Reset_At_Voltage'),
+                  Battery_Total_Wh:   await AsyncStorage.getItem('SoC_Battery_Total_Wh'),
+                  Used:               await AsyncStorage.getItem('SoC_Used'),
+                  Manual_Reset:       await AsyncStorage.getItem('SoC_Manual_Reset'),               
+                }
+              )
+
+              setWheel(
+                {
+                  Max_Speed:          await AsyncStorage.getItem('Wheel_Max_Speed'),
+                  Circumference:      await AsyncStorage.getItem('Wheel_Circumference'),                 
+                }           
+              )
+
+              setTrip(
+                {
+                  Odometer:           await AsyncStorage.getItem('Trip_Odometer'),
+                  A:                  await AsyncStorage.getItem('Trip_A'),
+                  B:                  await AsyncStorage.getItem('Trip_B'),
+                  A_Auto_Reset:       await AsyncStorage.getItem('Trip_A_Auto_Reset'),
+                  A_Auto_Reset_Hours: await AsyncStorage.getItem('Trip_A_Auto_Reset_Hours'),
+                  B_Auto_Reset:       await AsyncStorage.getItem('Trip_B_Auto_Reset'),
+                  B_Auto_Reset_Hours: await AsyncStorage.getItem('Trip_B_Auto_Reset_Hours'),          
+                }
+              )
+
+              setNumber_Assist_Levels(
+                {
+                  Levels: await AsyncStorage.getItem('Number_Assist_Levels_Levels'),
+                }
+              )
+
+              setPower_Assist(
+                {
+                  Level_1:    await AsyncStorage.getItem('Power_Assist_Level_1'),
+                  Level_2:    await AsyncStorage.getItem('Power_Assist_Level_2'),
+                  Level_3:    await AsyncStorage.getItem('Power_Assist_Level_3'),
+                  Level_4:    await AsyncStorage.getItem('Power_Assist_Level_4'),
+                  Level_5:    await AsyncStorage.getItem('Power_Assist_Level_5'),
+                  Level_6:    await AsyncStorage.getItem('Power_Assist_Level_6'),
+                  Level_7:    await AsyncStorage.getItem('Power_Assist_Level_7'),
+                  Level_8:    await AsyncStorage.getItem('Power_Assist_Level_8'),
+                  Level_9:    await AsyncStorage.getItem('Power_Assist_Level_9'), 
+                }               
+              )
+
+              setTorque_Assist(
+                {
+                  Level_1:    await AsyncStorage.getItem('Torque_Assist_Level_1'),
+                  Level_2:    await AsyncStorage.getItem('Torque_Assist_Level_2'),
+                  Level_3:    await AsyncStorage.getItem('Torque_Assist_Level_3'),
+                  Level_4:    await AsyncStorage.getItem('Torque_Assist_Level_4'),
+                  Level_5:    await AsyncStorage.getItem('Torque_Assist_Level_5'),
+                  Level_6:    await AsyncStorage.getItem('Torque_Assist_Level_6'),
+                  Level_7:    await AsyncStorage.getItem('Torque_Assist_Level_7'),
+                  Level_8:    await AsyncStorage.getItem('Torque_Assist_Level_8'),
+                  Level_9:    await AsyncStorage.getItem('Torque_Assist_Level_9'),  
+                }              
+              )         
+
+              setCadence_Assist(
+                {
+                  Level_1:    await AsyncStorage.getItem('Cadence_Assist_Level_1'),
+                  Level_2:    await AsyncStorage.getItem('Cadence_Assist_Level_2'),
+                  Level_3:    await AsyncStorage.getItem('Cadence_Assist_Level_3'),
+                  Level_4:    await AsyncStorage.getItem('Cadence_Assist_Level_4'),
+                  Level_5:    await AsyncStorage.getItem('Cadence_Assist_Level_5'),
+                  Level_6:    await AsyncStorage.getItem('Cadence_Assist_Level_6'),
+                  Level_7:    await AsyncStorage.getItem('Cadence_Assist_Level_7'),
+                  Level_8:    await AsyncStorage.getItem('Cadence_Assist_Level_8'),
+                  Level_9:    await AsyncStorage.getItem('Cadence_Assist_Level_9'),  
+                }              
+              )          
+
+              setEMTB_Assist(
+                {
+                  Level_1:    await AsyncStorage.getItem('EMTB_Assist_Level_1'),
+                  Level_2:    await AsyncStorage.getItem('EMTB_Assist_Level_2'),
+                  Level_3:    await AsyncStorage.getItem('EMTB_Assist_Level_3'),
+                  Level_4:    await AsyncStorage.getItem('EMTB_Assist_Level_4'),
+                  Level_5:    await AsyncStorage.getItem('EMTB_Assist_Level_5'),
+                  Level_6:    await AsyncStorage.getItem('EMTB_Assist_Level_6'),
+                  Level_7:    await AsyncStorage.getItem('EMTB_Assist_Level_7'),
+                  Level_8:    await AsyncStorage.getItem('EMTB_Assist_Level_8'),
+                  Level_9:    await AsyncStorage.getItem('EMTB_Assist_Level_9'),  
+                }              
+              )      
+
+              setWalk_Assist(
+                {
+                  Walk_Assist:            await AsyncStorage.getItem('Walk_Assist_Walk_Assist'),
+                  Cruise_Feature:         await AsyncStorage.getItem('Walk_Assist_Cruise_Feature'),
+                  Level_1:                await AsyncStorage.getItem('Walk_Assist_Level_1'),
+                  Level_2:                await AsyncStorage.getItem('Walk_Assist_Level_2'),
+                  Level_3:                await AsyncStorage.getItem('Walk_Assist_Level_3'),
+                  Level_4:                await AsyncStorage.getItem('Walk_Assist_Level_4'),
+                  Level_5:                await AsyncStorage.getItem('Walk_Assist_Level_5'),
+                  Level_6:                await AsyncStorage.getItem('Walk_Assist_Level_6'),
+                  Level_7:                await AsyncStorage.getItem('Walk_Assist_Level_7'),
+                  Level_8:                await AsyncStorage.getItem('Walk_Assist_Level_8'),
+                  Level_9:                await AsyncStorage.getItem('Walk_Assist_Level_9'),  
+                }              
+              )              
+
+              setStartup_Boost(
+                {
+                  Startup_Boost:    await AsyncStorage.getItem('Startup_Boost_Startup_Boost'),
+                  Torque_Factor:    await AsyncStorage.getItem('Startup_Boost_Torque_Factor'),
+                  Cadence_Step:     await AsyncStorage.getItem('Startup_Boost_Cadence_Step'),
+                }
+              )
+
+              setStreet_Mode(
+                {
+                  Street_Mode:          await AsyncStorage.getItem('Street_Mode_Street_Mode'),
+                  Enable_At_Startup:    await AsyncStorage.getItem('Street_Mode_Enable_At_Startup'),
+                  Speed_Limit:          await AsyncStorage.getItem('Street_Mode_Speed_Limit'),
+                  Motor_Power_Limit:    await AsyncStorage.getItem('Street_Mode_Motor_Power_Limit'),
+                  Throttle_Enable:      await AsyncStorage.getItem('Street_Mode_Throttle_Enable'),
+                  Cruise_Enable:        await AsyncStorage.getItem('Street_Mode_Cruise_Enable'),
+                  Hotkey_Enable:        await AsyncStorage.getItem('Street_Mode_Hotkey_Enable'),           
+                }
+              )
+
+              setVarious(
+                {
+                  Lights_Configuration:     await AsyncStorage.getItem('Various_Lights_Configuration'),
+                  Assist_With_Error:        await AsyncStorage.getItem('Various_Assist_With_Error'),
+                  Virtual_Throttle_Step:    await AsyncStorage.getItem('Various_Virtual_Throttle_Step'),
+                }
+              )
+
+              setDisplay(
+                {
+                  Units:              await AsyncStorage.getItem('Display_Units'),
+                  Temp_Units:         await AsyncStorage.getItem('Display_Temp_Units'),                 
+                }
+              )
+
+              setTechnical(
+                {
+                  ADC_Battery_Current:    await AsyncStorage.getItem('Technical_ADC_Battery_Current'),
+                  ADC_Throttle_Sensor:    await AsyncStorage.getItem('Technical_ADC_Throttle_Sensor'),
+                  Throttle_Sensor:        await AsyncStorage.getItem('Technical_Throttle_Sensor'),
+                  ADC_Torque_Sensor:      await AsyncStorage.getItem('Technical_ADC_Torque_Sensor'),
+                  ADC_Torque_Delta:       await AsyncStorage.getItem('Technical_ADC_Torque_Delta'),
+                  ADC_Torque_Boost:       await AsyncStorage.getItem('Technical_ADC_Torque_Boost'),
+                  ADC_Torque_Step_Calc:   await AsyncStorage.getItem('Technical_ADC_Torque_Step_Calc'),
+                  Pedal_Cadence:          await AsyncStorage.getItem('Technical_Pedal_Cadence'),
+                  PWM_Duty_Cycle:         await AsyncStorage.getItem('Technical_PWM_Duty_Cycle'),
+                  Motor_Speed:            await AsyncStorage.getItem('Technical_Motor_Speed'),
+                  Motor_FOC:              await AsyncStorage.getItem('Technical_Motor_FOC'),
+                  Hall_Sensors:           await AsyncStorage.getItem('Technical_Hall_Sensors'),          
+                }
+              )
+
+              setVars(
+                {
+                  Speed_Graph_Auto_Max_Min:               await AsyncStorage.getItem('Vars_Speed_Graph_Auto_Max_Min'),
+                  Speed_Graph_Max:                        await AsyncStorage.getItem('Vars_Speed_Graph_Max'),
+                  Speed_Graph_Min:                        await AsyncStorage.getItem('Vars_Speed_Graph_Min'),
+                  Speed_Thresholds:                       await AsyncStorage.getItem('Vars_Speed_Thresholds'),
+                  Speed_Max_Threshold_Red:                await AsyncStorage.getItem('Vars_Speed_Max_Threshold_Red'),
+                  Speed_Max_Threshold_Yellow:             await AsyncStorage.getItem('Vars_Speed_Max_Threshold_Yellow'),
+
+                  Trip_Dist_Graph_Auto_Max_Min:           await AsyncStorage.getItem('Vars_Trip_Dist_Graph_Auto_Max_Min'),
+                  Trip_Dist_Graph_Max:                    await AsyncStorage.getItem('Vars_Trip_Dist_Graph_Max'),
+                  Trip_Dist_Graph_Min:                    await AsyncStorage.getItem('Vars_Trip_Dist_Graph_Min'),
+                  Trip_Dist_Thresholds:                   await AsyncStorage.getItem('Vars_Trip_Dist_Thresholds'),
+                  Trip_Dist_Max_Threshold_Red:            await AsyncStorage.getItem('Vars_Trip_Dist_Max_Threshold_Red'),
+                  Trip_Dist_Max_Threshold_Yellow:         await AsyncStorage.getItem('Vars_Trip_Dist_Max_Threshold_Yellow'),
+
+                  Cadence_Graph_Auto_Max_Min:             await AsyncStorage.getItem('Vars_Cadence_Graph_Auto_Max_Min'),
+                  Cadence_Graph_Max:                      await AsyncStorage.getItem('Vars_Cadence_Graph_Max'),
+                  Cadence_Graph_Min:                      await AsyncStorage.getItem('Vars_Cadence_Graph_Min'),
+                  Cadence_Thresholds:                     await AsyncStorage.getItem('Vars_Cadence_Thresholds'),
+                  Cadence_Max_Threshold_Red:              await AsyncStorage.getItem('Vars_Cadence_Max_Threshold_Red'),
+                  Cadence_Max_Threshold_Yellow:           await AsyncStorage.getItem('Vars_Cadence_Max_Threshold_Yellow'),
+
+                  Human_Power_Graph_Auto_Max_Min:         await AsyncStorage.getItem('Vars_Human_Power_Graph_Auto_Max_Min'),
+                  Human_Power_Graph_Max:                  await AsyncStorage.getItem('Vars_Human_Power_Graph_Max'),
+                  Human_Power_Graph_Min:                  await AsyncStorage.getItem('Vars_Human_Power_Graph_Min'),
+                  Human_Power_Thresholds:                 await AsyncStorage.getItem('Vars_Human_Power_Thresholds'),
+                  Human_Power_Max_Threshold_Red:          await AsyncStorage.getItem('Vars_Human_Power_Max_Threshold_Red'),
+                  Human_Power_Max_Threshold_Yellow:       await AsyncStorage.getItem('Vars_Human_Power_Max_Threshold_Yellow'),
+
+                  Motor_Power_Graph_Auto_Max_Min:         await AsyncStorage.getItem('Vars_Motor_Power_Graph_Auto_Max_Min'),
+                  Motor_Power_Graph_Max:                  await AsyncStorage.getItem('Vars_Motor_Power_Graph_Max'),
+                  Motor_Power_Graph_Min:                  await AsyncStorage.getItem('Vars_Motor_Power_Graph_Min'),
+                  Motor_Power_Thresholds:                 await AsyncStorage.getItem('Vars_Motor_Power_Thresholds'),
+                  Motor_Power_Max_Threshold_Red:          await AsyncStorage.getItem('Vars_Motor_Power_Max_Threshold_Red'),
+                  Motor_Power_Max_Threshold_Yellow:       await AsyncStorage.getItem('Vars_Motor_Power_Max_Threshold_Yellow'),
+
+                  Watts_Km_Graph_Auto_Max_Min:            await AsyncStorage.getItem('Vars_Watts_Km_Graph_Auto_Max_Min'),
+                  Watts_Km_Graph_Max:                     await AsyncStorage.getItem('Vars_Watts_Km_Graph_Max'),
+                  Watts_Km_Graph_Min:                     await AsyncStorage.getItem('Vars_Watts_Km_Graph_Min'),
+                  Watts_Km_Thresholds:                    await AsyncStorage.getItem('Vars_Watts_Km_Thresholds'),
+                  Watts_Km_Max_Threshold_Red:             await AsyncStorage.getItem('Vars_Watts_Km_Max_Threshold_Red'),
+                  Watts_Km_Max_Threshold_Yellow:          await AsyncStorage.getItem('Vars_Watts_Km_Max_Threshold_Yellow'),
+
+                  Battery_Voltage_Graph_Auto_Max_Min:     await AsyncStorage.getItem('Vars_Battery_Voltage_Graph_Auto_Max_Min'),
+                  Battery_Voltage_Graph_Max:              await AsyncStorage.getItem('Vars_Battery_Voltage_Graph_Max'),
+                  Battery_Voltage_Graph_Min:              await AsyncStorage.getItem('Vars_Battery_Voltage_Graph_Min'),
+                  Battery_Voltage_Thresholds:             await AsyncStorage.getItem('Vars_Battery_Voltage_Thresholds'),
+                  Battery_Voltage_Max_Threshold_Red:      await AsyncStorage.getItem('Vars_Battery_Voltage_Max_Threshold_Red'),
+                  Battery_Voltage_Max_Threshold_Yellow:   await AsyncStorage.getItem('Vars_Battery_Voltage_Max_Threshold_Yellow'),
+
+                  Battery_Current_Graph_Auto_Max_Min:     await AsyncStorage.getItem('Vars_Battery_Current_Graph_Auto_Max_Min'),
+                  Battery_Current_Graph_Max:              await AsyncStorage.getItem('Vars_Battery_Current_Graph_Max'),
+                  Battery_Current_Graph_Min:              await AsyncStorage.getItem('Vars_Battery_Current_Graph_Min'),
+                  Battery_Current_Thresholds:             await AsyncStorage.getItem('Vars_Battery_Current_Thresholds'),
+                  Battery_Current_Max_Threshold_Red:      await AsyncStorage.getItem('Vars_Battery_Current_Max_Threshold_Red'),
+                  Battery_Current_Max_Threshold_Yellow:   await AsyncStorage.getItem('Vars_Battery_Current_Max_Threshold_Yellow'),
+
+                  Battery_SoC_Graph_Auto_Max_Min:         await AsyncStorage.getItem('Vars_Battery_SoC_Graph_Auto_Max_Min'),
+                  Battery_SoC_Graph_Max:                  await AsyncStorage.getItem('Vars_Battery_SoC_Graph_Max'),
+                  Battery_SoC_Graph_Min:                  await AsyncStorage.getItem('Vars_Battery_SoC_Graph_Min'),
+                  Battery_SoC_Thresholds:                 await AsyncStorage.getItem('Vars_Battery_SoC_Thresholds'),
+                  Battery_SoC_Max_Threshold_Red:          await AsyncStorage.getItem('Vars_Battery_SoC_Max_Threshold_Red'),
+                  Battery_SoC_Max_Threshold_Yellow:       await AsyncStorage.getItem('Vars_Battery_SoC_Max_Threshold_Yellow'),
+
+                  Motor_Current_Graph_Auto_Max_Min:       await AsyncStorage.getItem('Vars_Motor_Current_Graph_Auto_Max_Min'),
+                  Motor_Current_Graph_Max:                await AsyncStorage.getItem('Vars_Motor_Current_Graph_Max'),
+                  Motor_Current_Graph_Min:                await AsyncStorage.getItem('Vars_Motor_Current_Graph_Min'),
+                  Motor_Current_Thresholds:               await AsyncStorage.getItem('Vars_Motor_Current_Thresholds'),
+                  Motor_Current_Max_Threshold_Red:        await AsyncStorage.getItem('Vars_Motor_Current_Max_Threshold_Red'),
+                  Motor_Current_Max_Threshold_Yellow:     await AsyncStorage.getItem('Vars_Motor_Current_Max_Threshold_Yellow'),
+
+                  Motor_Temp_Graph_Auto_Max_Min:          await AsyncStorage.getItem('Vars_Motor_Temp_Graph_Auto_Max_Min'),
+                  Motor_Temp_Graph_Max:                   await AsyncStorage.getItem('Vars_Motor_Temp_Graph_Max'),
+                  Motor_Temp_Graph_Min:                   await AsyncStorage.getItem('Vars_Motor_Temp_Graph_Min'),
+                  Motor_Temp_Thresholds:                  await AsyncStorage.getItem('Vars_Motor_Temp_Thresholds'),
+                  Motor_Temp_Max_Threshold_Red:           await AsyncStorage.getItem('Vars_Motor_Temp_Max_Threshold_Red'),
+                  Motor_Temp_Max_Threshold_Yellow:        await AsyncStorage.getItem('Vars_Motor_Temp_Max_Threshold_Yellow'),
+
+                  Motor_Speed_Graph_Auto_Max_Min:         await AsyncStorage.getItem('Vars_Motor_Speed_Graph_Auto_Max_Min'),
+                  Motor_Speed_Graph_Max:                  await AsyncStorage.getItem('Vars_Motor_Speed_Graph_Max'),
+                  Motor_Speed_Graph_Min:                  await AsyncStorage.getItem('Vars_Motor_Speed_Graph_Min'),
+                  Motor_Speed_Thresholds:                 await AsyncStorage.getItem('Vars_Motor_Speed_Thresholds'),
+                  Motor_Speed_Max_Threshold_Red:          await AsyncStorage.getItem('Vars_Motor_Speed_Max_Threshold_Red'),
+                  Motor_Speed_Max_Threshold_Yellow:       await AsyncStorage.getItem('Vars_Motor_Speed_Max_Threshold_Yellow'),
+
+                  Motor_PWM_Graph_Auto_Max_Min:           await AsyncStorage.getItem('Vars_Motor_PWM_Graph_Auto_Max_Min'),
+                  Motor_PWM_Graph_Max:                    await AsyncStorage.getItem('Vars_Motor_PWM_Graph_Max'),
+                  Motor_PWM_Graph_Min:                    await AsyncStorage.getItem('Vars_Motor_PWM_Graph_Min'),
+                  Motor_PWM_Thresholds:                   await AsyncStorage.getItem('Vars_Motor_PWM_Thresholds'),
+                  Motor_PWM_Max_Threshold_Red:            await AsyncStorage.getItem('Vars_Motor_PWM_Max_Threshold_Red'),
+                  Motor_PWM_Max_Threshold_Yellow:         await AsyncStorage.getItem('Vars_Motor_PWM_Max_Threshold_Yellow'),
+
+                  Motor_FOC_Graph_Auto_Max_Min:           await AsyncStorage.getItem('Vars_Motor_FOC_Graph_Auto_Max_Min'),
+                  Motor_FOC_Graph_Max:                    await AsyncStorage.getItem('Vars_Motor_FOC_Graph_Max'),
+                  Motor_FOC_Graph_Min:                    await AsyncStorage.getItem('Vars_Motor_FOC_Graph_Min'),
+                  Motor_FOC_Thresholds:                   await AsyncStorage.getItem('Vars_Motor_FOC_Thresholds'),
+                  Motor_FOC_Max_Threshold_Red:            await AsyncStorage.getItem('Vars_Motor_FOC_Max_Threshold_Red'),
+                  Motor_FOC_Max_Threshold_Yellow:         await AsyncStorage.getItem('Vars_Motor_FOC_Max_Threshold_Yellow'),
+
+                }
+              )
+
+              setPoints(JSON.parse( await AsyncStorage.getItem('Points')) )
+
+
             }
             catch (e) {
-              console.log(`GM Error rtrieving data: ${e}`)
+              console.log(`GM Error retrieving data: ${e}`)
             }
             //#endregion
           }
@@ -666,232 +833,225 @@ const MainNavigator = () => {
           const saveStateToAsyncStorage = async () => {
             //#region store the current data in async storage
             try {
-              await AsyncStorage.setItem('motor_Voltage', motor_Voltage.toString())
-              await AsyncStorage.setItem('motor_Power_Max', motor_Power_Max.toString())
-              await AsyncStorage.setItem('motor_Acceleration', motor_Acceleration.toString())
-              await AsyncStorage.setItem('motor_Deceleration', motor_Deceleration.toString())
-              await AsyncStorage.setItem('motor_Fast_Stop', motor_Fast_Stop.toString())
-              await AsyncStorage.setItem('motor_Field_Weakening', motor_Field_Weakening.toString())
-              await AsyncStorage.setItem('motor_Temperature_Feature', motor_Temperature_Feature.toString())
-              await AsyncStorage.setItem('motor_Temperature_Min_Limit', motor_Temperature_Min_Limit.toString())
-              await AsyncStorage.setItem('motor_Temperature_Max_Limit', motor_Temperature_Max_Limit.toString())
+              await AsyncStorage.setItem('Motor_Voltage',                             motor.Voltage.toString())
+              await AsyncStorage.setItem('Motor_Power_Max',                           motor.Power_Max.toString())
+              await AsyncStorage.setItem('Motor_Acceleration',                        motor.Acceleration.toString())
+              await AsyncStorage.setItem('Motor_Deceleration',                        motor.Deceleration.toString())
+              await AsyncStorage.setItem('Motor_Fast_Stop',                           motor.Fast_Stop.toString())
+              await AsyncStorage.setItem('Motor_Field_Weakening',                     motor.Field_Weakening.toString())
 
-              await AsyncStorage.setItem('torque_Assist_wo_pedal', torque_Assist_wo_pedal.toString())
-              await AsyncStorage.setItem('torque_ADC_Threshold', torque_ADC_Threshold.toString())
-              await AsyncStorage.setItem('torque_Coast_Brake', torque_Coast_Brake.toString())
-              await AsyncStorage.setItem('torque_Coast_Brake_ADC', torque_Coast_Brake_ADC.toString())
-              await AsyncStorage.setItem('torque_Calibration', torque_Calibration.toString())
-              await AsyncStorage.setItem('torque_ADC_Step', torque_ADC_Step.toString())
-              await AsyncStorage.setItem('torque_ADC_Offset', torque_ADC_Offset.toString())
-              await AsyncStorage.setItem('torque_ADC_Max', torque_ADC_Max.toString())
-              await AsyncStorage.setItem('torque_Weight_On_Pedal', torque_Weight_On_Pedal.toString())
-              await AsyncStorage.setItem('torque_ADC_On_Weight', torque_ADC_On_Weight.toString())
-              await AsyncStorage.setItem('torque_Default_Weight', torque_Default_Weight.toString())
+              await AsyncStorage.setItem('MotorTemperature_Feature',                  motorTemperature.Feature.toString())
+              await AsyncStorage.setItem('MotorTemperature_Min_Limit',                motorTemperature.Min_Limit.toString())
+              await AsyncStorage.setItem('MotorTemperature_Max_Limit',                motorTemperature.Max_Limit.toString())
 
-              await AsyncStorage.setItem('battery_Max_current', battery_Max_current.toString())
-              await AsyncStorage.setItem('battery_Low_Cut_Off', battery_Low_Cut_Off.toString())
-              await AsyncStorage.setItem('battery_Resistance', battery_Resistance.toString())
-              await AsyncStorage.setItem('battery_Voltage_Est', battery_Voltage_Est.toString())
-              await AsyncStorage.setItem('battery_Resistance_Est', battery_Resistance_Est.toString())
-              await AsyncStorage.setItem('battery_Power_Loss_Est', battery_Power_Loss_Est.toString())
+              await AsyncStorage.setItem('Torque_Assist_wo_pedal',                    torque.Assist_wo_pedal.toString())
+              await AsyncStorage.setItem('Torque_ADC_Threshold',                      torque.ADC_Threshold.toString())
+              await AsyncStorage.setItem('Torque_Coast_Brake',                        torque.Coast_Brake.toString())
+              await AsyncStorage.setItem('Torque_Coast_Brake_ADC',                    torque.Coast_Brake_ADC.toString())
+              await AsyncStorage.setItem('Torque_Calibration',                        torque.Calibration.toString())
+              await AsyncStorage.setItem('Torque_ADC_Step',                           torque.ADC_Step.toString())
+              await AsyncStorage.setItem('Torque_ADC_Offset',                         torque.ADC_Offset.toString())
+              await AsyncStorage.setItem('Torque_ADC_Max',                            torque.ADC_Max.toString())
+              await AsyncStorage.setItem('Torque_Weight_On_Pedal',                    torque.Weight_On_Pedal.toString())
+              await AsyncStorage.setItem('Torque_ADC_On_Weight',                      torque.ADC_On_Weight.toString())
+              await AsyncStorage.setItem('Torque_Default_Weight',                     torque.Default_Weight.toString())
 
-              await AsyncStorage.setItem('soC_Text', soC_Text.toString())
-              await AsyncStorage.setItem('soC_Reset_At_Voltage', soC_Reset_At_Voltage.toString())
-              await AsyncStorage.setItem('soC_Battery_Total_Wh', soC_Battery_Total_Wh.toString())
-              await AsyncStorage.setItem('soC_Used', soC_Used.toString())
-              await AsyncStorage.setItem('soC_Manual_Reset', soC_Manual_Reset.toString())
+              await AsyncStorage.setItem('Battery_Max_current',                       battery.Max_current.toString())
+              await AsyncStorage.setItem('Battery_Low_Cut_Off',                       battery.Low_Cut_Off.toString())
+              await AsyncStorage.setItem('Battery_Resistance',                        battery.Resistance.toString())
+              await AsyncStorage.setItem('Battery_Voltage_Est',                       battery.Voltage_Est.toString())
+              await AsyncStorage.setItem('Battery_Resistance_Est',                    battery.Resistance_Est.toString())
+              await AsyncStorage.setItem('Battery_Power_Loss_Est',                    battery.Power_Loss_Est.toString())
 
-              await AsyncStorage.setItem('wheel_Max_Speed', wheel_Max_Speed.toString())
-              await AsyncStorage.setItem('wheel_Circumference', wheel_Circumference.toString())
+              await AsyncStorage.setItem('SoC_Text',                                  soC.Text.toString())
+              await AsyncStorage.setItem('SoC_Reset_At_Voltage',                      soC.Reset_At_Voltage.toString())
+              await AsyncStorage.setItem('SoC_Battery_Total_Wh',                      soC.Battery_Total_Wh.toString())
+              await AsyncStorage.setItem('SoC_Used',                                  soC.Used.toString())
+              await AsyncStorage.setItem('SoC_Manual_Reset',                          soC.Manual_Reset.toString())
 
-              await AsyncStorage.setItem('trip_A', trip_A.toString())
-              await AsyncStorage.setItem('trip_B', trip_B.toString())
-              await AsyncStorage.setItem('trip_A_Auto_Reset', trip_A_Auto_Reset.toString())
-              await AsyncStorage.setItem('trip_A_Auto_Reset_Hours', trip_A_Auto_Reset_Hours.toString())
-              await AsyncStorage.setItem('trip_B_Auto_Reset', trip_B_Auto_Reset.toString())
-              await AsyncStorage.setItem('trip_B_Auto_Reset_Hours', trip_B_Auto_Reset_Hours.toString())
-              await AsyncStorage.setItem('trip_Reset_Trip_A', trip_Reset_Trip_A.toString())
-              await AsyncStorage.setItem('trip_Reset_Trip_B', trip_Reset_Trip_B.toString())
+              await AsyncStorage.setItem('Wheel_Max_Speed',                           wheel.Max_Speed.toString())
+              await AsyncStorage.setItem('Wheel_Circumference',                       wheel.Circumference.toString())
 
-              await AsyncStorage.setItem('number_Assist_Levels', number_Assist_Levels.toString())
+              await AsyncStorage.setItem('Trip_Odometer',                             trip.Odometer.toString())
+              await AsyncStorage.setItem('Trip_A',                                    trip.A.toString())
+              await AsyncStorage.setItem('Trip_B',                                    trip.B.toString())
+              await AsyncStorage.setItem('Trip_A_Auto_Reset',                         trip.A_Auto_Reset.toString())
+              await AsyncStorage.setItem('Trip_A_Auto_Reset_Hours',                   trip.A_Auto_Reset_Hours.toString())
+              await AsyncStorage.setItem('Trip_B_Auto_Reset',                         trip.B_Auto_Reset.toString())
+              await AsyncStorage.setItem('Trip_B_Auto_Reset_Hours',                   trip.B_Auto_Reset_Hours.toString())
 
-              await AsyncStorage.setItem('power_Assist_Level_1', power_Assist_Level_1.toString())
-              await AsyncStorage.setItem('power_Assist_Level_2', power_Assist_Level_2.toString())
-              await AsyncStorage.setItem('power_Assist_Level_3', power_Assist_Level_3.toString())
-              await AsyncStorage.setItem('power_Assist_Level_4', power_Assist_Level_4.toString())
-              await AsyncStorage.setItem('power_Assist_Level_5', power_Assist_Level_5.toString())
-              await AsyncStorage.setItem('power_Assist_Level_6', power_Assist_Level_6.toString())
-              await AsyncStorage.setItem('power_Assist_Level_7', power_Assist_Level_7.toString())
-              await AsyncStorage.setItem('power_Assist_Level_8', power_Assist_Level_8.toString())
-              await AsyncStorage.setItem('power_Assist_Level_9', power_Assist_Level_9.toString())
+              await AsyncStorage.setItem('Number_Assist_Levels_Levels',               number_Assist_Levels.Levels.toString())
 
-              await AsyncStorage.setItem('torque_Assist_Level_1', torque_Assist_Level_1.toString())
-              await AsyncStorage.setItem('torque_Assist_Level_2', torque_Assist_Level_2.toString())
-              await AsyncStorage.setItem('torque_Assist_Level_3', torque_Assist_Level_3.toString())
-              await AsyncStorage.setItem('torque_Assist_Level_4', torque_Assist_Level_4.toString())
-              await AsyncStorage.setItem('torque_Assist_Level_5', torque_Assist_Level_5.toString())
-              await AsyncStorage.setItem('torque_Assist_Level_6', torque_Assist_Level_6.toString())
-              await AsyncStorage.setItem('torque_Assist_Level_7', torque_Assist_Level_7.toString())
-              await AsyncStorage.setItem('torque_Assist_Level_8', torque_Assist_Level_8.toString())
-              await AsyncStorage.setItem('torque_Assist_Level_9', torque_Assist_Level_9.toString())
+              await AsyncStorage.setItem('Power_Assist_Level_1',                      power_Assist.Level_1.toString())
+              await AsyncStorage.setItem('Power_Assist_Level_2',                      power_Assist.Level_2.toString())
+              await AsyncStorage.setItem('Power_Assist_Level_3',                      power_Assist.Level_3.toString())
+              await AsyncStorage.setItem('Power_Assist_Level_4',                      power_Assist.Level_4.toString())
+              await AsyncStorage.setItem('Power_Assist_Level_5',                      power_Assist.Level_5.toString())
+              await AsyncStorage.setItem('Power_Assist_Level_6',                      power_Assist.Level_6.toString())
+              await AsyncStorage.setItem('Power_Assist_Level_7',                      power_Assist.Level_7.toString())
+              await AsyncStorage.setItem('Power_Assist_Level_8',                      power_Assist.Level_8.toString())
+              await AsyncStorage.setItem('Power_Assist_Level_9',                      power_Assist.Level_9.toString())
 
-              await AsyncStorage.setItem('cadence_Assist_Level_1', cadence_Assist_Level_1.toString())
-              await AsyncStorage.setItem('cadence_Assist_Level_2', cadence_Assist_Level_2.toString())
-              await AsyncStorage.setItem('cadence_Assist_Level_3', cadence_Assist_Level_3.toString())
-              await AsyncStorage.setItem('cadence_Assist_Level_4', cadence_Assist_Level_4.toString())
-              await AsyncStorage.setItem('cadence_Assist_Level_5', cadence_Assist_Level_5.toString())
-              await AsyncStorage.setItem('cadence_Assist_Level_6', cadence_Assist_Level_6.toString())
-              await AsyncStorage.setItem('cadence_Assist_Level_7', cadence_Assist_Level_7.toString())
-              await AsyncStorage.setItem('cadence_Assist_Level_8', cadence_Assist_Level_8.toString())
-              await AsyncStorage.setItem('cadence_Assist_Level_9', cadence_Assist_Level_9.toString())
+              await AsyncStorage.setItem('Torque_Assist_Level_1',                     torque_Assist.Level_1.toString())
+              await AsyncStorage.setItem('Torque_Assist_Level_2',                     torque_Assist.Level_2.toString())
+              await AsyncStorage.setItem('Torque_Assist_Level_3',                     torque_Assist.Level_3.toString())
+              await AsyncStorage.setItem('Torque_Assist_Level_4',                     torque_Assist.Level_4.toString())
+              await AsyncStorage.setItem('Torque_Assist_Level_5',                     torque_Assist.Level_5.toString())
+              await AsyncStorage.setItem('Torque_Assist_Level_6',                     torque_Assist.Level_6.toString())
+              await AsyncStorage.setItem('Torque_Assist_Level_7',                     torque_Assist.Level_7.toString())
+              await AsyncStorage.setItem('Torque_Assist_Level_8',                     torque_Assist.Level_8.toString())
+              await AsyncStorage.setItem('Torque_Assist_Level_9',                     torque_Assist.Level_9.toString())
 
-              await AsyncStorage.setItem('eMTB_Assist_Level_1', eMTB_Assist_Level_1.toString())
-              await AsyncStorage.setItem('eMTB_Assist_Level_2', eMTB_Assist_Level_2.toString())
-              await AsyncStorage.setItem('eMTB_Assist_Level_3', eMTB_Assist_Level_3.toString())
-              await AsyncStorage.setItem('eMTB_Assist_Level_4', eMTB_Assist_Level_4.toString())
-              await AsyncStorage.setItem('eMTB_Assist_Level_5', eMTB_Assist_Level_5.toString())
-              await AsyncStorage.setItem('eMTB_Assist_Level_6', eMTB_Assist_Level_6.toString())
-              await AsyncStorage.setItem('eMTB_Assist_Level_7', eMTB_Assist_Level_7.toString())
-              await AsyncStorage.setItem('eMTB_Assist_Level_8', eMTB_Assist_Level_8.toString())
-              await AsyncStorage.setItem('eMTB_Assist_Level_9', eMTB_Assist_Level_9.toString())
+              await AsyncStorage.setItem('Cadence_Assist_Level_1',                    cadence_Assist.Level_1.toString())
+              await AsyncStorage.setItem('Cadence_Assist_Level_2',                    cadence_Assist.Level_2.toString())
+              await AsyncStorage.setItem('Cadence_Assist_Level_3',                    cadence_Assist.Level_3.toString())
+              await AsyncStorage.setItem('Cadence_Assist_Level_4',                    cadence_Assist.Level_4.toString())
+              await AsyncStorage.setItem('Cadence_Assist_Level_5',                    cadence_Assist.Level_5.toString())
+              await AsyncStorage.setItem('Cadence_Assist_Level_6',                    cadence_Assist.Level_6.toString())
+              await AsyncStorage.setItem('Cadence_Assist_Level_7',                    cadence_Assist.Level_7.toString())
+              await AsyncStorage.setItem('Cadence_Assist_Level_8',                    cadence_Assist.Level_8.toString())
+              await AsyncStorage.setItem('Cadence_Assist_Level_9',                    cadence_Assist.Level_9.toString())
 
-              await AsyncStorage.setItem('walk_Assist', walk_Assist.toString())
-              await AsyncStorage.setItem('walk_Assist_Cruise_Feature', walk_Assist_Cruise_Feature.toString())
-              await AsyncStorage.setItem('walk_Assist_Level_1', walk_Assist_Level_1.toString())
-              await AsyncStorage.setItem('walk_Assist_Level_2', walk_Assist_Level_2.toString())
-              await AsyncStorage.setItem('walk_Assist_Level_3', walk_Assist_Level_3.toString())
-              await AsyncStorage.setItem('walk_Assist_Level_4', walk_Assist_Level_4.toString())
-              await AsyncStorage.setItem('walk_Assist_Level_5', walk_Assist_Level_5.toString())
-              await AsyncStorage.setItem('walk_Assist_Level_6', walk_Assist_Level_6.toString())
-              await AsyncStorage.setItem('walk_Assist_Level_7', walk_Assist_Level_7.toString())
-              await AsyncStorage.setItem('walk_Assist_Level_8', walk_Assist_Level_8.toString())
-              await AsyncStorage.setItem('walk_Assist_Level_9', walk_Assist_Level_9.toString())
+              await AsyncStorage.setItem('EMTB_Assist_Level_1',                       eMTB_Assist.Level_1.toString())
+              await AsyncStorage.setItem('EMTB_Assist_Level_2',                       eMTB_Assist.Level_2.toString())
+              await AsyncStorage.setItem('EMTB_Assist_Level_3',                       eMTB_Assist.Level_3.toString())
+              await AsyncStorage.setItem('EMTB_Assist_Level_4',                       eMTB_Assist.Level_4.toString())
+              await AsyncStorage.setItem('EMTB_Assist_Level_5',                       eMTB_Assist.Level_5.toString())
+              await AsyncStorage.setItem('EMTB_Assist_Level_6',                       eMTB_Assist.Level_6.toString())
+              await AsyncStorage.setItem('EMTB_Assist_Level_7',                       eMTB_Assist.Level_7.toString())
+              await AsyncStorage.setItem('EMTB_Assist_Level_8',                       eMTB_Assist.Level_8.toString())
+              await AsyncStorage.setItem('EMTB_Assist_Level_9',                       eMTB_Assist.Level_9.toString())
 
-              await AsyncStorage.setItem('startup_Boost', startup_Boost.toString())
-              await AsyncStorage.setItem('startup_Boost_Torque_Factor', startup_Boost_Torque_Factor.toString())
-              await AsyncStorage.setItem('startup_Boost_Cadence_Step', startup_Boost_Cadence_Step.toString())
+              await AsyncStorage.setItem('Walk_Assist_Walk_Assist',                   walk_Assist.Walk_Assist.toString())
+              await AsyncStorage.setItem('Walk_Assist_Cruise_Feature',                walk_Assist.Cruise_Feature.toString())
+              await AsyncStorage.setItem('Walk_Assist_Level_1',                       walk_Assist.Level_1.toString())
+              await AsyncStorage.setItem('Walk_Assist_Level_2',                       walk_Assist.Level_2.toString())
+              await AsyncStorage.setItem('Walk_Assist_Level_3',                       walk_Assist.Level_3.toString())
+              await AsyncStorage.setItem('Walk_Assist_Level_4',                       walk_Assist.Level_4.toString())
+              await AsyncStorage.setItem('Walk_Assist_Level_5',                       walk_Assist.Level_5.toString())
+              await AsyncStorage.setItem('Walk_Assist_Level_6',                       walk_Assist.Level_6.toString())
+              await AsyncStorage.setItem('Walk_Assist_Level_7',                       walk_Assist.Level_7.toString())
+              await AsyncStorage.setItem('Walk_Assist_Level_8',                       walk_Assist.Level_8.toString())
+              await AsyncStorage.setItem('Walk_Assist_Level_9',                       walk_Assist.Level_9.toString())
 
-              await AsyncStorage.setItem('street_Mode', street_Mode.toString())
-              await AsyncStorage.setItem('street_Mode_Enable_At_Startup', street_Mode_Enable_At_Startup.toString())
-              await AsyncStorage.setItem('street_Mode_Speed_Limit', street_Mode_Speed_Limit.toString())
-              await AsyncStorage.setItem('street_Mode_Motor_Power_Limit', street_Mode_Motor_Power_Limit.toString())
-              await AsyncStorage.setItem('street_Mode_Throttle_Enable', street_Mode_Throttle_Enable.toString())
-              await AsyncStorage.setItem('street_Mode_Cruise_Enable', street_Mode_Cruise_Enable.toString())
-              await AsyncStorage.setItem('street_Mode_Hotkey_Enable', street_Mode_Hotkey_Enable.toString())
+              await AsyncStorage.setItem('Startup_Boost_Startup_Boost',               startup_Boost.Startup_Boost.toString())
+              await AsyncStorage.setItem('Startup_Boost_Torque_Factor',               startup_Boost.Torque_Factor.toString())
+              await AsyncStorage.setItem('Startup_Boost_Cadence_Step',                startup_Boost.Cadence_Step.toString())
 
-              await AsyncStorage.setItem('vars_Speed_Graph_Auto_Max_Min', vars_Speed_Graph_Auto_Max_Min.toString())
-              await AsyncStorage.setItem('vars_Speed_Graph_Max', vars_Speed_Graph_Max.toString())
-              await AsyncStorage.setItem('vars_Speed_Graph_Min', vars_Speed_Graph_Min.toString())
-              await AsyncStorage.setItem('vars_Speed_Thresholds', vars_Speed_Thresholds.toString())
-              await AsyncStorage.setItem('vars_Speed_Max_Threshold_Red', vars_Speed_Max_Threshold_Red.toString())
-              await AsyncStorage.setItem('vars_Speed_Max_Threshold_Yellow', vars_Speed_Max_Threshold_Yellow.toString())
-              await AsyncStorage.setItem('vars_Trip_Dist_Graph_Auto_Max_Min', vars_Trip_Dist_Graph_Auto_Max_Min.toString())
-              await AsyncStorage.setItem('vars_Trip_Dist_Graph_Max', vars_Trip_Dist_Graph_Max.toString())
-              await AsyncStorage.setItem('vars_Trip_Dist_Graph_Min', vars_Trip_Dist_Graph_Min.toString())
-              await AsyncStorage.setItem('vars_Trip_Dist_Thresholds', vars_Trip_Dist_Thresholds.toString())
-              await AsyncStorage.setItem('vars_Trip_Dist_Max_Threshold_Red', vars_Trip_Dist_Max_Threshold_Red.toString())
-              await AsyncStorage.setItem('vars_Trip_Dist_Max_Threshold_Yellow', vars_Trip_Dist_Max_Threshold_Yellow.toString())
-              await AsyncStorage.setItem('vars_Cadence_Graph_Auto_Max_Min', vars_Cadence_Graph_Auto_Max_Min.toString())
-              await AsyncStorage.setItem('vars_Cadence_Graph_Max', vars_Cadence_Graph_Max.toString())
-              await AsyncStorage.setItem('vars_Cadence_Graph_Min', vars_Cadence_Graph_Min.toString())
-              await AsyncStorage.setItem('vars_Cadence_Thresholds', vars_Cadence_Thresholds.toString())
-              await AsyncStorage.setItem('vars_Cadence_Max_Threshold_Red', vars_Cadence_Max_Threshold_Red.toString())
-              await AsyncStorage.setItem('vars_Cadence_Max_Threshold_Yellow', vars_Cadence_Max_Threshold_Yellow.toString())
-              await AsyncStorage.setItem('vars_Human_Power_Graph_Auto_Max_Min', vars_Human_Power_Graph_Auto_Max_Min.toString())
-              await AsyncStorage.setItem('vars_Human_Power_Graph_Max', vars_Human_Power_Graph_Max.toString())
-              await AsyncStorage.setItem('vars_Human_Power_Graph_Min', vars_Human_Power_Graph_Min.toString())
-              await AsyncStorage.setItem('vars_Human_Power_Thresholds', vars_Human_Power_Thresholds.toString())
-              await AsyncStorage.setItem('vars_Human_Power_Max_Threshold_Red', vars_Human_Power_Max_Threshold_Red.toString())
-              await AsyncStorage.setItem('vars_Human_Power_Max_Threshold_Yellow', vars_Human_Power_Max_Threshold_Yellow.toString())
-              await AsyncStorage.setItem('vars_Motor_Power_Graph_Auto_Max_Min', vars_Motor_Power_Graph_Auto_Max_Min.toString())
-              await AsyncStorage.setItem('vars_Motor_Power_Graph_Max', vars_Motor_Power_Graph_Max.toString())
-              await AsyncStorage.setItem('vars_Motor_Power_Graph_Min', vars_Motor_Power_Graph_Min.toString())
-              await AsyncStorage.setItem('vars_Motor_Power_Thresholds', vars_Motor_Power_Thresholds.toString())
-              await AsyncStorage.setItem('vars_Motor_Power_Max_Threshold_Red', vars_Motor_Power_Max_Threshold_Red.toString())
-              await AsyncStorage.setItem('vars_Motor_Power_Max_Threshold_Yellow', vars_Motor_Power_Max_Threshold_Yellow.toString())
-              await AsyncStorage.setItem('vars_Watts_Km_Graph_Auto_Max_Min', vars_Watts_Km_Graph_Auto_Max_Min.toString())
-              await AsyncStorage.setItem('vars_Watts_Km_Graph_Max', vars_Watts_Km_Graph_Max.toString())
-              await AsyncStorage.setItem('vars_Watts_Km_Graph_Min', vars_Watts_Km_Graph_Min.toString())
-              await AsyncStorage.setItem('vars_Watts_Km_Thresholds', vars_Watts_Km_Thresholds.toString())
-              await AsyncStorage.setItem('vars_Watts_Km_Max_Threshold_Red', vars_Watts_Km_Max_Threshold_Red.toString())
-              await AsyncStorage.setItem('vars_Watts_Km_Max_Threshold_Yellow', vars_Watts_Km_Max_Threshold_Yellow.toString())
-              await AsyncStorage.setItem('vars_Battery_Voltage_Graph_Auto_Max_Min', vars_Battery_Voltage_Graph_Auto_Max_Min.toString())
-              await AsyncStorage.setItem('vars_Battery_Voltage_Graph_Max', vars_Battery_Voltage_Graph_Max.toString())
-              await AsyncStorage.setItem('vars_Battery_Voltage_Graph_Min', vars_Battery_Voltage_Graph_Min.toString())
-              await AsyncStorage.setItem('vars_Battery_Voltage_Thresholds', vars_Battery_Voltage_Thresholds.toString())
-              await AsyncStorage.setItem('vars_Battery_Voltage_Max_Threshold_Red', vars_Battery_Voltage_Max_Threshold_Red.toString())
-              await AsyncStorage.setItem('vars_Battery_Voltage_Max_Threshold_Yellow', vars_Battery_Voltage_Max_Threshold_Yellow.toString())
-              await AsyncStorage.setItem('vars_Battery_Current_Graph_Auto_Max_Min', vars_Battery_Current_Graph_Auto_Max_Min.toString())
-              await AsyncStorage.setItem('vars_Battery_Current_Graph_Max', vars_Battery_Current_Graph_Max.toString())
-              await AsyncStorage.setItem('vars_Battery_Current_Graph_Min', vars_Battery_Current_Graph_Min.toString())
-              await AsyncStorage.setItem('vars_Battery_Current_Thresholds', vars_Battery_Current_Thresholds.toString())
-              await AsyncStorage.setItem('vars_Battery_Current_Max_Threshold_Red', vars_Battery_Current_Max_Threshold_Red.toString())
-              await AsyncStorage.setItem('vars_Battery_Current_Max_Threshold_Yellow', vars_Battery_Current_Max_Threshold_Yellow.toString())
-              await AsyncStorage.setItem('vars_Battery_SoC_Graph_Auto_Max_Min', vars_Battery_SoC_Graph_Auto_Max_Min.toString())
-              await AsyncStorage.setItem('vars_Battery_SoC_Graph_Max', vars_Battery_SoC_Graph_Max.toString())
-              await AsyncStorage.setItem('vars_Battery_SoC_Graph_Min', vars_Battery_SoC_Graph_Min.toString())
-              await AsyncStorage.setItem('vars_Battery_SoC_Thresholds', vars_Battery_SoC_Thresholds.toString())
-              await AsyncStorage.setItem('vars_Battery_SoC_Max_Threshold_Red', vars_Battery_SoC_Max_Threshold_Red.toString())
-              await AsyncStorage.setItem('vars_Battery_SoC_Max_Threshold_Yellow', vars_Battery_SoC_Max_Threshold_Yellow.toString())
-              await AsyncStorage.setItem('vars_Motor_Current_Graph_Auto_Max_Min', vars_Motor_Current_Graph_Auto_Max_Min.toString())
-              await AsyncStorage.setItem('vars_Motor_Current_Graph_Max', vars_Motor_Current_Graph_Max.toString())
-              await AsyncStorage.setItem('vars_Motor_Current_Graph_Min', vars_Motor_Current_Graph_Min.toString())
-              await AsyncStorage.setItem('vars_Motor_Current_Thresholds', vars_Motor_Current_Thresholds.toString())
-              await AsyncStorage.setItem('vars_Motor_Current_Max_Threshold_Red', vars_Motor_Current_Max_Threshold_Red.toString())
-              await AsyncStorage.setItem('vars_Motor_Current_Max_Threshold_Yellow', vars_Motor_Current_Max_Threshold_Yellow.toString())
-              await AsyncStorage.setItem('vars_Motor_Temp_Graph_Auto_Max_Min', vars_Motor_Temp_Graph_Auto_Max_Min.toString())
-              await AsyncStorage.setItem('vars_Motor_Temp_Graph_Max', vars_Motor_Temp_Graph_Max.toString())
-              await AsyncStorage.setItem('vars_Motor_Temp_Graph_Min', vars_Motor_Temp_Graph_Min.toString())
-              await AsyncStorage.setItem('vars_Motor_Temp_Thresholds', vars_Motor_Temp_Thresholds.toString())
-              await AsyncStorage.setItem('vars_Motor_Temp_Max_Threshold_Red', vars_Motor_Temp_Max_Threshold_Red.toString())
-              await AsyncStorage.setItem('vars_Motor_Temp_Max_Threshold_Yellow', vars_Motor_Temp_Max_Threshold_Yellow.toString())
-              await AsyncStorage.setItem('vars_Motor_Speed_Graph_Auto_Max_Min', vars_Motor_Speed_Graph_Auto_Max_Min.toString())
-              await AsyncStorage.setItem('vars_Motor_Speed_Graph_Max', vars_Motor_Speed_Graph_Max.toString())
-              await AsyncStorage.setItem('vars_Motor_Speed_Graph_Min', vars_Motor_Speed_Graph_Min.toString())
-              await AsyncStorage.setItem('vars_Motor_Speed_Thresholds', vars_Motor_Speed_Thresholds.toString())
-              await AsyncStorage.setItem('vars_Motor_Speed_Max_Threshold_Red', vars_Motor_Speed_Max_Threshold_Red.toString())
-              await AsyncStorage.setItem('vars_Motor_Speed_Max_Threshold_Yellow', vars_Motor_Speed_Max_Threshold_Yellow.toString())
-              await AsyncStorage.setItem('vars_Motor_PWM_Graph_Auto_Max_Min', vars_Motor_PWM_Graph_Auto_Max_Min.toString())
-              await AsyncStorage.setItem('vars_Motor_PWM_Graph_Max', vars_Motor_PWM_Graph_Max.toString())
-              await AsyncStorage.setItem('vars_Motor_PWM_Graph_Min', vars_Motor_PWM_Graph_Min.toString())
-              await AsyncStorage.setItem('vars_Motor_PWM_Thresholds', vars_Motor_PWM_Thresholds.toString())
-              await AsyncStorage.setItem('vars_Motor_PWM_Max_Threshold_Red', vars_Motor_PWM_Max_Threshold_Red.toString())
-              await AsyncStorage.setItem('vars_Motor_PWM_Max_Threshold_Yellow', vars_Motor_PWM_Max_Threshold_Yellow.toString())
-              await AsyncStorage.setItem('vars_Motor_FOC_Graph_Auto_Max_Min', vars_Motor_FOC_Graph_Auto_Max_Min.toString())
-              await AsyncStorage.setItem('vars_Motor_FOC_Graph_Max', vars_Motor_FOC_Graph_Max.toString())
-              await AsyncStorage.setItem('vars_Motor_FOC_Graph_Min', vars_Motor_FOC_Graph_Min.toString())
-              await AsyncStorage.setItem('vars_Motor_FOC_Thresholds', vars_Motor_FOC_Thresholds.toString())
-              await AsyncStorage.setItem('vars_Motor_FOC_Max_Threshold_Red', vars_Motor_FOC_Max_Threshold_Red.toString())
-              await AsyncStorage.setItem('vars_Motor_FOC_Max_Threshold_Yellow', vars_Motor_FOC_Max_Threshold_Yellow.toString())
+              await AsyncStorage.setItem('Street_Mode_Street_Mode',                   street_Mode.Street_Mode.toString())
+              await AsyncStorage.setItem('Street_Mode_Enable_At_Startup',             street_Mode.Enable_At_Startup.toString())
+              await AsyncStorage.setItem('Street_Mode_Speed_Limit',                   street_Mode.Speed_Limit.toString())
+              await AsyncStorage.setItem('Street_Mode_Motor_Power_Limit',             street_Mode.Motor_Power_Limit.toString())
+              await AsyncStorage.setItem('Street_Mode_Throttle_Enable',               street_Mode.Throttle_Enable.toString())
+              await AsyncStorage.setItem('Street_Mode_Cruise_Enable',                 street_Mode.Cruise_Enable.toString())
+              await AsyncStorage.setItem('Street_Mode_Hotkey_Enable',                 street_Mode.Hotkey_Enable.toString())
 
-              await AsyncStorage.setItem('various_Lights_Configuration', various_Lights_Configuration.toString())
-              await AsyncStorage.setItem('various_Assist_With_Error', various_Assist_With_Error.toString())
-              await AsyncStorage.setItem('various_Virtual_Throttle_Step', various_Virtual_Throttle_Step.toString())
-              await AsyncStorage.setItem('various_Odometer', various_Odometer.toString())
+              await AsyncStorage.setItem('Various_Lights_Configuration',              various.Lights_Configuration.toString())
+              await AsyncStorage.setItem('Various_Assist_With_Error',                 various.Assist_With_Error.toString())
+              await AsyncStorage.setItem('Various_Virtual_Throttle_Step',             various.Virtual_Throttle_Step.toString())
 
-              await AsyncStorage.setItem('display_Clock_Hours', display_Clock_Hours.toString())
-              await AsyncStorage.setItem('display_Clock_Minutes', display_Clock_Minutes.toString())
-              await AsyncStorage.setItem('display_Brightness_On', display_Brightness_On.toString())
-              await AsyncStorage.setItem('display_Brightness_Off', display_Brightness_Off.toString())
-              await AsyncStorage.setItem('display_Auto_Power_Off', display_Auto_Power_Off.toString())
-              await AsyncStorage.setItem('display_LCD_Type', display_LCD_Type.toString())
-              await AsyncStorage.setItem('display_860C_Shortcut_Key', display_860C_Shortcut_Key.toString())
-              await AsyncStorage.setItem('display_Units', display_Units.toString())
-              await AsyncStorage.setItem('display_Temp_Units', display_Temp_Units.toString())
-              await AsyncStorage.setItem('display_Reset_To_Defaults', display_Reset_To_Defaults.toString())
+              await AsyncStorage.setItem('Display_Units',                             display.Units.toString())
+              await AsyncStorage.setItem('Display_Temp_Units',                        display.Temp_Units.toString())
 
-              await AsyncStorage.setItem('technical_ADC_Battery_Current', technical_ADC_Battery_Current.toString())
-              await AsyncStorage.setItem('technical_ADC_Throttle_Sensor', technical_ADC_Throttle_Sensor.toString())
-              await AsyncStorage.setItem('technical_Throttle_Sensor', technical_Throttle_Sensor.toString())
-              await AsyncStorage.setItem('technical_ADC_Torque_Sensor', technical_ADC_Torque_Sensor.toString())
-              await AsyncStorage.setItem('technical_ADC_Torque_Delta', technical_ADC_Torque_Delta.toString())
-              await AsyncStorage.setItem('technical_ADC_Torque_Boost', technical_ADC_Torque_Boost.toString())
-              await AsyncStorage.setItem('technical_ADC_Torque_Step_Calc', technical_ADC_Torque_Step_Calc.toString())
-              await AsyncStorage.setItem('technical_Pedal_Cadence', technical_Pedal_Cadence.toString())
-              await AsyncStorage.setItem('technical_PWM_Duty_Cycle', technical_PWM_Duty_Cycle.toString())
-              await AsyncStorage.setItem('technical_Motor_Speed', technical_Motor_Speed.toString())
-              await AsyncStorage.setItem('technical_Motor_FOC', technical_Motor_FOC.toString())
-              await AsyncStorage.setItem('technical_Hall_Sensors', technical_Hall_Sensors.toString())
+              await AsyncStorage.setItem('Technical_ADC_Battery_Current',             technical.ADC_Battery_Current.toString())
+              await AsyncStorage.setItem('Technical_ADC_Throttle_Sensor',             technical.ADC_Throttle_Sensor.toString())
+              await AsyncStorage.setItem('Technical_Throttle_Sensor',                 technical.Throttle_Sensor.toString())
+              await AsyncStorage.setItem('Technical_ADC_Torque_Sensor',               technical.ADC_Torque_Sensor.toString())
+              await AsyncStorage.setItem('Technical_ADC_Torque_Delta',                technical.ADC_Torque_Delta.toString())
+              await AsyncStorage.setItem('Technical_ADC_Torque_Boost',                technical.ADC_Torque_Boost.toString())
+              await AsyncStorage.setItem('Technical_ADC_Torque_Step_Calc',            technical.ADC_Torque_Step_Calc.toString())
+              await AsyncStorage.setItem('Technical_Pedal_Cadence',                   technical.Pedal_Cadence.toString())
+              await AsyncStorage.setItem('Technical_PWM_Duty_Cycle',                  technical.PWM_Duty_Cycle.toString())
+              await AsyncStorage.setItem('Technical_Motor_Speed',                     technical.Motor_Speed.toString())
+              await AsyncStorage.setItem('Technical_Motor_FOC',                       technical.Motor_FOC.toString())
+              await AsyncStorage.setItem('Technical_Hall_Sensors',                    technical.Hall_Sensors.toString())
+
+              await AsyncStorage.setItem('Vars_Speed_Graph_Auto_Max_Min',             vars.Speed_Graph_Auto_Max_Min.toString())
+              await AsyncStorage.setItem('Vars_Speed_Graph_Max',                      vars.Speed_Graph_Max.toString())
+              await AsyncStorage.setItem('Vars_Speed_Graph_Min',                      vars.Speed_Graph_Min.toString())
+              await AsyncStorage.setItem('Vars_Speed_Thresholds',                     vars.Speed_Thresholds.toString())
+              await AsyncStorage.setItem('Vars_Speed_Max_Threshold_Red',              vars.Speed_Max_Threshold_Red.toString())
+              await AsyncStorage.setItem('Vars_Speed_Max_Threshold_Yellow',           vars.Speed_Max_Threshold_Yellow.toString())
+              await AsyncStorage.setItem('Vars_Trip_Dist_Graph_Auto_Max_Min',         vars.Trip_Dist_Graph_Auto_Max_Min.toString())
+              await AsyncStorage.setItem('Vars_Trip_Dist_Graph_Max',                  vars.Trip_Dist_Graph_Max.toString())
+              await AsyncStorage.setItem('Vars_Trip_Dist_Graph_Min',                  vars.Trip_Dist_Graph_Min.toString())
+              await AsyncStorage.setItem('Vars_Trip_Dist_Thresholds',                 vars.Trip_Dist_Thresholds.toString())
+              await AsyncStorage.setItem('Vars_Trip_Dist_Max_Threshold_Red',          vars.Trip_Dist_Max_Threshold_Red.toString())
+              await AsyncStorage.setItem('Vars_Trip_Dist_Max_Threshold_Yellow',       vars.Trip_Dist_Max_Threshold_Yellow.toString())
+              await AsyncStorage.setItem('Vars_Cadence_Graph_Auto_Max_Min',           vars.Cadence_Graph_Auto_Max_Min.toString())
+              await AsyncStorage.setItem('Vars_Cadence_Graph_Max',                    vars.Cadence_Graph_Max.toString())
+              await AsyncStorage.setItem('Vars_Cadence_Graph_Min',                    vars.Cadence_Graph_Min.toString())
+              await AsyncStorage.setItem('Vars_Cadence_Thresholds',                   vars.Cadence_Thresholds.toString())
+              await AsyncStorage.setItem('Vars_Cadence_Max_Threshold_Red',            vars.Cadence_Max_Threshold_Red.toString())
+              await AsyncStorage.setItem('Vars_Cadence_Max_Threshold_Yellow',         vars.Cadence_Max_Threshold_Yellow.toString())
+              await AsyncStorage.setItem('Vars_Human_Power_Graph_Auto_Max_Min',       vars.Human_Power_Graph_Auto_Max_Min.toString())
+              await AsyncStorage.setItem('Vars_Human_Power_Graph_Max',                vars.Human_Power_Graph_Max.toString())
+              await AsyncStorage.setItem('Vars_Human_Power_Graph_Min',                vars.Human_Power_Graph_Min.toString())
+              await AsyncStorage.setItem('Vars_Human_Power_Thresholds',               vars.Human_Power_Thresholds.toString())
+              await AsyncStorage.setItem('Vars_Human_Power_Max_Threshold_Red',        vars.Human_Power_Max_Threshold_Red.toString())
+              await AsyncStorage.setItem('Vars_Human_Power_Max_Threshold_Yellow',     vars.Human_Power_Max_Threshold_Yellow.toString())
+              await AsyncStorage.setItem('Vars_Motor_Power_Graph_Auto_Max_Min',       vars.Motor_Power_Graph_Auto_Max_Min.toString())
+              await AsyncStorage.setItem('Vars_Motor_Power_Graph_Max',                vars.Motor_Power_Graph_Max.toString())
+              await AsyncStorage.setItem('Vars_Motor_Power_Graph_Min',                vars.Motor_Power_Graph_Min.toString())
+              await AsyncStorage.setItem('Vars_Motor_Power_Thresholds',               vars.Motor_Power_Thresholds.toString())
+              await AsyncStorage.setItem('Vars_Motor_Power_Max_Threshold_Red',        vars.Motor_Power_Max_Threshold_Red.toString())
+              await AsyncStorage.setItem('Vars_Motor_Power_Max_Threshold_Yellow',     vars.Motor_Power_Max_Threshold_Yellow.toString())
+              await AsyncStorage.setItem('Vars_Watts_Km_Graph_Auto_Max_Min',          vars.Watts_Km_Graph_Auto_Max_Min.toString())
+              await AsyncStorage.setItem('Vars_Watts_Km_Graph_Max',                   vars.Watts_Km_Graph_Max.toString())
+              await AsyncStorage.setItem('Vars_Watts_Km_Graph_Min',                   vars.Watts_Km_Graph_Min.toString())
+              await AsyncStorage.setItem('Vars_Watts_Km_Thresholds',                  vars.Watts_Km_Thresholds.toString())
+              await AsyncStorage.setItem('Vars_Watts_Km_Max_Threshold_Red',           vars.Watts_Km_Max_Threshold_Red.toString())
+              await AsyncStorage.setItem('Vars_Watts_Km_Max_Threshold_Yellow',        vars.Watts_Km_Max_Threshold_Yellow.toString())
+              await AsyncStorage.setItem('Vars_Battery_Voltage_Graph_Auto_Max_Min',   vars.Battery_Voltage_Graph_Auto_Max_Min.toString())
+              await AsyncStorage.setItem('Vars_Battery_Voltage_Graph_Max',            vars.Battery_Voltage_Graph_Max.toString())
+              await AsyncStorage.setItem('Vars_Battery_Voltage_Graph_Min',            vars.Battery_Voltage_Graph_Min.toString())
+              await AsyncStorage.setItem('Vars_Battery_Voltage_Thresholds',           vars.Battery_Voltage_Thresholds.toString())
+              await AsyncStorage.setItem('Vars_Battery_Voltage_Max_Threshold_Red',    vars.Battery_Voltage_Max_Threshold_Red.toString())
+              await AsyncStorage.setItem('Vars_Battery_Voltage_Max_Threshold_Yellow', vars.Battery_Voltage_Max_Threshold_Yellow.toString())
+              await AsyncStorage.setItem('Vars_Battery_Current_Graph_Auto_Max_Min',   vars.Battery_Current_Graph_Auto_Max_Min.toString())
+              await AsyncStorage.setItem('Vars_Battery_Current_Graph_Max',            vars.Battery_Current_Graph_Max.toString())
+              await AsyncStorage.setItem('Vars_Battery_Current_Graph_Min',            vars.Battery_Current_Graph_Min.toString())
+              await AsyncStorage.setItem('Vars_Battery_Current_Thresholds',           vars.Battery_Current_Thresholds.toString())
+              await AsyncStorage.setItem('Vars_Battery_Current_Max_Threshold_Red',    vars.Battery_Current_Max_Threshold_Red.toString())
+              await AsyncStorage.setItem('Vars_Battery_Current_Max_Threshold_Yellow', vars.Battery_Current_Max_Threshold_Yellow.toString())
+              await AsyncStorage.setItem('Vars_Battery_SoC_Graph_Auto_Max_Min',       vars.Battery_SoC_Graph_Auto_Max_Min.toString())
+              await AsyncStorage.setItem('Vars_Battery_SoC_Graph_Max',                vars.Battery_SoC_Graph_Max.toString())
+              await AsyncStorage.setItem('Vars_Battery_SoC_Graph_Min',                vars.Battery_SoC_Graph_Min.toString())
+              await AsyncStorage.setItem('Vars_Battery_SoC_Thresholds',               vars.Battery_SoC_Thresholds.toString())
+              await AsyncStorage.setItem('Vars_Battery_SoC_Max_Threshold_Red',        vars.Battery_SoC_Max_Threshold_Red.toString())
+              await AsyncStorage.setItem('Vars_Battery_SoC_Max_Threshold_Yellow',     vars.Battery_SoC_Max_Threshold_Yellow.toString())
+              await AsyncStorage.setItem('Vars_Motor_Current_Graph_Auto_Max_Min',     vars.Motor_Current_Graph_Auto_Max_Min.toString())
+              await AsyncStorage.setItem('Vars_Motor_Current_Graph_Max',              vars.Motor_Current_Graph_Max.toString())
+              await AsyncStorage.setItem('Vars_Motor_Current_Graph_Min',              vars.Motor_Current_Graph_Min.toString())
+              await AsyncStorage.setItem('Vars_Motor_Current_Thresholds',             vars.Motor_Current_Thresholds.toString())
+              await AsyncStorage.setItem('Vars_Motor_Current_Max_Threshold_Red',      vars.Motor_Current_Max_Threshold_Red.toString())
+              await AsyncStorage.setItem('Vars_Motor_Current_Max_Threshold_Yellow',   vars.Motor_Current_Max_Threshold_Yellow.toString())
+              await AsyncStorage.setItem('Vars_Motor_Temp_Graph_Auto_Max_Min',        vars.Motor_Temp_Graph_Auto_Max_Min.toString())
+              await AsyncStorage.setItem('Vars_Motor_Temp_Graph_Max',                 vars.Motor_Temp_Graph_Max.toString())
+              await AsyncStorage.setItem('Vars_Motor_Temp_Graph_Min',                 vars.Motor_Temp_Graph_Min.toString())
+              await AsyncStorage.setItem('Vars_Motor_Temp_Thresholds',                vars.Motor_Temp_Thresholds.toString())
+              await AsyncStorage.setItem('Vars_Motor_Temp_Max_Threshold_Red',         vars.Motor_Temp_Max_Threshold_Red.toString())
+              await AsyncStorage.setItem('Vars_Motor_Temp_Max_Threshold_Yellow',      vars.Motor_Temp_Max_Threshold_Yellow.toString())
+              await AsyncStorage.setItem('Vars_Motor_Speed_Graph_Auto_Max_Min',       vars.Motor_Speed_Graph_Auto_Max_Min.toString())
+              await AsyncStorage.setItem('Vars_Motor_Speed_Graph_Max',                vars.Motor_Speed_Graph_Max.toString())
+              await AsyncStorage.setItem('Vars_Motor_Speed_Graph_Min',                vars.Motor_Speed_Graph_Min.toString())
+              await AsyncStorage.setItem('Vars_Motor_Speed_Thresholds',               vars.Motor_Speed_Thresholds.toString())
+              await AsyncStorage.setItem('Vars_Motor_Speed_Max_Threshold_Red',        vars.Motor_Speed_Max_Threshold_Red.toString())
+              await AsyncStorage.setItem('Vars_Motor_Speed_Max_Threshold_Yellow',     vars.Motor_Speed_Max_Threshold_Yellow.toString())
+              await AsyncStorage.setItem('Vars_Motor_PWM_Graph_Auto_Max_Min',         vars.Motor_PWM_Graph_Auto_Max_Min.toString())
+              await AsyncStorage.setItem('Vars_Motor_PWM_Graph_Max',                  vars.Motor_PWM_Graph_Max.toString())
+              await AsyncStorage.setItem('Vars_Motor_PWM_Graph_Min',                  vars.Motor_PWM_Graph_Min.toString())
+              await AsyncStorage.setItem('Vars_Motor_PWM_Thresholds',                 vars.Motor_PWM_Thresholds.toString())
+              await AsyncStorage.setItem('Vars_Motor_PWM_Max_Threshold_Red',          vars.Motor_PWM_Max_Threshold_Red.toString())
+              await AsyncStorage.setItem('Vars_Motor_PWM_Max_Threshold_Yellow',       vars.Motor_PWM_Max_Threshold_Yellow.toString())
+              await AsyncStorage.setItem('Vars_Motor_FOC_Graph_Auto_Max_Min',         vars.Motor_FOC_Graph_Auto_Max_Min.toString())
+              await AsyncStorage.setItem('Vars_Motor_FOC_Graph_Max',                  vars.Motor_FOC_Graph_Max.toString())
+              await AsyncStorage.setItem('Vars_Motor_FOC_Graph_Min',                  vars.Motor_FOC_Graph_Min.toString())
+              await AsyncStorage.setItem('Vars_Motor_FOC_Thresholds',                 vars.Motor_FOC_Thresholds.toString())
+              await AsyncStorage.setItem('Vars_Motor_FOC_Max_Threshold_Red',          vars.Motor_FOC_Max_Threshold_Red.toString())
+              await AsyncStorage.setItem('Vars_Motor_FOC_Max_Threshold_Yellow',       vars.Motor_FOC_Max_Threshold_Yellow.toString())
+
+              await AsyncStorage.setItem('Points',  JSON.stringify(points))
             }
             catch(e) {
               console.log(`GM Error saving data: ${e}`)
@@ -922,250 +1082,26 @@ const MainNavigator = () => {
 
   const pc = {
     //#region Set the Parameters Context  pc
-    motor_Voltage, setMotor_Voltage,
-    motor_Power_Max, setMotor_Power_Max,
-    motor_Acceleration, setMotor_Acceleration,
-    motor_Deceleration, setMotor_Deceleration,
-    motor_Fast_Stop, setMotor_Fast_Stop,
-    motor_Field_Weakening, setMotor_Field_Weakening,
-
-    motor_Temperature_Feature, setMotor_Temperature_Feature,
-    motor_Temperature_Min_Limit, setMotor_Temperature_Min_Limit,
-    motor_Temperature_Max_Limit, setMotor_Temperature_Max_Limit,
-
-    torque_Assist_wo_pedal, setTorque_Assist_wo_pedal,
-    torque_ADC_Threshold, setTorque_ADC_Threshold,
-    torque_Coast_Brake, setTorque_Coast_Brake,
-    torque_Coast_Brake_ADC, setTorque_Coast_Brake_ADC,
-    torque_Calibration, setTorque_Calibration,
-    torque_ADC_Step, setTorque_ADC_Step,
-    torque_ADC_Offset, setTorque_ADC_Offset,
-    torque_ADC_Max, setTorque_ADC_Max,
-    torque_Weight_On_Pedal, setTorque_Weight_On_Pedal,
-    torque_ADC_On_Weight, setTorque_ADC_On_Weight,
-    torque_Default_Weight, setTorque_Default_Weight,
-
-    battery_Max_current, setBattery_Max_current,
-    battery_Low_Cut_Off, setBattery_Low_Cut_Off,
-    battery_Resistance, setBattery_Resistance,
-    battery_Voltage_Est, setBattery_Voltage_Est,
-    battery_Resistance_Est, setBattery_Resistance_Est,
-    battery_Power_Loss_Est, setBattery_Power_Loss_Est,
-
-    soC_Text, setSoC_Text,
-    soC_Reset_At_Voltage, setSoC_Reset_At_Voltage,
-    soC_Battery_Total_Wh, setSoC_Battery_Total_Wh,
-    soC_Used, setSoC_Used,
-    soC_Manual_Reset, setSoC_Manual_Reset,
-
-    wheel_Max_Speed, setWheel_Max_Speed,
-    wheel_Circumference, setWheel_Circumference,
-
-    various_Odometer, setVarious_Odometer,
-    trip_A, setTrip_A,
-    trip_B, setTrip_B,
-    trip_A_Auto_Reset, setTrip_A_Auto_Reset,
-    trip_A_Auto_Reset_Hours, setTrip_A_Auto_Reset_Hours,
-    trip_B_Auto_Reset, setTrip_B_Auto_Reset,
-    trip_B_Auto_Reset_Hours, setTrip_B_Auto_Reset_Hours,
-    trip_Reset_Trip_A, setTrip_Reset_Trip_A,
-    trip_Reset_Trip_B, setTrip_Reset_Trip_B,
-
+    motor,                setMotor,
+    motorTemperature,     setMotorTemperature,
+    torque,               setTorque,
+    battery,              setBattery,
+    soC,                  setSoC,
+    wheel,                setWheel,
+    trip,                 setTrip,
     number_Assist_Levels, setNumber_Assist_Levels,
-
-    power_Assist_Level_1, setPower_Assist_Level_1,
-    power_Assist_Level_2, setPower_Assist_Level_2,
-    power_Assist_Level_3, setPower_Assist_Level_3,
-    power_Assist_Level_4, setPower_Assist_Level_4,
-    power_Assist_Level_5, setPower_Assist_Level_5,
-    power_Assist_Level_6, setPower_Assist_Level_6,
-    power_Assist_Level_7, setPower_Assist_Level_7,
-    power_Assist_Level_8, setPower_Assist_Level_8,
-    power_Assist_Level_9, setPower_Assist_Level_9,
-
-    torque_Assist_Level_1, setTorque_Assist_Level_1,
-    torque_Assist_Level_2, setTorque_Assist_Level_2,
-    torque_Assist_Level_3, setTorque_Assist_Level_3,
-    torque_Assist_Level_4, setTorque_Assist_Level_4,
-    torque_Assist_Level_5, setTorque_Assist_Level_5,
-    torque_Assist_Level_6, setTorque_Assist_Level_6,
-    torque_Assist_Level_7, setTorque_Assist_Level_7,
-    torque_Assist_Level_8, setTorque_Assist_Level_8,
-    torque_Assist_Level_9, setTorque_Assist_Level_9,
-
-    cadence_Assist_Level_1, setCadence_Assist_Level_1,
-    cadence_Assist_Level_2, setCadence_Assist_Level_2,
-    cadence_Assist_Level_3, setCadence_Assist_Level_3,
-    cadence_Assist_Level_4, setCadence_Assist_Level_4,
-    cadence_Assist_Level_5, setCadence_Assist_Level_5,
-    cadence_Assist_Level_6, setCadence_Assist_Level_6,
-    cadence_Assist_Level_7, setCadence_Assist_Level_7,
-    cadence_Assist_Level_8, setCadence_Assist_Level_8,
-    cadence_Assist_Level_9, setCadence_Assist_Level_9,
-
-    eMTB_Assist_Level_1, setEMTB_Assist_Level_1,
-    eMTB_Assist_Level_2, setEMTB_Assist_Level_2,
-    eMTB_Assist_Level_3, setEMTB_Assist_Level_3,
-    eMTB_Assist_Level_4, setEMTB_Assist_Level_4,
-    eMTB_Assist_Level_5, setEMTB_Assist_Level_5,
-    eMTB_Assist_Level_6, setEMTB_Assist_Level_6,
-    eMTB_Assist_Level_7, setEMTB_Assist_Level_7,
-    eMTB_Assist_Level_8, setEMTB_Assist_Level_8,
-    eMTB_Assist_Level_9, setEMTB_Assist_Level_9,
-
-    walk_Assist, setWalk_Assist,
-    walk_Assist_Cruise_Feature, setWalk_Assist_Cruise_Feature,
-    walk_Assist_Level_1, setWalk_Assist_Level_1,
-    walk_Assist_Level_2, setWalk_Assist_Level_2,
-    walk_Assist_Level_3, setWalk_Assist_Level_3,
-    walk_Assist_Level_4, setWalk_Assist_Level_4,
-    walk_Assist_Level_5, setWalk_Assist_Level_5,
-    walk_Assist_Level_6, setWalk_Assist_Level_6,
-    walk_Assist_Level_7, setWalk_Assist_Level_7,
-    walk_Assist_Level_8, setWalk_Assist_Level_8,
-    walk_Assist_Level_9, setWalk_Assist_Level_9,
-
-    startup_Boost, setStartup_Boost,
-    startup_Boost_Torque_Factor, setStartup_Boost_Torque_Factor,
-    startup_Boost_Cadence_Step, setStartup_Boost_Cadence_Step,
-
-    street_Mode, setStreet_Mode,
-    street_Mode_Enable_At_Startup, setStreet_Mode_Enable_At_Startup,
-    street_Mode_Speed_Limit, setStreet_Mode_Speed_Limit,
-    street_Mode_Motor_Power_Limit, setStreet_Mode_Motor_Power_Limit,
-    street_Mode_Throttle_Enable, setStreet_Mode_Throttle_Enable,
-    street_Mode_Cruise_Enable, setStreet_Mode_Cruise_Enable,
-    street_Mode_Hotkey_Enable, setStreet_Mode_Hotkey_Enable,
-
-    vars_Speed_Graph_Auto_Max_Min, setVars_Speed_Graph_Auto_Max_Min,
-    vars_Speed_Graph_Max, setVars_Speed_Graph_Max,
-    vars_Speed_Graph_Min, setVars_Speed_Graph_Min,
-    vars_Speed_Thresholds, setVars_Speed_Thresholds,
-    vars_Speed_Max_Threshold_Red, setVars_Speed_Max_Threshold_Red,
-    vars_Speed_Max_Threshold_Yellow, setVars_Speed_Max_Threshold_Yellow,
-
-    vars_Trip_Dist_Graph_Auto_Max_Min, setVars_Trip_Dist_Graph_Auto_Max_Min,
-    vars_Trip_Dist_Graph_Max, setVars_Trip_Dist_Graph_Max,
-    vars_Trip_Dist_Graph_Min, setVars_Trip_Dist_Graph_Min,
-    vars_Trip_Dist_Thresholds, setVars_Trip_Dist_Thresholds,
-    vars_Trip_Dist_Max_Threshold_Red, setVars_Trip_Dist_Max_Threshold_Red,
-    vars_Trip_Dist_Max_Threshold_Yellow, setVars_Trip_Dist_Max_Threshold_Yellow,
-
-    vars_Cadence_Graph_Auto_Max_Min, setVars_Cadence_Graph_Auto_Max_Min,
-    vars_Cadence_Graph_Max, setVars_Cadence_Graph_Max,
-    vars_Cadence_Graph_Min, setVars_Cadence_Graph_Min,
-    vars_Cadence_Thresholds, setVars_Cadence_Thresholds,
-    vars_Cadence_Max_Threshold_Red, setVars_Cadence_Max_Threshold_Red,
-    vars_Cadence_Max_Threshold_Yellow, setVars_Cadence_Max_Threshold_Yellow,
-
-    vars_Human_Power_Graph_Auto_Max_Min, setVars_Human_Power_Graph_Auto_Max_Min,
-    vars_Human_Power_Graph_Max, setVars_Human_Power_Graph_Max,
-    vars_Human_Power_Graph_Min, setVars_Human_Power_Graph_Min,
-    vars_Human_Power_Thresholds, setVars_Human_Power_Thresholds,
-    vars_Human_Power_Max_Threshold_Red, setVars_Human_Power_Max_Threshold_Red,
-    vars_Human_Power_Max_Threshold_Yellow, setVars_Human_Power_Max_Threshold_Yellow,
-
-    vars_Motor_Power_Graph_Auto_Max_Min, setVars_Motor_Power_Graph_Auto_Max_Min,
-    vars_Motor_Power_Graph_Max, setVars_Motor_Power_Graph_Max,
-    vars_Motor_Power_Graph_Min, setVars_Motor_Power_Graph_Min,
-    vars_Motor_Power_Thresholds, setVars_Motor_Power_Thresholds,
-    vars_Motor_Power_Max_Threshold_Red, setVars_Motor_Power_Max_Threshold_Red,
-    vars_Motor_Power_Max_Threshold_Yellow, setVars_Motor_Power_Max_Threshold_Yellow,
-
-    vars_Watts_Km_Graph_Auto_Max_Min, setVars_Watts_Km_Graph_Auto_Max_Min,
-    vars_Watts_Km_Graph_Max, setVars_Watts_Km_Graph_Max,
-    vars_Watts_Km_Graph_Min, setVars_Watts_Km_Graph_Min,
-    vars_Watts_Km_Thresholds, setVars_Watts_Km_Thresholds,
-    vars_Watts_Km_Max_Threshold_Red, setVars_Watts_Km_Max_Threshold_Red,
-    vars_Watts_Km_Max_Threshold_Yellow, setVars_Watts_Km_Max_Threshold_Yellow,
-
-    vars_Battery_Voltage_Graph_Auto_Max_Min, setVars_Battery_Voltage_Graph_Auto_Max_Min,
-    vars_Battery_Voltage_Graph_Max, setVars_Battery_Voltage_Graph_Max,
-    vars_Battery_Voltage_Graph_Min, setVars_Battery_Voltage_Graph_Min,
-    vars_Battery_Voltage_Thresholds, setVars_Battery_Voltage_Thresholds,
-    vars_Battery_Voltage_Max_Threshold_Red, setVars_Battery_Voltage_Max_Threshold_Red,
-    vars_Battery_Voltage_Max_Threshold_Yellow, setVars_Battery_Voltage_Max_Threshold_Yellow,
-
-    vars_Battery_Current_Graph_Auto_Max_Min, setVars_Battery_Current_Graph_Auto_Max_Min,
-    vars_Battery_Current_Graph_Max, setVars_Battery_Current_Graph_Max,
-    vars_Battery_Current_Graph_Min, setVars_Battery_Current_Graph_Min,
-    vars_Battery_Current_Thresholds, setVars_Battery_Current_Thresholds,
-    vars_Battery_Current_Max_Threshold_Red, setVars_Battery_Current_Max_Threshold_Red,
-    vars_Battery_Current_Max_Threshold_Yellow, setVars_Battery_Current_Max_Threshold_Yellow,
-
-    vars_Battery_SoC_Graph_Auto_Max_Min, setVars_Battery_SoC_Graph_Auto_Max_Min,
-    vars_Battery_SoC_Graph_Max, setVars_Battery_SoC_Graph_Max,
-    vars_Battery_SoC_Graph_Min, setVars_Battery_SoC_Graph_Min,
-    vars_Battery_SoC_Thresholds, setVars_Battery_SoC_Thresholds,
-    vars_Battery_SoC_Max_Threshold_Red, setVars_Battery_SoC_Max_Threshold_Red,
-    vars_Battery_SoC_Max_Threshold_Yellow, setVars_Battery_SoC_Max_Threshold_Yellow,
-
-    vars_Motor_Current_Graph_Auto_Max_Min, setVars_Motor_Current_Graph_Auto_Max_Min,
-    vars_Motor_Current_Graph_Max, setVars_Motor_Current_Graph_Max,
-    vars_Motor_Current_Graph_Min, setVars_Motor_Current_Graph_Min,
-    vars_Motor_Current_Thresholds, setVars_Motor_Current_Thresholds,
-    vars_Motor_Current_Max_Threshold_Red, setVars_Motor_Current_Max_Threshold_Red,
-    vars_Motor_Current_Max_Threshold_Yellow, setVars_Motor_Current_Max_Threshold_Yellow,
-
-    vars_Motor_Temp_Graph_Auto_Max_Min, setVars_Motor_Temp_Graph_Auto_Max_Min,
-    vars_Motor_Temp_Graph_Max, setVars_Motor_Temp_Graph_Max,
-    vars_Motor_Temp_Graph_Min, setVars_Motor_Temp_Graph_Min,
-    vars_Motor_Temp_Thresholds, setVars_Motor_Temp_Thresholds,
-    vars_Motor_Temp_Max_Threshold_Red, setVars_Motor_Temp_Max_Threshold_Red,
-    vars_Motor_Temp_Max_Threshold_Yellow, setVars_Motor_Temp_Max_Threshold_Yellow,
-
-    vars_Motor_Speed_Graph_Auto_Max_Min, setVars_Motor_Speed_Graph_Auto_Max_Min,
-    vars_Motor_Speed_Graph_Max, setVars_Motor_Speed_Graph_Max,
-    vars_Motor_Speed_Graph_Min, setVars_Motor_Speed_Graph_Min,
-    vars_Motor_Speed_Thresholds, setVars_Motor_Speed_Thresholds,
-    vars_Motor_Speed_Max_Threshold_Red, setVars_Motor_Speed_Max_Threshold_Red,
-    vars_Motor_Speed_Max_Threshold_Yellow, setVars_Motor_Speed_Max_Threshold_Yellow,
-
-    vars_Motor_PWM_Graph_Auto_Max_Min, setVars_Motor_PWM_Graph_Auto_Max_Min,
-    vars_Motor_PWM_Graph_Max, setVars_Motor_PWM_Graph_Max,
-    vars_Motor_PWM_Graph_Min, setVars_Motor_PWM_Graph_Min,
-    vars_Motor_PWM_Thresholds, setVars_Motor_PWM_Thresholds,
-    vars_Motor_PWM_Max_Threshold_Red, setVars_Motor_PWM_Max_Threshold_Red,
-    vars_Motor_PWM_Max_Threshold_Yellow, setVars_Motor_PWM_Max_Threshold_Yellow,
-
-    vars_Motor_FOC_Graph_Auto_Max_Min, setVars_Motor_FOC_Graph_Auto_Max_Min,
-    vars_Motor_FOC_Graph_Max, setVars_Motor_FOC_Graph_Max,
-    vars_Motor_FOC_Graph_Min, setVars_Motor_FOC_Graph_Min,
-    vars_Motor_FOC_Thresholds, setVars_Motor_FOC_Thresholds,
-    vars_Motor_FOC_Max_Threshold_Red, setVars_Motor_FOC_Max_Threshold_Red,
-    vars_Motor_FOC_Max_Threshold_Yellow, setVars_Motor_FOC_Max_Threshold_Yellow,
-
-    various_Lights_Configuration, setVarious_Lights_Configuration,
-    various_Assist_With_Error, setVarious_Assist_With_Error,
-    various_Virtual_Throttle_Step, setVarious_Virtual_Throttle_Step,
-
-    display_Clock_Hours, setDisplay_Clock_Hours,
-    display_Clock_Minutes, setDisplay_Clock_Minutes,
-    display_Brightness_On, setDisplay_Brightness_On,
-    display_Brightness_Off, setDisplay_Brightness_Off,
-    display_Auto_Power_Off, setDisplay_Auto_Power_Off,
-    display_LCD_Type, setDisplay_LCD_Type,
-    display_860C_Shortcut_Key, setDisplay_860C_Shortcut_Key,
-    display_Units, setDisplay_Units,
-    display_Temp_Units, setDisplay_Temp_Units,
-    display_Reset_To_Defaults, setDisplay_Reset_To_Defaults,
-
-
-    technical_ADC_Battery_Current, setTechnical_ADC_Battery_Current,
-    technical_ADC_Throttle_Sensor, setTechnical_ADC_Throttle_Sensor,
-    technical_Throttle_Sensor, setTechnical_Throttle_Sensor,
-    technical_ADC_Torque_Sensor, setTechnical_ADC_Torque_Sensor,
-    technical_ADC_Torque_Delta, setTechnical_ADC_Torque_Delta,
-    technical_ADC_Torque_Boost, setTechnical_ADC_Torque_Boost,
-    technical_ADC_Torque_Step_Calc, setTechnical_ADC_Torque_Step_Calc,
-    technical_Pedal_Cadence, setTechnical_Pedal_Cadence,
-    technical_PWM_Duty_Cycle, setTechnical_PWM_Duty_Cycle,
-    technical_Motor_Speed, setTechnical_Motor_Speed,
-    technical_Motor_FOC, setTechnical_Motor_FOC,
-    technical_Hall_Sensors, setTechnical_Hall_Sensors,
-
-
-    points, setPoints
+    power_Assist,         setPower_Assist,
+    torque_Assist,        setTorque_Assist,
+    cadence_Assist,       setCadence_Assist,
+    eMTB_Assist,          setEMTB_Assist,
+    walk_Assist,          setWalk_Assist,
+    startup_Boost,        setStartup_Boost,
+    street_Mode,          setStreet_Mode,
+    various,              setVarious,
+    display,              setDisplay,
+    technical,            setTechnical,
+    vars,                 setVars,
+    points,               setPoints
   }
   //#endregion
 

@@ -21,7 +21,6 @@ import DataEntrySelect          from '../components/dataentrySelect'
 import DataEntryNumeric         from '../components/dataentryNumeric'
 import DataEntryUnsignedLimits  from '../components/dataentryUnsignedLimits'
 import DataEntryBoolean         from '../components/dataentryBoolean'
-import DataEntryOdometer        from '../components/dataentryOdometer'
 
 export default function Various ( { route, navigation } ) {
 
@@ -29,7 +28,7 @@ export default function Various ( { route, navigation } ) {
 
   return (
     <View style={global.root, global.app}>
-      <DataEntrySelect  label='Lights configuration'   p={pc.various_Lights_Configuration}   s={pc.setVarious_Lights_Configuration}
+      <DataEntrySelect  label='Lights configuration'   p={'various'} q={'Lights_Configuration'}  s={pc.setVarious}
         listitems={['0', '1', '2', '3', '4', '5', '6', '7', '8']}
           // '0 - on',
           // '1 - flashing',
@@ -41,11 +40,9 @@ export default function Various ( { route, navigation } ) {
           // '7 - flashing and switched on when braking even with the light control OFF',
           // '8 - flashing and fast flashing when braking even with the light control OFF'
         // ]}
-        k='various_Lights_Configuration'
       />
-      <DataEntryBoolean         label='Assist with error'      p={pc.various_Assist_With_Error}      s={pc.setvarious_Assist_With_Error}      k='various_Assist_With_Error'/>
-      <DataEntryUnsignedLimits  label='Virtual Throttle step'  p={pc.various_Virtual_Throttle_Step}  s={pc.setvarious_Virtual_Throttle_Step}  k='various_Virtual_Throttle_Step' low='0' high='100'/>
-      {/* <DataEntryBoolean         label='Odometer'               p={pc.various_Odometer}               s={pc.setvarious_Odometer}               k='various_Odometer'/> */}
+      <DataEntryBoolean         label='Assist with error'      p={'various'} q={'Assist_With_Error'}      s={pc.setvarious}   />
+      <DataEntryUnsignedLimits  label='Virtual Throttle step'  p={'various'} q={'Virtual_Throttle_Step'}  s={pc.setvarious}   low='0' high='100'/>
       <Text style={global.labelOdo}>Odometer moved to Trip Memories</Text>
     </View>
   )

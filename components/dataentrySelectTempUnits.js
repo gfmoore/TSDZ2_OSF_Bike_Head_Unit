@@ -12,45 +12,71 @@
 
 import React, { useState, useContext } from 'react'
 import { StyleSheet, View, Text, TextInput } from 'react-native'
+import { global } from '../styles/global'
 
 import Icon from 'react-native-vector-icons/Ionicons'
 
 import ModalDropdown from 'react-native-modal-dropdown'
- 
-import { global } from '../styles/global'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import Context from '../context/Context'
 
-const DataEntrySelectTempUnits = ({ label, p, s, listitems, k }) => {
-
-  const [datax, setDatax] = useState(p)
-
+const DataEntrySelectTempUnits = ({ label, p, q, s, listitems  }) => {
+  //label is obvious, p is main object name e.g. 'motor,  q is variable name e.g. motor_acceleration, s is the context setter e.g. pc.setMotor
+  
   const pc = useContext(Context)
+
+  const [datax, setDatax] = useState(eval(`pc.${p}.${q}`).toString()) //e.g. eval('pc.motor.motor_Acceleration')
+
+  let key = p.charAt(0).toUpperCase() + p.slice(1) + '_' + q  //upercase the first letter
 
   let changed = false
   const change = (x) => {
-    //only want to do this if actual change?
-    if ( x !== p) changed = true 
+    //only want to do this if actual change of units?
+    if ( x !== pc.display.Temp_Units) changed = true 
     else changed = false
 
     if (changed) {
-      if (x === 'Celsius' ) {
-        pc.setMotor_Temperature_Min_Limit(FtoC(pc.motor_Temperature_Min_Limit))
-        pc.setMotor_Temperature_Max_Limit(FtoC(pc.motor_Temperature_Max_Limit))
+      if (x === 'Celsius' ) {  //are there asynchronous timing issues here!!!
+        let a = FtoC(pc.motorTemperature.Min_Limit)
+        let b = FtoC(pc.motorTemperature.Max_Limit)
+
+        let temp = pc.motorTemperature
+        temp.Min_Limit = a
+        temp.Max_Limit = b
+        pc.setMotorTemperature( { ...temp })
+
+        saveStateToAsyncStorage('MotorTemperature_Min_Limit', a)
+        saveStateToAsyncStorage('MotorTemperature_Max_Limit', b)
       }
       else {
-        pc.setMotor_Temperature_Min_Limit(CtoF(pc.motor_Temperature_Min_Limit))
-        pc.setMotor_Temperature_Max_Limit(CtoF(pc.motor_Temperature_Max_Limit))
+        let a = CtoF(pc.motorTemperature.Min_Limit)
+        let b = CtoF(pc.motorTemperature.Max_Limit)
+
+        let temp = pc.motorTemperature
+        temp.Min_Limit = a
+        temp.Max_Limit = b
+        pc.setMotorTemperature({ ...temp })
+
+        saveStateToAsyncStorage('MotorTemperature_Min_Limit', a)
+        saveStateToAsyncStorage('MotorTemperature_Max_Limit', b)
       }
     }
 
     setDatax(x)
-    s(x)
 
-    //update the async storage
-    saveStateToAsyncStorage(k, x)
+    if (x !== '') {
+
+
+      let temp = pc[p]
+      temp[q] = x
+      s({ ...temp })
+      //s({ ...pc[p], [q]: x })               //e.g. pc.setMotor( { ...pc.motor, motor_acceleration: n })
+
+      saveStateToAsyncStorage(key, x)       //e.g. saveStateToAsyncStorage('motor_Acceleration', n)
+    }
+
   }
 
   const saveStateToAsyncStorage = async (key, value) => {
@@ -83,7 +109,7 @@ const DataEntrySelectTempUnits = ({ label, p, s, listitems, k }) => {
         dropdownTextStyle={global.dropdownTextStyle}
         dropdownTextHighlightStyle={global.dropdownTextHighlightStyle}
         onSelect={(idx, value) => { change(value)  }}
-        defaultValue={p}
+        defaultValue={datax}
       />
 
 

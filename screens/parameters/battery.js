@@ -16,22 +16,20 @@ import { global } from '../styles/global'
 
 import Context from '../context/Context'
 
-import DataEntryNumeric from '../components/dataentryNumeric'
 import DataEntryUnsigned from '../components/dataentryUnsigned'
-import DataEntryBoolean from '../components/dataentryBoolean'
 
 export default function Battery( { navigation } ) {
 
-  const pc = useContext(Context)  //parameters pc =parametersContext
+  const pc = useContext(Context)  //pc=parametersContext
 
   return (
     <View style={global.root, global.app}>
-      <DataEntryUnsigned label='Max current'          p={pc.battery_Max_current}     s={pc.setBattery_Max_current}     k='battery_Max_current' />
-      <DataEntryUnsigned label='Low cut off'          p={pc.battery_Low_Cut_Off}     s={pc.setBattery_Low_Cut_Off}     k='battery_Low_Cut_Off' />
-      <DataEntryUnsigned label='Resistance'           p={pc.battery_Resistance}      s={pc.setBattery_Resistance}      k='battery_Resistance' />
-      <DataEntryUnsigned label='Voltage estimate'     p={pc.battery_Voltage_Est}     s={pc.setBattery_Voltage_Est}     k='battery_Voltage_Est' />
-      <DataEntryUnsigned label='Resistance estimate'  p={pc.battery_Resistance_Est}  s={pc.setBattery_Resistance_Est}  k='battery_Resistance_Est' />
-      <DataEntryUnsigned label='Power loss estimate'  p={pc.battery_Power_Loss_Est}  s={pc.setBattery_Power_Loss_Est}  k='battery_Power_Loss_Est' />
+      <DataEntryUnsigned label='Max current'          p={'battery'}  q={'Max_current'}     s={pc.setBattery}  />
+      <DataEntryUnsigned label='Low cut off'          p={'battery'}  q={'Low_Cut_Off'}     s={pc.setBattery}  />
+      <DataEntryUnsigned label='Resistance'           p={'battery'}  q={'Resistance'}      s={pc.setBattery}  />
+      <DataEntryUnsigned label='Voltage estimate'     p={'battery'}  q={'Voltage_Est'}     s={pc.setBattery}  />
+      <DataEntryUnsigned label='Resistance estimate'  p={'battery'}  q={'Resistance_Est'}  s={pc.setBattery}  />
+      <DataEntryUnsigned label='Power loss estimate'  p={'battery'}  q={'Power_Loss_Est'}  s={pc.setBattery}  />
     </View>
   )
 }

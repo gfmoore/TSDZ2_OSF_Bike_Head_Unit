@@ -18,46 +18,66 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import Context from '../context/Context'
 
-//p=the context value i.e. someValue, s=the setter i.e. setSomeValue
-const DataEntryUnsignedLimits = ( { label, p, s, k, low, high} ) => {
-
-  const [datax, setDatax] = useState(p.toString())
+const DataEntryUnsignedLimits = ( { label, p, q, s, low, high} ) => {
+  //label is obvious, p is main object name e.g. 'motor,  q is variable name e.g. motor_acceleration, s is the context setter e.g. pc.setMotor
 
   const pc = useContext(Context)
 
+  const [datax, setDatax] = useState(eval(`pc.${p}.${q}`).toString()) //e.g. eval('pc.motor.motor_Acceleration')
+
+  let key = p.charAt(0).toUpperCase() + p.slice(1) + '_' + q  //upercase the first letter
+
   const change = (n) => {
-    //Check for valid number (is it possible to change some of this to regex?)
-    if ( /[a-z]/i.test(n) )   return                //if contains a-z or A-Z not allowed
+    if ( /[a-z]/i.test(n) )   return                  //if contains a-z or A-Z not allowed
     if ( /[^\d]/.test(n) )    return                  //only 0..9 allowed
+
+    if (n.length > 1 && n.charAt(0) === '0' ) return  //if 0 in first pos that's it
 
     if (parseInt(n) > parseInt(high)) n = high.toString()
 
     setDatax(n)
-    s(n)
-    saveStateToAsyncStorage(k, n)
+
+    if (n !== '') {
+
+      let temp = pc[p]
+      temp[q] = x
+      s({ ...temp })
+      //s( { ...pc[p], [q]: n } )             //e.g. pc.setMotor( { ...pc.motor, motor_acceleration: n })
+      
+      saveStateToAsyncStorage(key, n)       //e.g. saveStateToAsyncStorage('motor_Acceleration', n)
+    }
   }
 
   const end = (e) => {
-    //note that setting setDatax to low changes the display, but not the datax at that point, don't understand the logic
     if (datax === '' || datax === null) {
       setDatax(low.toString())
-      s(low.toString())
-      saveStateToAsyncStorage(k, low.toString())
+      
+      let temp = pc[p]
+      temp[q] = low.toString()
+      s({ ...temp })
+      //s({ ...pc[p], [q]: low.toString() })
+      
+      saveStateToAsyncStorage(key, low.toString())
       return
     }
     if (parseInt(datax) < parseInt(low))  {
       setDatax(low.toString())
-      s(low.toString())
-      saveStateToAsyncStorage(k, low.toString())
+
+      let temp = pc[p]
+      temp[q] = low.toString()
+      s({ ...temp })
+      //s({ ...pc[p], [q]: low.toString() })
+      
+      saveStateToAsyncStorage(key, low.toString())
       return
     }
     //otherwise
-    s(datax)
-    saveStateToAsyncStorage(k, datax)
-  }
+    let temp = pc[p]
+    temp[q] = datax
+    s({ ...temp })
+    //s({ ...pc[p], [q]: datax })
 
-  const submit = (e) => { //not used
-    //console.log('submit ' + e.nativeEvent.text)
+    saveStateToAsyncStorage(key, datax)
   }
 
   const saveStateToAsyncStorage = async (key, value) => {
@@ -74,11 +94,10 @@ const DataEntryUnsignedLimits = ( { label, p, s, k, low, high} ) => {
       <Text style={global.label}>{label}</Text>
       <TextInput style={global.data} 
         keyboardType='numeric' 
-        maxLength={5} 
+        maxLength={8} 
         value={datax}
         onChangeText={ change }
         onEndEditing={ end }
-        onSubmitEditing={ submit }
       />
     </View>
   )

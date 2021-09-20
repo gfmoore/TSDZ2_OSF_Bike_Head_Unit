@@ -18,18 +18,23 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import Context from '../context/Context'
 
-const DataEntryAlpha = ({ label, p, s, k }) => {
-
-  const [datax, setDatax] = useState(p)
+const DataEntryAlpha = ({ label, p, q, s }) => {
+  //label is obvious, p is main object name e.g. 'motor,  q is variable name e.g. motor_acceleration, s is the context setter e.g. pc.setMotor
 
   const pc = useContext(Context)
 
+  const [datax, setDatax] = useState(eval(`pc.${p}.${q}`).toString()) //e.g. eval('pc.motor.motor_Acceleration')
+
+  let key = p.charAt(0).toUpperCase() + p.slice(1) + '_' + q  //upercase the first letter
+
   const change = (n) => {
     setDatax(n)
-    s(n)
 
-    //update the async storage 
-    saveStateToAsyncStorage(k, n)
+    let temp = pc[p]
+    temp[q] = x
+    s({ ...temp })
+
+    saveStateToAsyncStorage(key, n)
   }
 
   const saveStateToAsyncStorage = async (key, value) => {
@@ -45,7 +50,7 @@ const DataEntryAlpha = ({ label, p, s, k }) => {
     <View style={global.item}>
       <Text style={global.label}>{label}</Text>
       <TextInput style={global.data}
-        maxLength={20}
+        maxLength={100}
         value={datax}
         onChangeText={change} />
     </View>

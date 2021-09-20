@@ -18,33 +18,52 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import Context from '../context/Context'
 
-//p=the context value i.e. someValue, s=the setter i.e. setSomeValue
-const DataEntryUnsigned = ( { label, p, s, k } ) => {
 
-  const [datax, setDatax] = useState(p.toString())
+const DataEntryUnsigned = ( { label, p, q, s} ) => {
+  //label is obvious, p is main object name e.g. 'motor,  q is variable name e.g. motor_acceleration, s  is the context setter e.g. pc.setMotor
 
   const pc = useContext(Context)
 
+  const [datax, setDatax] = useState(eval(`pc.${p}.${q}`).toString())   //e.g. eval('pc.motor.motor_Acceleration')
+
+  let key = p.charAt(0).toUpperCase() + p.slice(1) + '_' + q  //upercase the first letter
+
   const change = (n) => {
-    //Check for valid number (is it possible to change some of this to regex?)
-    if ( /[a-z]/i.test(n) )   return                //if contains a-z or A-Z not allowed
-    if ( /[^\d]/.test(n) )    return                //only 0..9 allowed
+    if ( /[a-z]/i.test(n) )   return                 //if contains a-z or A-Z not allowed
+    if ( /[^\d]/.test(n) )    return                 //only 0..9 allowed
+
+    if (n.length > 1 && n.charAt(0) === '0') return  //if 0 in first pos that's it
 
     setDatax(n)
-    s(n)
-    saveStateToAsyncStorage(k, n)
+
+    if (n !== '') {
+      let temp = pc[p]
+      temp[q] = n.toString()
+      s({ ...temp })
+      //s({ ...pc[p], [q]: n })           //e.g. pc.setMotor( { ...pc.motor, motor_acceleration: n })
+      
+      saveStateToAsyncStorage(key, n)       //e.g. saveStateToAsyncStorage('motor_Acceleration', n)
+    }
   }
 
   const end = () => {
     if (datax === '' || datax === null) {  //don't allow empty
       setDatax('0')
-      s('0')
-      saveStateToAsyncStorage(k, '0')
+      let temp = pc[p]
+      temp[q] = '0'
+      s({ ...temp })
+      //s({ ...pc[p], [q]: '0' })
+      
+      saveStateToAsyncStorage(key, '0')
       return
     }
     //otherwise
-    s(datax)
-    saveStateToAsyncStorage(k, datax)
+    let temp = pc[p]
+    temp[q] = datax.toString()
+    s({ ...temp })
+    //s({ ...pc[p], [q]: datax })
+    
+    saveStateToAsyncStorage(key, datax)
   }
 
   const saveStateToAsyncStorage = async (key, value) => {

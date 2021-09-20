@@ -39,7 +39,7 @@
   },
   item2: {
     flexDirection: 'row',
-    marginTop: 25,
+    marginTop: 0,
   },
   listitems: {
     marginTop: 20,

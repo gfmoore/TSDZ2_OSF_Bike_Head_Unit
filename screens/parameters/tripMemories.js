@@ -16,12 +16,9 @@ import { global } from '../styles/global'
 
 import Context from '../context/Context'
 
-import DataEntryAlpha     from '../components/dataentryAlpha'
-import DataEntryNumeric   from '../components/dataentryNumeric'
-import DataEntryUnsigned  from '../components/dataentryUnsigned'
-import DataEntryPositive  from '../components/dataentryPositive'
-import DataEntryPositiveReset  from '../components/dataentryPositiveReset'
-import DataEntryBoolean   from '../components/dataentryBoolean'
+import DataEntryUnsigned        from '../components/dataentryUnsigned'
+import DataEntryPositiveReset   from '../components/dataentryPositiveReset'
+import DataEntryBoolean         from '../components/dataentryBoolean'
 
 export default function TripMemories ( { route, navigation } ) {
 
@@ -30,17 +27,15 @@ export default function TripMemories ( { route, navigation } ) {
   return (
     <ScrollView style={global.tripsScroll}>
       <View style={global.root, global.app}>
-        <DataEntryPositiveReset label='Odometer'            p={pc.various_Odometer}         s={pc.setVarious_Odometer}        k='various_Odometer'  resetText='Reset Odometer' />
-        <DataEntryPositiveReset label='Trip A'              p={pc.trip_A}                   s={pc.setTrip_A}                  k='trip_A'            resetText='Reset Trip A'/>
-        <DataEntryPositiveReset label='Trip B'              p={pc.trip_B}                   s={pc.setTrip_B}                  k='trip_B'            resetText='Reset Trip B'/>
+        <DataEntryPositiveReset label='Odometer'            p={'trip'}  q={'Odometer'}            s={pc.setTrip}    resetText='Reset Odometer' />
+        <DataEntryPositiveReset label='Trip A'              p={'trip'}  q={'A'}                   s={pc.setTrip}    resetText='Reset Trip A' />
+        <DataEntryPositiveReset label='Trip B'              p={'trip'}  q={'B'}                   s={pc.setTrip}    resetText='Reset Trip B'/>
 
-        <DataEntryBoolean       label='A auto reset'        p={pc.trip_A_Auto_Reset}        s={pc.setTrip_A_Auto_Reset}       k='trip_A_Auto_Reset'/>
-        <DataEntryUnsigned      label='A auto reset hours'  p={pc.trip_A_Auto_Reset_Hours}  s={pc.setTrip_A_Auto_Reset_Hours} k='trip_A_Auto_Reset_Hours'/>
-        <DataEntryBoolean       label='B auto reset'        p={pc.trip_B_Auto_Reset}        s={pc.setTrip_B_Auto_Reset}       k='trip_B_Auto_Reset'/>
-        <DataEntryUnsigned      label='B auto reset hours'  p={pc.trip_B_Auto_Reset_Hours}  s={pc.setTrip_B_Auto_Reset_Hours} k='trip_B_Auto_Reset_Hours'/>
+        <DataEntryBoolean       label='A auto reset'        p={'trip'}  q={'A_Auto_Reset'}        s={pc.setTrip} />
+        <DataEntryUnsigned      label='A auto reset hours'  p={'trip'}  q={'A_Auto_Reset_Hours'}  s={pc.setTrip} />
+        <DataEntryBoolean       label='B auto reset'        p={'trip'}  q={'B_Auto_Reset'}        s={pc.setTrip} />
+        <DataEntryUnsigned      label='B auto reset hours'  p={'trip'}  q={'B_Auto_Reset_Hours'}  s={pc.setTrip} />
       </View>
     </ScrollView>
   )
 }
-
-//don't really need to store the Reset Trip A and Reset Trip B, they are just actions

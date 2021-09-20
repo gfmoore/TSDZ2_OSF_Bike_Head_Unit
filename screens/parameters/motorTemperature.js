@@ -17,8 +17,7 @@ import { global } from '../styles/global'
 import Context from '../context/Context'
 
 import DataEntrySelect  from '../components/dataentrySelect'
-import DataEntryNumeric from '../components/dataentryNumeric'
-import DataEntryBoolean from '../components/dataentryBoolean'
+import DataEntryUnsignedLimits from '../components/dataentryUnsignedLimits'
 
 export default function MotorTemperature ( { navigation } ) {
 
@@ -26,10 +25,10 @@ export default function MotorTemperature ( { navigation } ) {
 
   return (
     <View style={global.root, global.app}>
-      <Text style={global.unitsdisplayed}>{pc.display_Temp_Units}</Text>
-      <DataEntrySelect  label='Temperature Feature' p={pc.motor_Temperature_Feature}    s={pc.setMotor_Temperature_Feature} listitems={['Throttle', 'Temperature']} k='motor_Temperature_Feature' />
-      <DataEntryNumeric label='Min limit'           p={pc.motor_Temperature_Min_Limit}  s={pc.setMotor_Temperature_Min_Limit} k='motor_Temperature_Min_Limit' />
-      <DataEntryNumeric label='Max limit'           p={pc.motor_Temperature_Max_Limit}  s={pc.setMotor_Temperature_Max_Limit} k='motor_Temperature_Max_Limit' />
+      <Text style={global.unitsdisplayed}>{pc.display.Temp_Units}</Text>
+      <DataEntrySelect          label='Temperature Feature' p={'motorTemperature'}  q={'Feature'}   s={pc.setMotorTemperature} listitems={['Throttle', 'Temperature']} />
+      <DataEntryUnsignedLimits  label='Min limit'           p={'motorTemperature'}  q={'Min_Limit'} s={pc.setMotorTemperature} low='0' high='500' />
+      <DataEntryUnsignedLimits  label='Max limit'           p={'motorTemperature'}  q={'Max_Limit'} s={pc.setMotorTemperature} low='0' high='500' />
     </View>
   )
 }

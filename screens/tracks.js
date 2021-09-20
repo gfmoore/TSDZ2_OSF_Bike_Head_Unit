@@ -21,7 +21,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Tracks = ({ route, navigation }) => {
 
-  console.log('in tracks screen')
+  //console.log('in tracks screen')
 
   const pc = useContext(Context)  //parameters pc =parametersContext to access points as used in Maps
 

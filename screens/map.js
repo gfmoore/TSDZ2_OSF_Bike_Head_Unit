@@ -34,7 +34,7 @@ const Map = ({ route, navigation }) => {
 
   const pc = useContext(Context)  //parameters includes "points" array, pc=parametersContext, 
 
-  console.log('here ' + cnt++)
+  //console.log('here ' + cnt++)
 
   //where on the map do we focus - this needs to be set to our current location
   const [region, setRegion] = useState(
@@ -68,7 +68,7 @@ const Map = ({ route, navigation }) => {
   useEffect(() => {  //a one off
     //set initial region and location, but will get updated.
 
-    console.log('here in useEffect')
+    //console.log('here in useEffect')
 
     const requestLocationPermission = async () => {
       try {
@@ -148,7 +148,7 @@ const Map = ({ route, navigation }) => {
   useEffect( () => {
     const startWatching = async () => {
       if (watching) {
-        console.log('Watching...')
+        //console.log('Watching...')
         pc.setPoints([])
         if (permission) {
           watchId = await Geolocation.watchPosition(
@@ -165,7 +165,7 @@ const Map = ({ route, navigation }) => {
         }
       }
       else {
-        console.log('Stopped Watching...')
+        //console.log('Stopped Watching...')
         Geolocation.clearWatch(watchId)
       }
     } 
@@ -199,15 +199,15 @@ const Map = ({ route, navigation }) => {
   }
 
   const press = (c) => {
-    console.log('Pressed ' + c.nativeEvent.coordinate.latitude + '  ' + + c.nativeEvent.coordinate.longitude)  //{ coordinate: LatLng, position: Point }
+    //console.log('Pressed ' + c.nativeEvent.coordinate.latitude + '  ' + + c.nativeEvent.coordinate.longitude)  //{ coordinate: LatLng, position: Point }
   }
 
   const doublepress = (c) => {
-    console.log('Double pressed ' + c)
+    //console.log('Double pressed ' + c)
   }
 
   const longpress = (c) => {
-    console.log('Long press ' + c)
+    //console.log('Long press ' + c)
   }
 
   return (

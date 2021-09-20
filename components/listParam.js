@@ -23,7 +23,7 @@ const ListParam = ({ label, p }) => {
   return (
     <View style={global.item}>
       <Text style={global.labellist}>{label}</Text>
-      <Text style={global.datalist}>{p.toString()}</Text>
+      <Text style={global.datalist}>{p}</Text>
     </View>
   )
 }

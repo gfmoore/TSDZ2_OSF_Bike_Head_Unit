@@ -1,9 +1,9 @@
 /**
  * Name:          TSDZ2 OSF Bike Head Unit
  * Author:        Gordon Moore
- * File:          dataentryUnsigned.js
+ * File:          dataentryTest.js
  * Date:          13 August 2021
- * Description:   Code for entering unsigned numbers 0 --> xxxx
+ * Description:   Testing child change state of parent
  * Licence        The MIT License https://opensource.org/licenses/MIT
  *
  * Version history
@@ -18,27 +18,27 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import Context from '../context/Context'
 
-const DataEntryUnsigned = ( { label, p, q, s, enabled } ) => {
-  //label is obvious, p is main object name e.g. 'motor,  q is variable name e.g. motor_acceleration, s is the context setter e.g. pc.setMotor
 
+const DataEntryTest = ( {label, p, q, s} ) => {
+  //label is obvious, p is main object name e.g. 'motor,  q is variable name e.g. motor_acceleration, s  is the context setter e.g. pc.setMotor
+  
   const pc = useContext(Context)
 
-  const [datax, setDatax] = useState(eval(`pc.${p}.${q}`).toString()) //e.g. eval('pc.motor.motor_Acceleration')
-
-  let key = p.charAt(0).toUpperCase() + p.slice(1) + '_' + q  //upercase the first letter
+  const [datax, setDatax] = useState(eval(`pc.${p}.${q}`).toString())   //e.g. eval('pc.motor.motor_Acceleration')
 
   const change = (n) => {
-    if (!enabled) return
-    //Check for valid number (is it possible to change some of this to regex?)
     if ( /[a-z]/i.test(n) )   return                //if contains a-z or A-Z not allowed
     if ( /[^\d]/.test(n) )    return                //only 0..9 allowed
 
     setDatax(n)
+
     let temp = pc[p]
     temp[q] = n.toString()
     s({ ...temp })
-
-    saveStateToAsyncStorage(k, n)
+    //s( { ...pc[p], [q]: n} )          //e.g. pc.setMotor( { ...motor, motor_acceleration: n })
+    
+    saveStateToAsyncStorage(q, n)   //e.g. saveStateToAsyncStorage('motor_Acceleration', n)
+    
   }
 
   const end = () => {
@@ -47,15 +47,18 @@ const DataEntryUnsigned = ( { label, p, q, s, enabled } ) => {
       let temp = pc[p]
       temp[q] = '0'
       s({ ...temp })
+      //s({ ...pc[p], [q]: '0' })
       
-      saveStateToAsyncStorage(k, '0')
+      saveStateToAsyncStorage(q, '0')
       return
     }
     //otherwise
     let temp = pc[p]
     temp[q] = datax.toString()
     s({ ...temp })
-    saveStateToAsyncStorage(k, datax)
+    //s({ ...pc[p], [q]: datax })
+    
+    saveStateToAsyncStorage(q, datax)
   }
 
   const saveStateToAsyncStorage = async (key, value) => {
@@ -67,22 +70,18 @@ const DataEntryUnsigned = ( { label, p, q, s, enabled } ) => {
     }
   }
 
-  function parseBool(val) { return val === true || val === "true" }
-
   return (
     <View style={global.item}>
       <Text style={global.label}>{label}</Text>
-      <TextInput 
-        style={parseBool(enabled) ? global.data : global.datadisabled}
+      <TextInput style={global.data} 
         keyboardType='numeric' 
         maxLength={8} 
         value={datax}
         onChangeText={ change }
         onEndEditing={ end }
-        editable={parseBool(enabled)}
       />
     </View>
   )
 } 
 
-export default DataEntryUnsigned
+export default DataEntryTest

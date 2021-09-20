@@ -18,12 +18,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import Context from '../context/Context'
 
-//p=the context value i.e. someValue, s=the setter i.e. setSomeValue
-const DataEntryNumeric = ( { label, p, s, k} ) => {
-
-  const [datax, setDatax] = useState(p.toString())
+const DataEntryNumeric = ( { label, p, q, s } ) => {
+  //label is obvious, p is main object name e.g. 'motor,  q is variable name e.g. motor_acceleration, s is the context setter e.g. pc.setMotor
 
   const pc = useContext(Context)
+  
+  const [datax, setDatax] = useState(eval(`pc.${p}.${q}`).toString()) //e.g. eval('pc.motor.motor_Acceleration')
 
   const change = (n) => {
     //Check for valid number (is it possible to change some of this to regex?)
@@ -37,10 +37,35 @@ const DataEntryNumeric = ( { label, p, s, k} ) => {
     if (n.split('.').length > 2) return             //don't allow more than one .
 
     setDatax(n)
-    s(n)
 
-    //update the async storage here? No where else seems reasonable
-    saveStateToAsyncStorage(k, n)
+    if (n !== '') {
+      let temp = pc[p]
+      temp[q] = n.toString()
+      s({ ...temp })
+      //s( { ...pc[p], [q]: n } )           //e.g. pc.setMotor( { ...pc.motor, motor_acceleration: n })
+      
+      saveStateToAsyncStorage(q, n)       //e.g. saveStateToAsyncStorage('motor_Acceleration', n)
+    }
+  }
+
+  const end = (e) => {
+    if (datax === '' || datax === null) {
+      setDatax('0')
+      let temp = pc[p]
+      temp[q] = '0'
+      s({ ...temp })
+      //s({ ...pc[p], [q]: '0' })
+      
+      saveStateToAsyncStorage(q, '0')
+      return
+    }
+    //otherwise
+    let temp = pc[p]
+    temp[q] = datax.toString()
+    s({ ...temp })
+    //s({ ...pc[p], [q]: datax })
+    
+    saveStateToAsyncStorage(q, datax)
   }
 
   const saveStateToAsyncStorage = async (key, value) => {
@@ -57,11 +82,10 @@ const DataEntryNumeric = ( { label, p, s, k} ) => {
       <Text style={global.label}>{label}</Text>
       <TextInput style={global.data} 
         keyboardType='numeric' 
-        maxLength={5} 
-        // placeholderTextColor='yellow' 
-        // placeholder={data.toString()} 
+        maxLength={8} 
         value={datax}
-        onChangeText={ change }/>
+        onChangeText={ change }
+        onEndEditing={ end } />
     </View>
   )
 } 

@@ -18,25 +18,28 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import Context from '../context/Context'
 
-const DataEntryBoolean = ({ label, p, s, k }) => {
-
-  const [datax, setDatax] = useState(parseBool(p))
-
+const DataEntryBoolean = ({ label, p, q, s }) => {
+  
   const pc = useContext(Context)
+  
+  //datax has to be true boolean, but is stored as string in context and asyncstorage
+  const [datax, setDatax] = useState( parseBool( eval(`pc.${p}.${q}`) ) ) //e.g. eval('pc.motor.motor_Acceleration')
+
+  let key = p.charAt(0).toUpperCase() + p.slice(1) + '_' + q  //upercase the first letter
 
   const change = (n) => {
-    //need to pick up some specific items
+
+    //need to pick up some specific parameters for resetting
     if (label === 'Reset trip A') {
-      // saveStateToAsyncStorage('trip_Reset_Trip_A', 'false')
       Alert.alert(
         'Reset trip A.',
         'Are you sure? There is no going back!',
         [
           {
             text: 'Yes', onPress: async () => {
-              pc.setTrip_A(0)
+              pc.setTrip_A('0')
               setDatax(false)
-              saveStateToAsyncStorage('trip_A', '0')
+              saveStateToAsyncStorage('Trip_A', '0')
             }
           },
           {
@@ -47,16 +50,15 @@ const DataEntryBoolean = ({ label, p, s, k }) => {
       )
     }
     else if (label === 'Reset trip B') {
-      //saveStateToAsyncStorage('trip_Reset_Trip_B', 'false')
       Alert.alert(
         'Reset trip B.',
         'Are you sure? There is no going back!',
         [
           {
             text: 'Yes', onPress: async () => {
-              pc.setTrip_B(0)
+              pc.setTrip_B('0')
               setDatax(false)
-              saveStateToAsyncStorage('trip_B', '0')
+              saveStateToAsyncStorage('Trip_B', '0')
             }
           },
           {
@@ -67,16 +69,15 @@ const DataEntryBoolean = ({ label, p, s, k }) => {
       )
     }
     else if (label === 'Reset Odometer') {
-      //saveStateToAsyncStorage('various_Odometer', 'false')
       Alert.alert(
         'Reset Odometer',
         'Are you sure? There is no going back!',
         [
           {
             text: 'Yes', onPress: async () => {
-              pc.setVarious_Odometer(0)
+              pc.setVarious_Odometer('0')
               setDatax(false)
-              saveStateToAsyncStorage('various_Odometer', '0')
+              saveStateToAsyncStorage('Trip_Odometer', '0')
             }
           },
           {
@@ -88,16 +89,19 @@ const DataEntryBoolean = ({ label, p, s, k }) => {
     }
 
     else { //standard set unset
-      setDatax(n)
-      s(n)
-      //update the async storage
-      saveStateToAsyncStorage(k, n)
+      setDatax(n)  //n is boolean
+
+      let temp = pc[p]
+      temp[q] = n.toString()
+      s({ ...temp })
+      //s({ ...pc[p], [q]: n.toString() })            //e.g. pc.setMotor( { ...pc.motor, motor_acceleration: n })
+      
+      saveStateToAsyncStorage(key, n)               //e.g. saveStateToAsyncStorage('motor_Acceleration', n)
     }
 
   }
 
   const saveStateToAsyncStorage = async (key, value) => {
-    //console.log(key + ' --> ' + value)
     try {
       await AsyncStorage.setItem(key, value.toString())
     }

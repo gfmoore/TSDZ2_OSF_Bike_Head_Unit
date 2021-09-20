@@ -16,10 +16,8 @@ import { global } from '../styles/global'
 
 import Context from '../context/Context'
 
-import DataEntryAlpha   from '../components/dataentryAlpha'
 import DataEntrySelect  from '../components/dataentrySelect'
 import DataEntryNumeric from '../components/dataentryNumeric'
-import DataEntryBoolean from '../components/dataentryBoolean'
 
 export default function VarsSpeed ( { route, navigation } ) {
 
@@ -27,12 +25,12 @@ export default function VarsSpeed ( { route, navigation } ) {
 
   return (
   <View style={global.root, global.app}>
-      <DataEntrySelect label='Graph auto max min' p={pc.vars_Motor_PWM_Graph_Auto_Max_Min} s={pc.setVars_Motor_PWM_Graph_Auto_Max_Min}        listitems={['Atomatic', 'Manual']} k='vars_Motor_PWM_Graph_Auto_Max_Min'/>
-    <DataEntryNumeric label='Graph max'             p={pc.vars_Motor_PWM_Graph_Max}             s={pc.setVars_Motor_PWM_Graph_Max}            k='vars_Motor_PWM_Graph_Max'/>
-    <DataEntryNumeric label='Graph min'             p={pc.vars_Motor_PWM_Graph_Min}             s={pc.setVars_Motor_PWM_Graph_Min}            k='vars_Motor_PWM_Graph_Min'/>
-    <DataEntrySelect  label='Thresholds'            p={pc.vars_Motor_PWM_Thresholds}            s={pc.setVars_Motor_PWM_Thresholds}           listitems={['Automatic', 'Manual', 'Disable']} k='vars_Motor_PWM_Thresholds'/>
-    <DataEntryNumeric label='Max threshold Red'     p={pc.vars_Motor_PWM_Max_Threshold_Red}     s={pc.setVars_Motor_PWM_Max_Threshold_Red}    k='vars_Motor_PWM_Max_Threshold_Red'/>
-    <DataEntryNumeric label='Max threshold Yellow'  p={pc.vars_Motor_PWM_Max_Threshold_Yellow}  s={pc.setVars_Motor_PWM_Max_Threshold_Yellow} k='vars_Motor_PWM_Max_Threshold_Yellow'/>
+    <DataEntrySelect  label='Graph auto max min'    p={'vars'}   q={'Motor_PWM_Graph_Auto_Max_Min'}    s={pc.setVars}  listitems={['Atomatic', 'Manual']} k='vars_Battery_Current_Graph_Auto_Max_Min'/>
+    <DataEntryNumeric label='Graph max'             p={'vars'}   q={'Motor_PWM_Graph_Max'}             s={pc.setVars}  />
+    <DataEntryNumeric label='Graph min'             p={'vars'}   q={'Motor_PWM_Graph_Min'}             s={pc.setVars}  />
+    <DataEntrySelect  label='Thresholds'            p={'vars'}   q={'Motor_PWM_Thresholds'}            s={pc.setVars}  listitems={['Automatic', 'Manual', 'Disable']} k='vars_Battery_Current_Thresholds'/>
+    <DataEntryNumeric label='Max threshold Red'     p={'vars'}   q={'Motor_PWM_Max_Threshold_Red'}     s={pc.setVars}  />
+    <DataEntryNumeric label='Max threshold Yellow'  p={'vars'}   q={'Motor_PWM_Max_Threshold_Yellow'}  s={pc.setVars}  />
   </View>
   )
 }

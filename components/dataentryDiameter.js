@@ -18,14 +18,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import Context from '../context/Context'
 
-//p=the context value i.e. someValue, s=the setter i.e. setSomeValue  - the circumference
-const DataEntryDiameter = ( { label, p, s, k} ) => {
-
-  const [datax, setDatax] = useState(p.toString())
-  const [diameter, setDiameter] = useState('0')
-  const [units, setUnits] = useState(false)  //false = 'metric',  true = 'Imperial'
+const DataEntryDiameter = ( { label, p, q, s} ) => {
+  //label is obvious, p is main object name e.g. 'motor,  q is variable name e.g. motor_acceleration, s is the context setter e.g. pc.setMotor
 
   const pc = useContext(Context)
+
+  const [datax, setDatax]       = useState(eval(`pc.${p}.${q}`).toString()) //e.g. eval('pc.motor.motor_Acceleration')
+  const [diameter, setDiameter] = useState('0')
+  const [units, setUnits]       = useState(false)  //false = 'metric',  true = 'Imperial'
+
+  let key = p.charAt(0).toUpperCase() + p.slice(1) + '_' + q  //upercase the first letter
 
   const change = (n) => {
     //Check for valid number (is it possible to change some of this to regex?)
@@ -37,12 +39,48 @@ const DataEntryDiameter = ( { label, p, s, k} ) => {
     if (n.split('.').length > 2) return             //don't allow more than one .
 
     setDatax(n)
-    s(n)
 
-    //update the async storage here? No where else seems reasonable
-    saveStateToAsyncStorage(k, n)
+    if (n !== '') {
+      
+      let temp = pc[p]
+      temp[q] = n.toString()
+      s({ ...temp })
+      //s({ ...pc[p], [q]: n })             //e.g. pc.setMotor( { ...pc.motor, motor_acceleration: n })
+      
+      saveStateToAsyncStorage(key, n)       //e.g. saveStateToAsyncStorage('motor_Acceleration', n)
+    }
   }
 
+  const end = (e) => {
+    if (datax === '' || datax === null) {
+      setDatax('0')
+
+      let temp = pc[p]
+      temp[q] = '0'
+      s({ ...temp })
+      //s({ ...pc[p], [q]: '0' })
+      
+      saveStateToAsyncStorage(key, '0')
+      return
+    }
+    if (parseInt(datax) < 0) {  //? would it be?
+      setDatax('0')
+
+      let temp = pc[p]
+      temp[q] = '0'
+      s({ ...temp })
+      //s({ ...pc[p], [q]: '0' })
+      
+      saveStateToAsyncStorage(key, '0')
+      return
+    }
+    //otherwise
+    let temp = pc[p]
+    temp[q] = datax.toString()
+    s({ ...temp })
+    //s({ ...pc[p], [q]: datax })
+    saveStateToAsyncStorage(key, datax)
+  }
 
   const changeDiameter = (n) => {
     //Check for valid number (is it possible to change some of this to regex?)
@@ -67,8 +105,12 @@ const DataEntryDiameter = ( { label, p, s, k} ) => {
     }
 
     setDatax(parseInt(c).toString())
-    s(parseInt(c).toString())
-    saveStateToAsyncStorage(k, parseInt(c).toString())
+    let temp = pc[p]
+    temp[q] = parseInt(c).toString()
+    s({ ...temp })
+    //s({ ...pc[p], [q]: parseInt(c).toString() })    //e.g. pc.setMotor( { ...pc.motor, motor_acceleration: n })
+    
+    saveStateToAsyncStorage(key, parseInt(c))       //e.g. saveStateToAsyncStorage('motor_Acceleration', n)
 
   }
 
@@ -95,16 +137,17 @@ const DataEntryDiameter = ( { label, p, s, k} ) => {
         <Text style={global.label}>{label}</Text>
         <TextInput style={global.data}
           keyboardType='numeric'
-          maxLength={5}
+          maxLength={8}
           value={datax}
-          onChangeText={change} />
+          onChangeText={ change } 
+          onEndEditing={ end }/>
       </View>
       <View style={global.itemDiameter}>
         <View style={global.item}>
           <Text style={global.label}>Convert Diameter</Text>
           <TextInput style={global.data} 
             keyboardType='numeric' 
-            maxLength={5} 
+            maxLength={8} 
             value={diameter}
             onChangeText={ changeDiameter }
             onEndEditing={ endChangeDiameter }/>

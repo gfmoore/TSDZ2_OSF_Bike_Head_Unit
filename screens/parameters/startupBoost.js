@@ -16,8 +16,6 @@ import { global } from '../styles/global'
 
 import Context from '../context/Context'
 
-import DataEntryAlpha   from '../components/dataentryAlpha'
-import DataEntryNumeric from '../components/dataentryNumeric'
 import DataEntryUnsignedLimits from '../components/dataentryUnsignedLimits'
 import DataEntryBoolean from '../components/dataentryBoolean'
 
@@ -27,9 +25,9 @@ export default function StartUpBoost ( { route, navigation } ) {
 
   return (
     <View style={global.root, global.app}>
-      <DataEntryBoolean label='Startup boost'              p={pc.startup_Boost}                s={pc.setStartup_Boost}               k='startup_Boost' />
-      <DataEntryUnsignedLimits label='Boost torque factor' p={pc.startup_Boost_Torque_Factor}  s={pc.setStartup_Boost_Torque_Factor} k='startup_Boost_Torque_Factor' low='0' high='500' />
-      <DataEntryUnsignedLimits label='Boost cadence step'  p={pc.startup_Boost_Cadence_Step}   s={pc.setStartup_Boost_Cadence_Step}  k='startup_Boost_Cadence_Step'  low='10'high='50'  />
+      <DataEntryBoolean         label='Startup boost'      p={'startup_Boost'}  q={'Startup_Boost'} s={pc.setStartup_Boost} />
+      <DataEntryUnsignedLimits label='Boost torque factor' p={'startup_Boost'}  q={'Torque_Factor'} s={pc.setStartup_Boost} low='0'  high='500' />
+      <DataEntryUnsignedLimits label='Boost cadence step'  p={'startup_Boost'}  q={'Cadence_Step'}  s={pc.setStartup_Boost} low='10' high='50'  />
     </View>
   )
 }

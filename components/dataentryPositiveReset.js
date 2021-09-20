@@ -18,13 +18,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import Context from '../context/Context'
 
-//p=the context value i.e. someValue, s=the setter i.e. setSomeValue
-const DataEntryPositiveReset = ( { label, p, s, k, resetText} ) => {
 
-  const [datax, setDatax] = useState(p.toString())
-  const [reset, setReset] = useState(false)
+const DataEntryPositiveReset = ( { label, p, q, s, resetText} ) => {
+  //label is obvious, p is main object name e.g. 'motor,  q is variable name e.g. motor_acceleration, s is the context setter e.g. pc.setMotor
 
   const pc = useContext(Context)
+
+  const [datax, setDatax] = useState(eval(`pc.${p}.${q}`).toString()) //e.g. eval('pc.motor.motor_Acceleration')
+  const [reset, setReset] = useState(false)
+
+  let key = p.charAt(0).toUpperCase() + p.slice(1) + '_' + q  //upercase the first letter
 
   const change = (n) => {
     //Check for valid number (is it possible to change some of this to regex?)
@@ -35,20 +38,35 @@ const DataEntryPositiveReset = ( { label, p, s, k, resetText} ) => {
     if (n.split('.').length > 2) return             //don't allow more than one .
 
     setDatax(n)
-    s(n)
-    saveStateToAsyncStorage(k, n)
+
+    if (n !== '') {
+      let temp = pc[p]
+      temp[q] = n.toString()
+      s({ ...temp })
+      //s({ ...pc[p], [q]: n })               //e.g. pc.setMotor( { ...pc.motor, motor_acceleration: n })
+      
+      saveStateToAsyncStorage(key, n)       //e.g. saveStateToAsyncStorage('motor_Acceleration', n)
+    }
   }
 
   const end = () => {
     if (datax === '' || datax === null) {  //don't allow empty
       setDatax('0')
-      s('0')
-      saveStateToAsyncStorage(k, '0')
+      let temp = pc[p]
+      temp[q] = '0'
+      s({ ...temp })
+      //s({ ...pc[p], [q]: '0' })
+      
+      saveStateToAsyncStorage(key, '0')
       return
     }
     //otherwise
-    s(datax)
-    saveStateToAsyncStorage(k, datax)
+    let temp = pc[p]
+    temp[q] = datax.toString()
+    s({ ...temp })
+    //s({ ...pc[p], [q]: datax })
+    
+    saveStateToAsyncStorage(key, datax)
   }
 
   const saveStateToAsyncStorage = async (key, value) => {
@@ -69,8 +87,8 @@ const DataEntryPositiveReset = ( { label, p, s, k, resetText} ) => {
         {
           text: 'Yes', onPress: async () => {
             setDatax('0')
-            s('0')
-            saveStateToAsyncStorage(k, '0')
+            s({ ...pc[p], [q]: '0' })
+            saveStateToAsyncStorage(key, '0')
           }
         },
         {
