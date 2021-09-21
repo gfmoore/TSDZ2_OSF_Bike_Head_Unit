@@ -37,11 +37,7 @@ const DataEntryAssistLevels = ( { label, p, q, s, low, high, enabled} ) => {
     setDatax(n)
 
     if (n !== '') {
-      let temp = pc[p]
-      temp[q] = n
-      s({ ...temp })
-      //s({ ...pc[p], [q]: n })             //e.g. pc.setMotor( { ...pc.motor, motor_acceleration: n })
-      
+      s(prevState => { return { ...prevState, [q]: n.toString() } })
       saveStateToAsyncStorage(key, n)       //e.g. saveStateToAsyncStorage('motor_Acceleration', n)
     }
   }
@@ -50,32 +46,18 @@ const DataEntryAssistLevels = ( { label, p, q, s, low, high, enabled} ) => {
     //note that setting setDatax to low changes the display, but not the datax at that point, don't understand the logic
     if (datax === '' || datax === null) {
       setDatax(low.toString())
-
-      let temp = pc[p]
-      temp[q] = low.toString()
-      s({ ...temp })
-      //s(low.toString())
-      
+      s(prevState => { return { ...prevState, [q]: low.toString() } })
       saveStateToAsyncStorage(key, low.toString())
       return
     }
     if (parseInt(datax) < parseInt(low)) {
       setDatax(low.toString())
-      
-      let temp = pc[p]
-      temp[q] = low.toString()
-      s({ ...temp })
-      //s(low.toString())
-      
+      s(prevState => { return { ...prevState, [q]: low.toString() } })
       saveStateToAsyncStorage(key, low.toString())
       return
     }
     //otherwise
-    let temp = pc[p]
-    temp[q] = datax
-    s({ ...temp })
-    //s({ ...pc[p], [q]: datax })
-    
+    s(prevState => { return { ...prevState, [q]: datax.toString() } })
     saveStateToAsyncStorage(key, datax)
   }
 

@@ -40,32 +40,20 @@ const DataEntryPositiveReset = ( { label, p, q, s, resetText} ) => {
     setDatax(n)
 
     if (n !== '') {
-      let temp = pc[p]
-      temp[q] = n.toString()
-      s({ ...temp })
-      //s({ ...pc[p], [q]: n })               //e.g. pc.setMotor( { ...pc.motor, motor_acceleration: n })
-      
-      saveStateToAsyncStorage(key, n)       //e.g. saveStateToAsyncStorage('motor_Acceleration', n)
+      s(prevState => { return { ...prevState, [q]: n.toString() } })
+      saveStateToAsyncStorage(key, n) 
     }
   }
 
   const end = () => {
     if (datax === '' || datax === null) {  //don't allow empty
       setDatax('0')
-      let temp = pc[p]
-      temp[q] = '0'
-      s({ ...temp })
-      //s({ ...pc[p], [q]: '0' })
-      
+      s(prevState => { return { ...prevState, [q]: '0' } })
       saveStateToAsyncStorage(key, '0')
       return
     }
     //otherwise
-    let temp = pc[p]
-    temp[q] = datax.toString()
-    s({ ...temp })
-    //s({ ...pc[p], [q]: datax })
-    
+    s(prevState => { return { ...prevState, [q]: datax.toString() } })
     saveStateToAsyncStorage(key, datax)
   }
 

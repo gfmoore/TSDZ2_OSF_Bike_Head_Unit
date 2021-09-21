@@ -40,20 +40,12 @@ const DataEntrySelectUnits = ({ label, p, q, s, listitems }) => {
     if (changed) {
       if (x === 'Metric (SI)' ) {
         let a = MphToKph(pc.street_Mode.Speed_Limit)
-
-        let temp = pc.street_Mode
-        temp.Speed_Limit = a
-        pc.setStreet_Mode({ ...temp })
-
+        pc.setStreet_Mode(prevState => { return { ...prevState, Speed_Limit: a } })
         saveStateToAsyncStorage( 'Street_Mode_Speed_Limit', a )
       }
       else { // 'Imperial
         let a = KphToMph(pc.street_Mode.Speed_Limit)
-
-        let temp = pc.street_Mode
-        temp.Speed_Limit = a
-        pc.setStreet_Mode({ ...temp })
-
+        pc.setStreet_Mode(prevState => { return { ...prevState, Speed_Limit: a } })
         saveStateToAsyncStorage( 'Street_Mode_Speed_Limit', a )
       }
     }
@@ -61,12 +53,8 @@ const DataEntrySelectUnits = ({ label, p, q, s, listitems }) => {
     setDatax(x)
 
     if (x !== '') {
-      let temp = pc[p]
-      temp[q] = x
-      s({ ...temp })
-      //s({ ...pc[p], [q]: x })                //e.g. pc.setMotor( { ...pc.motor, motor_acceleration: n })
-
-      saveStateToAsyncStorage(key, x)        //e.g. saveStateToAsyncStorage('motor_Acceleration', n)
+      s(prevState => { return { ...prevState, [q]: x.toString() } })
+      saveStateToAsyncStorage(key, x) 
     }
   }
 

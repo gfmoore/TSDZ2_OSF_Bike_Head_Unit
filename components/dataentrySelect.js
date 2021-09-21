@@ -36,11 +36,7 @@ const DataEntrySelect = ({ label, p, q, s, listitems }) => {
 
   const change = (o) => {
     setDatax(p)
-    let temp = pc[p]
-    temp[q] = o.toString()
-    s({ ...temp })
-    //s({ ...pc[p], [q]: o })
-
+    s(prevState => { return { ...prevState, [q]: o.toString() } })
     saveStateToAsyncStorage(key, o)  
   }
 

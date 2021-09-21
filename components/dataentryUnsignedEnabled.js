@@ -34,27 +34,19 @@ const DataEntryUnsigned = ( { label, p, q, s, enabled } ) => {
     if ( /[^\d]/.test(n) )    return                //only 0..9 allowed
 
     setDatax(n)
-    let temp = pc[p]
-    temp[q] = n.toString()
-    s({ ...temp })
-
+    s(prevState => { return { ...prevState, [q]: n.toString() } })
     saveStateToAsyncStorage(k, n)
   }
 
   const end = () => {
     if (datax === '' || datax === null) {  //don't allow empty
       setDatax('0')
-      let temp = pc[p]
-      temp[q] = '0'
-      s({ ...temp })
-      
+      s(prevState => { return { ...prevState, [q]: '0' } })
       saveStateToAsyncStorage(k, '0')
       return
     }
     //otherwise
-    let temp = pc[p]
-    temp[q] = datax.toString()
-    s({ ...temp })
+    s(prevState => { return { ...prevState, [q]: datax.toString() } })
     saveStateToAsyncStorage(k, datax)
   }
 

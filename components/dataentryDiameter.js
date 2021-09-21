@@ -41,44 +41,26 @@ const DataEntryDiameter = ( { label, p, q, s} ) => {
     setDatax(n)
 
     if (n !== '') {
-      
-      let temp = pc[p]
-      temp[q] = n.toString()
-      s({ ...temp })
-      //s({ ...pc[p], [q]: n })             //e.g. pc.setMotor( { ...pc.motor, motor_acceleration: n })
-      
-      saveStateToAsyncStorage(key, n)       //e.g. saveStateToAsyncStorage('motor_Acceleration', n)
+      s(prevState => { return { ...prevState, [q]: n.toString() } })
+      saveStateToAsyncStorage(key, n) 
     }
   }
 
   const end = (e) => {
     if (datax === '' || datax === null) {
       setDatax('0')
-
-      let temp = pc[p]
-      temp[q] = '0'
-      s({ ...temp })
-      //s({ ...pc[p], [q]: '0' })
-      
+      s(prevState => { return { ...prevState, [q]: '0' } })
       saveStateToAsyncStorage(key, '0')
       return
     }
     if (parseInt(datax) < 0) {  //? would it be?
       setDatax('0')
-
-      let temp = pc[p]
-      temp[q] = '0'
-      s({ ...temp })
-      //s({ ...pc[p], [q]: '0' })
-      
+      s(prevState => { return { ...prevState, [q]: '0' } })
       saveStateToAsyncStorage(key, '0')
       return
     }
     //otherwise
-    let temp = pc[p]
-    temp[q] = datax.toString()
-    s({ ...temp })
-    //s({ ...pc[p], [q]: datax })
+    s(prevState => { return { ...prevState, [q]: datax.toString() } })
     saveStateToAsyncStorage(key, datax)
   }
 
@@ -105,13 +87,8 @@ const DataEntryDiameter = ( { label, p, q, s} ) => {
     }
 
     setDatax(parseInt(c).toString())
-    let temp = pc[p]
-    temp[q] = parseInt(c).toString()
-    s({ ...temp })
-    //s({ ...pc[p], [q]: parseInt(c).toString() })    //e.g. pc.setMotor( { ...pc.motor, motor_acceleration: n })
-    
-    saveStateToAsyncStorage(key, parseInt(c))       //e.g. saveStateToAsyncStorage('motor_Acceleration', n)
-
+    s(prevState => { return { ...prevState, [q]: datax.toString() } })
+    saveStateToAsyncStorage(key, parseInt(c))
   }
 
   const endChangeDiameter = () => {

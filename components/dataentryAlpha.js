@@ -29,11 +29,7 @@ const DataEntryAlpha = ({ label, p, q, s }) => {
 
   const change = (n) => {
     setDatax(n)
-
-    let temp = pc[p]
-    temp[q] = x
-    s({ ...temp })
-
+    s(prevState => { return { ...prevState, [q]: n.toString() } })
     saveStateToAsyncStorage(key, n)
   }
 

@@ -41,40 +41,23 @@ const DataEntrySelectTempUnits = ({ label, p, q, s, listitems  }) => {
       if (x === 'Celsius' ) {  //are there asynchronous timing issues here!!!
         let a = FtoC(pc.motorTemperature.Min_Limit)
         let b = FtoC(pc.motorTemperature.Max_Limit)
-
-        let temp = pc.motorTemperature
-        temp.Min_Limit = a
-        temp.Max_Limit = b
-        pc.setMotorTemperature( { ...temp })
-
+        pc.setMotorTemperature(prevState => { return { ...prevState, Min_Limit: a, Max_Limit: b } })
         saveStateToAsyncStorage('MotorTemperature_Min_Limit', a)
         saveStateToAsyncStorage('MotorTemperature_Max_Limit', b)
       }
       else {
         let a = CtoF(pc.motorTemperature.Min_Limit)
         let b = CtoF(pc.motorTemperature.Max_Limit)
-
-        let temp = pc.motorTemperature
-        temp.Min_Limit = a
-        temp.Max_Limit = b
-        pc.setMotorTemperature({ ...temp })
-
+        pc.setMotorTemperature(prevState => { return { ...prevState, Min_Limit: a, Max_Limit: b } })
         saveStateToAsyncStorage('MotorTemperature_Min_Limit', a)
         saveStateToAsyncStorage('MotorTemperature_Max_Limit', b)
       }
     }
 
     setDatax(x)
-
     if (x !== '') {
-
-
-      let temp = pc[p]
-      temp[q] = x
-      s({ ...temp })
-      //s({ ...pc[p], [q]: x })               //e.g. pc.setMotor( { ...pc.motor, motor_acceleration: n })
-
-      saveStateToAsyncStorage(key, x)       //e.g. saveStateToAsyncStorage('motor_Acceleration', n)
+      s(prevState => { return { ...prevState, [q]: x.toString() } })
+      saveStateToAsyncStorage(key, x)
     }
 
   }

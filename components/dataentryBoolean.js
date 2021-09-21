@@ -90,13 +90,8 @@ const DataEntryBoolean = ({ label, p, q, s }) => {
 
     else { //standard set unset
       setDatax(n)  //n is boolean
-
-      let temp = pc[p]
-      temp[q] = n.toString()
-      s({ ...temp })
-      //s({ ...pc[p], [q]: n.toString() })            //e.g. pc.setMotor( { ...pc.motor, motor_acceleration: n })
-      
-      saveStateToAsyncStorage(key, n)               //e.g. saveStateToAsyncStorage('motor_Acceleration', n)
+      s(prevState => { return { ...prevState, [q]: n.toString() } })
+      saveStateToAsyncStorage(key, n)   
     }
 
   }

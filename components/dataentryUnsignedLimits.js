@@ -36,47 +36,27 @@ const DataEntryUnsignedLimits = ( { label, p, q, s, low, high} ) => {
     if (parseInt(n) > parseInt(high)) n = high.toString()
 
     setDatax(n)
-
     if (n !== '') {
-
-      let temp = pc[p]
-      temp[q] = x
-      s({ ...temp })
-      //s( { ...pc[p], [q]: n } )             //e.g. pc.setMotor( { ...pc.motor, motor_acceleration: n })
-      
-      saveStateToAsyncStorage(key, n)       //e.g. saveStateToAsyncStorage('motor_Acceleration', n)
+      s(prevState => { return { ...prevState, [q]: n.toString() } })
+      saveStateToAsyncStorage(key, n)       
     }
   }
 
   const end = (e) => {
     if (datax === '' || datax === null) {
       setDatax(low.toString())
-      
-      let temp = pc[p]
-      temp[q] = low.toString()
-      s({ ...temp })
-      //s({ ...pc[p], [q]: low.toString() })
-      
+      s(prevState => { return { ...prevState, [q]: low.toString() } })
       saveStateToAsyncStorage(key, low.toString())
       return
     }
     if (parseInt(datax) < parseInt(low))  {
       setDatax(low.toString())
-
-      let temp = pc[p]
-      temp[q] = low.toString()
-      s({ ...temp })
-      //s({ ...pc[p], [q]: low.toString() })
-      
+      s(prevState => { return { ...prevState, [q]: low.toString() } })
       saveStateToAsyncStorage(key, low.toString())
       return
     }
     //otherwise
-    let temp = pc[p]
-    temp[q] = datax
-    s({ ...temp })
-    //s({ ...pc[p], [q]: datax })
-
+    s( prevState => { return { ...prevState, [q]: datax } } )
     saveStateToAsyncStorage(key, datax)
   }
 
