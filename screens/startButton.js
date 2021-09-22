@@ -12,15 +12,15 @@
 
 import React, { useState, useContext, useEffect, useRef } from 'react'
 import {Animated, PanResponder, View, TouchableOpacity, Text} from 'react-native'
+
 import { global } from '../styles/global'
 
 import Context from '../context/Context'
 
 const StartButton = () => {
 
-  const ps = useContext(Context)
+  const pc = useContext(Context)
 
-  const [started, setStarted]         = useState(false)
   const [buttonText, setButtonText]   = useState('Start')
   const [cntr, setCntr]               = useState(0)
   const [pos, setPos]                 = useState({x: 100, y: 400})
@@ -31,11 +31,9 @@ const StartButton = () => {
   const position = useRef(new Animated.ValueXY(pos)).current  
 
   const starting = () => {
-
-
-    if (started) {  
+    if (pc.motorStarted) {  
       if (cntr === 2) {  //hit button 3 times to stop motor  
-        setStarted(false)
+        pc.setMotorStarted(false)
         setPos( { x: 100, y: 400 } )
         setScaleFactor(1.0)
         // setAngle('0deg')
@@ -50,7 +48,7 @@ const StartButton = () => {
     }
     else {
       console.log('Starting motor...')
-      setStarted(true)
+      pc.setMotorStarted(true)
       setPos( { x: -120, y: 485 })
       setScaleFactor(0.3)
       // setAngle('45deg')

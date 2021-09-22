@@ -14,17 +14,19 @@ import { StyleSheet, Image, View, Text , TouchableOpacity} from 'react-native'
 import { global } from '../styles/global'
 
 import StartButton from './startButton'
+import MainDisplay from './mainDisplay'
 
 import Context from '../context/Context'
 
 const Home = ({route, navigation}) => {
 
-  const ps = useContext(Context)
+  const pc = useContext(Context)
 
   return (
     <View style={global.app}>
       <Image source={require('../assets/images/cycle.png')} style={global.appImage} />
       <StartButton />
+      { pc.motorStarted ? <MainDisplay /> : null }
     </View>
   )
 }

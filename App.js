@@ -473,6 +473,9 @@ const MainNavigator = () => {
     }
   )
  
+  //for working with main display screens
+  const [motorStarted, setMotorStarted] = useState(true)
+
   //for working with the Maps and SaveTracks screens
   const [points, setPoints] = useState([])
 
@@ -1101,6 +1104,7 @@ const MainNavigator = () => {
     display,              setDisplay,
     technical,            setTechnical,
     vars,                 setVars,
+    motorStarted,         setMotorStarted,
     points,               setPoints
   }
   //#endregion

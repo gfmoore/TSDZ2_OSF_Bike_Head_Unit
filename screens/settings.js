@@ -348,6 +348,7 @@ const Settings = ( { route, navigation } ) => {
             )
 
             pc.setPoints([])
+            pc.setMotorStarted(false)
             //#endregion
 
             //#region now save all context data to async-storage
