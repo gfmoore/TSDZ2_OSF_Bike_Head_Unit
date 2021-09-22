@@ -20,82 +20,109 @@ const StartButton = () => {
 
   const ps = useContext(Context)
 
-  const [x, setX] = useState(false)
-  const [pos, setPos] = useState({ x: 100, y: 400 })
+  const [started, setStarted]         = useState(false)
+  const [buttonText, setButtonText]   = useState('Start')
+  const [cntr, setCntr]               = useState(0)
+  const [pos, setPos]                 = useState({x: 100, y: 400})
+  const [scaleFactor, setScaleFactor] = useState(1)
+  const [angle, setAngle]             = useState('0deg')
+  const [colr, setColr]               = useState('red')
 
-  let position
-  // position = useRef(new Animated.ValueXY(pos)).current  
-  position = useRef(new Animated.ValueXY()).current  
-  //console.log(position)
-
-  const panResponder = useRef(
-    PanResponder.create({
-
-      onMoveShouldSetPanResponder: (evt, gestureState) => true,
-
-      onPanResponderGrant: (evt, gestureState) => {
-        position.setOffset({
-          x: position.x._value,
-          y: position.y._value
-        })
-      },
-      onPanResponderMove: Animated.event(
-        [
-          null,
-          { dx: position.x, dy: position.y }
-        ], {useNativeDriver: false}
-      ),
-      onPanResponderRelease: (evt, gestureState) => {}
-    })
-  ).current
-  
-
-
-  useEffect( () => {
-
-  }, [])
+  const position = useRef(new Animated.ValueXY(pos)).current  
 
   const starting = () => {
-    console.log('starting...')
 
-    // if (x) {    
-    //   debugger
-    //   setX(false)
-    //   setPos( { x: 100, y: 400 } )
-    //   console.log(`true ${position}`)
-    // }
-    // else {
-    //   setX(true)
-    //   setPos( { x: 10, y: 10 })
-    //   console.log(`false ${position}`)
-    // }
+
+    if (started) {  
+      if (cntr === 2) {  //hit button 3 times to stop motor  
+        setStarted(false)
+        setPos( { x: 100, y: 400 } )
+        setScaleFactor(1.0)
+        // setAngle('0deg')
+        setColr('red')
+        setCntr(0)
+        console.log('Stopping motor...')
+        setButtonText('Start')
+      }
+      else {
+        setCntr(cntr + 1)
+      }
+    }
+    else {
+      console.log('Starting motor...')
+      setStarted(true)
+      setPos( { x: -120, y: 485 })
+      setScaleFactor(0.3)
+      // setAngle('45deg')
+      setColr('green')
+      setButtonText('Stop')
+
+      displayMainScreen()
+    }
+  }
+
+  const displayMainScreen = () => {
+
   }
 
   useEffect( () => {  //because setting state is asynchronous
-    // Animated.spring(position, {
-    //   toValue: pos,
-    //   useNativeDriver: false,
-    // }).start()
+    Animated.spring(position, {
+      toValue: pos,
+      useNativeDriver: false,
+    }).start()
   }, [pos])
 
   return (
-
-
-    <Animated.View style={{
-         transform: [{translateX: position.x}, { translateY: position.y}] 
-       }}  
-       {...panResponder.panHandlers} >
-      <TouchableOpacity style={global.startButton2}>
-      {/* <TouchableOpacity  onPress={starting}> */}
-        <Text style={global.startButtonText}>Start</Text>
+    <Animated.View style={
+      { transform: [{ rotate: angle }, { scale: scaleFactor }] }
+      }
+      {...position.getLayout()} 
+    >
+      <TouchableOpacity style={{ ...global.startButton, backgroundColor: colr }  } onPress={starting} >
+        <Text style={global.startButtonText}>{buttonText}</Text>
       </TouchableOpacity>
     </Animated.View>
-
   )
 }
 
 export default StartButton
-    // <Animated.View >
- // < TouchableOpacity style = { global.startButton2 } onPress = { starting } >
-// <Animated.View style={position.getLayout()}>
-    // </Animated.View>
+
+
+//move button around code
+// const StartButton = () => {
+
+//   const ps = useContext(Context)
+
+//   const position = useRef(new Animated.ValueXY()).current
+
+//   const panResponder = useRef(
+//     PanResponder.create({
+
+//       onMoveShouldSetPanResponder: (evt, gestureState) => true,
+
+//       onPanResponderGrant: (evt, gestureState) => {
+//         position.setOffset({
+//           x: position.x._value,
+//           y: position.y._value
+//         })
+//       },
+//       onPanResponderMove: Animated.event(
+//         [
+//           null,
+//           { dx: position.x, dy: position.y }
+//         ], { useNativeDriver: false }
+//       ),
+//       onPanResponderRelease: (evt, gestureState) => { }
+//     })
+//   ).current
+
+//   return (
+//     <Animated.View style={{
+//       transform: [{ translateX: position.x }, { translateY: position.y }]
+//     }}
+//       {...panResponder.panHandlers} >
+//       <TouchableOpacity style={global.startButton2}>
+//         <Text style={global.startButtonText}>Start</Text>
+//       </TouchableOpacity>
+//     </Animated.View>
+//   )

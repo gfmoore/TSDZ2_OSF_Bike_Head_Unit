@@ -24,10 +24,32 @@
     marginTop: 10,
   },
   appImage: { 
+    position: 'absolute',
+    left: 0,
+    top: 0,
     marginLeft: 5, 
     width: 380, 
-    height: 380 
+    height: 380,
+    // borderWidth:3,
+    // borderColor: 'red',
   },
+   startButton: {
+    //  position: 'absolute',  ..doesn't work very well in android for touchables, yet more hacks
+    //  top: 0,
+    //  left: 0,
+     width: 200,
+     height: 200,
+     borderColor: 'blue',
+     borderWidth: 1,
+     borderRadius: 100,
+     // alignSelf: 'center',
+     justifyContent: 'center', //Centered horizontally
+     alignItems: 'center',     //Centered vertically
+   },
+   startButtonText: {
+     fontSize: 36,
+     color: 'white',
+   },
   root: {
     flex: 1,
     flexDirection: 'column',
@@ -96,31 +118,6 @@
      marginRight: 10,
      paddingLeft: 15,
    },
-  startButton: {
-    width: 200,
-    height: 200,
-    backgroundColor: 'red',
-    borderColor: 'blue',
-    borderWidth: 1,
-    borderRadius: 100,
-    alignSelf: 'center',
-    justifyContent: 'center', //Centered horizontally
-    alignItems: 'center',     //Centered vertically
-  },
-  startButton2: {
-    width: 200,
-    height: 200,
-    backgroundColor: 'red',
-    borderColor: 'blue',
-    borderWidth: 1,
-    borderRadius: 100,
-    justifyContent: 'center', //Centered horizontally
-    alignItems: 'center',     //Centered vertically
-  },
-  startButtonText: {
-    fontSize: 36,
-    color: 'white',
-  },
   switch: {
     marginTop: 20,
     marginRight: 10,

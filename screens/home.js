@@ -23,7 +23,7 @@ const Home = ({route, navigation}) => {
 
   return (
     <View style={global.app}>
-      {/* <Image source={require('../assets/images/cycle.png')} style={global.appImage} /> */}
+      <Image source={require('../assets/images/cycle.png')} style={global.appImage} />
       <StartButton />
     </View>
   )
