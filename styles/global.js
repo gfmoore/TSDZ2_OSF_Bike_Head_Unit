@@ -107,6 +107,16 @@
     justifyContent: 'center', //Centered horizontally
     alignItems: 'center',     //Centered vertically
   },
+  startButton2: {
+    width: 200,
+    height: 200,
+    backgroundColor: 'red',
+    borderColor: 'blue',
+    borderWidth: 1,
+    borderRadius: 100,
+    justifyContent: 'center', //Centered horizontally
+    alignItems: 'center',     //Centered vertically
+  },
   startButtonText: {
     fontSize: 36,
     color: 'white',
