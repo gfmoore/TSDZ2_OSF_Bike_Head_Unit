@@ -474,7 +474,7 @@ const MainNavigator = () => {
   )
  
   //for working with main display screens
-  const [motorStarted, setMotorStarted] = useState(true)
+  const [motorStarted, setMotorStarted] = useState(false)
 
   //for working with the Maps and SaveTracks screens
   const [points, setPoints] = useState([])

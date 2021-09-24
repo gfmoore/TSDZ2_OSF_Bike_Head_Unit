@@ -15,6 +15,7 @@ import { global } from '../styles/global'
 
 import StartButton from './startButton'
 import MainDisplay from './mainDisplay'
+import Test from './test'
 
 import Context from '../context/Context'
 
@@ -27,6 +28,7 @@ const Home = ({route, navigation}) => {
       <Image source={require('../assets/images/cycle.png')} style={global.appImage} />
       <StartButton />
       { pc.motorStarted ? <MainDisplay /> : null }
+      {/* { pc.motorStarted ? <Test /> : null } */}
     </View>
   )
 }
