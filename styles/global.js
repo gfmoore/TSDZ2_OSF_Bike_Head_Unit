@@ -292,4 +292,26 @@
      marginRight: 20,
      marginBottom: 10,
    },
+   tripstartpause: {
+     position: 'absolute',
+     top: 555,
+     left: 320,
+     width: 60,
+     height: 60,
+     backgroundColor: 'orange',
+     borderWidth: 2,
+     borderColor: 'red',
+     borderRadius: 5,
+  },
+  tripstop: {
+     position: 'absolute',
+     top: 555,
+     left: 250,
+     width: 60,
+     height: 60,
+     backgroundColor: 'red',
+     borderWidth: 2,
+     borderColor: 'orange',
+     borderRadius: 5,
+   }
 })

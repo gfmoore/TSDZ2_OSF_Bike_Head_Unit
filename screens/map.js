@@ -67,9 +67,6 @@ const Map = ({ route, navigation }) => {
 
   useEffect(() => {  //a one off
     //set initial region and location, but will get updated.
-
-    //console.log('here in useEffect')
-
     const requestLocationPermission = async () => {
       try {
         const granted = await PermissionsAndroid.request(

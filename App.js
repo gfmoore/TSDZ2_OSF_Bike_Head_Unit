@@ -476,6 +476,11 @@ const MainNavigator = () => {
   //for working with main display screens
   const [motorStarted, setMotorStarted] = useState(false)
 
+  //start trip, pause trip, resume trip, stop trip
+  const [tripStatus, setTripStatus] = useState('Stopped')
+  const [currentTime, setCurrentTime] = useState('')
+  const [elapsedTime, setElapsedTime] = useState('')
+
   //for working with the Maps and SaveTracks screens
   const [points, setPoints] = useState([])
 
@@ -1105,6 +1110,9 @@ const MainNavigator = () => {
     technical,            setTechnical,
     vars,                 setVars,
     motorStarted,         setMotorStarted,
+    tripStatus,           setTripStatus,
+    currentTime,          setCurrentTime,
+    elapsedTime,          setElapsedTime,
     points,               setPoints
   }
   //#endregion

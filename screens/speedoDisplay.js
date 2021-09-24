@@ -6,15 +6,11 @@ import { global } from '../styles/global'
 
 import Context from '../context/Context'
 
-const MainDisplay = () => {
+const SpeedoDisplay = () => {
 
   const pc = useContext(Context)
 
   const [speed, setSpeed] = useState(17)
-
-  useEffect( () => {
-
-  }, [])
 
   const dw = Dimensions.get('window').width
   const dh = Dimensions.get('window').height
@@ -110,23 +106,23 @@ const MainDisplay = () => {
         <SvgText x={xs(16)} y={ys(85)} fontSize={30} fill="white" fontFamily="sans-serif" fontStyle="normal">0</SvgText>
         {(pc.display.Units === 'Metric (SI)' &&  
           <>
-            <SvgText x={xs(22)} y={ys(85)} fontSize={30} fill="white" fontFamily="sans-serif" fontStyle="normal">kph</SvgText> 
-            <SvgText x={xs(0)}  y={ys(52)} fontSize={30} fill="white" fontFamily="sans-serif" fontStyle="normal">10</SvgText> 
-            <SvgText x={xs(13)} y={ys(22)} fontSize={30} fill="white" fontFamily="sans-serif" fontStyle="normal">20</SvgText> 
-            <SvgText x={xs(45)} y={ys(8)}  fontSize={30} fill="white" fontFamily="sans-serif" fontStyle="normal">30</SvgText> 
-            <SvgText x={xs(80)} y={ys(22)} fontSize={30} fill="white" fontFamily="sans-serif" fontStyle="normal">40</SvgText> 
-            <SvgText x={xs(90)} y={ys(52)} fontSize={30} fill="white" fontFamily="sans-serif" fontStyle="normal">50</SvgText> 
-            <SvgText x={xs(79)} y={ys(85)} fontSize={30} fill="white" fontFamily="sans-serif" fontStyle="normal">60</SvgText> 
+            <SvgText x={xs(22)} y={ys(85)}  fontSize={30} fill="white" fontFamily="sans-serif" fontStyle="normal">kph</SvgText> 
+            <SvgText x={xs(0)}  y={ys(52)}  fontSize={30} fill="white" fontFamily="sans-serif" fontStyle="normal">10</SvgText> 
+            <SvgText x={xs(12)} y={ys(21)}  fontSize={30} fill="white" fontFamily="sans-serif" fontStyle="normal">20</SvgText> 
+            <SvgText x={xs(45.5)} y={ys(8)} fontSize={30} fill="white" fontFamily="sans-serif" fontStyle="normal">30</SvgText> 
+            <SvgText x={xs(80)} y={ys(21)}  fontSize={30} fill="white" fontFamily="sans-serif" fontStyle="normal">40</SvgText> 
+            <SvgText x={xs(90)} y={ys(52)}  fontSize={30} fill="white" fontFamily="sans-serif" fontStyle="normal">50</SvgText> 
+            <SvgText x={xs(79)} y={ys(85)}  fontSize={30} fill="white" fontFamily="sans-serif" fontStyle="normal">60</SvgText> 
           </>)
         }
         {(pc.display.Units === 'Imperial' && 
           <>
-            <SvgText x={xs(22)} y={ys(85)} fontSize={30} fill="white" fontFamily="sans-serif" fontStyle="normal">mph</SvgText>
-            <SvgText x={xs(1)}  y={ys(46)} fontSize={30} fill="white" fontFamily="sans-serif" fontStyle="normal">10</SvgText>
-            <SvgText x={xs(25)} y={ys(12)} fontSize={30} fill="white" fontFamily="sans-serif" fontStyle="normal">20</SvgText>
-            <SvgText x={xs(65)} y={ys(12)} fontSize={30} fill="white" fontFamily="sans-serif" fontStyle="normal">30</SvgText>
-            <SvgText x={xs(91)} y={ys(46)} fontSize={30} fill="white" fontFamily="sans-serif" fontStyle="normal">40</SvgText>
-            <SvgText x={xs(78)} y={ys(85)} fontSize={30} fill="white" fontFamily="sans-serif" fontStyle="normal">50</SvgText>
+            <SvgText x={xs(22)} y={ys(85)}  fontSize={30} fill="white" fontFamily="sans-serif" fontStyle="normal">mph</SvgText>
+            <SvgText x={xs(1)}  y={ys(46)}  fontSize={30} fill="white" fontFamily="sans-serif" fontStyle="normal">10</SvgText>
+            <SvgText x={xs(25)} y={ys(12)}  fontSize={30} fill="white" fontFamily="sans-serif" fontStyle="normal">20</SvgText>
+            <SvgText x={xs(65)} y={ys(12)}  fontSize={30} fill="white" fontFamily="sans-serif" fontStyle="normal">30</SvgText>
+            <SvgText x={xs(91)} y={ys(46)}  fontSize={30} fill="white" fontFamily="sans-serif" fontStyle="normal">40</SvgText>
+            <SvgText x={xs(78)} y={ys(85)}  fontSize={30} fill="white" fontFamily="sans-serif" fontStyle="normal">50</SvgText>
           </>)
         }
 
@@ -141,11 +137,13 @@ const MainDisplay = () => {
         {(speed >= pc.street_Mode.Speed_Limit + 5 &&               
           <Path d={arc(xs(50), ys(50), xs(32), 0, speedangle(speed))} stroke='red'     strokeWidth='12' fill='transparent' /> ) }
 
-        {/* display trip distance */}
-        <Rect x={xs(33)} y={ys(60)} rx='20' ry='20' width={xs(36)} height="50" stroke='transparent' strokeWidth='1' fill='white' /> 
-        <SvgText x={xs(35)} y={ys(69)} fontSize={30} fill="black" fontFamily="monospace" fontStyle="normal">0000.00</SvgText>
+        {/* elapsed time and current time */}
+        <SvgText x={xs(1)} y={ys(8)}  fontSize={30} fill="yellow" fontFamily="monospace" fontStyle="normal">{pc.elapsedTime}</SvgText>
+        <SvgText x={xs(60)} y={ys(8)} fontSize={30} fill="yellow" fontFamily="monospace" fontStyle="normal">{pc.currentTime}</SvgText>
 
-        
+        {/* display trip distance */}
+        <Rect x={xs(33)} y={ys(60)} rx='20' ry='20' width={xs(36)} height="50" stroke='transparent' strokeWidth='1' fill='lightgrey' /> 
+        <SvgText x={xs(35)} y={ys(69)} fontSize={30} fill="black" fontFamily="monospace" fontStyle="normal">0000.00</SvgText>
 
       </Svg>
 
@@ -153,6 +151,6 @@ const MainDisplay = () => {
   )
 }
 
-export default MainDisplay
+export default SpeedoDisplay
 
 // Note arc is adapted from https://stackoverflow.com/questions/5736398/how-to-calculate-the-svg-path-for-an-arc-of-a-circle
