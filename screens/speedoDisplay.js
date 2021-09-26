@@ -10,7 +10,11 @@ const SpeedoDisplay = () => {
 
   const pc = useContext(Context)
 
-  const [speed, setSpeed] = useState(17)
+  useEffect( () => {
+    pc.setTrip(prevState => { return { ...prevState, A: '45' } })
+    pc.setSpeed(17)
+  }, [])
+
 
   const dw = Dimensions.get('window').width
   const dh = Dimensions.get('window').height
@@ -68,6 +72,38 @@ const SpeedoDisplay = () => {
     return d
   }
 
+  const assistUp = () => {
+    if (pc.assistLevel === parseInt(pc.number_Assist_Levels.Levels)) return
+    pc.setAssistLevel(pc.assistLevel + 1)
+  }
+
+  const assistDn = () => {
+    if (pc.assistLevel === 0) return
+    pc.setAssistLevel(pc.assistLevel - 1)
+  }
+
+  const assistDecreaseButton = () => {
+    let d = [
+      "M", xs(41), ys(22),
+      "l", -30, 22,
+      "l", +30, 22,
+      "Z"
+    ].join(" ")
+    return d
+  }
+
+  const assistIncreaseButton = () => {
+    let d = [
+      "M", xs(60), ys(22),
+      "l", 30, 22,
+      "l", -30, 22,
+      "Z"
+    ].join(" ")
+    return d
+  }
+
+
+  
   return (
     
     <View style={[StyleSheet.absoluteFill, { bottom: 60, /* borderColor: 'green', borderWidth: 5 */ },]} >
@@ -127,24 +163,36 @@ const SpeedoDisplay = () => {
         }
 
         {/* speedo rotor */}
-        <Path d={radial(speedangle(speed), xs(50), ys(50), xs(0), xs(30))} stroke='red' strokeWidth='10' fill='blue' />
+        <Path d={radial(speedangle(pc.speed), xs(50), ys(50), xs(0), xs(30))} stroke='red' strokeWidth='10' fill='blue' />
 
         {/* speedo arc, color coded to speed limit */}
-        {(speed < pc.street_Mode.Speed_Limit - 5 &&                
-          <Path d={arc(xs(50), ys(50), xs(32), 0, speedangle(speed))} stroke='green'   strokeWidth='12' fill='transparent' /> ) }
-        {(speed >= pc.street_Mode.Speed_Limit && speed < pc.street_Mode.Speed_Limit + 5 && 
-          <Path d={arc(xs(50), ys(50), xs(32), 0, speedangle(speed))} stroke='yellow'  strokeWidth='12' fill='transparent' /> ) }
-        {(speed >= pc.street_Mode.Speed_Limit + 5 &&               
-          <Path d={arc(xs(50), ys(50), xs(32), 0, speedangle(speed))} stroke='red'     strokeWidth='12' fill='transparent' /> ) }
+        {(pc.speed < pc.street_Mode.Speed_Limit - 5 &&                
+          <Path d={arc(xs(50), ys(50), xs(32), 0, speedangle(pc.speed))} stroke='green'   strokeWidth='12' fill='transparent' /> ) }
+        {(pc.speed >= pc.street_Mode.Speed_Limit && pc.speed < pc.street_Mode.Speed_Limit + 5 && 
+          <Path d={arc(xs(50), ys(50), xs(32), 0, speedangle(pc.speed))} stroke='yellow'  strokeWidth='12' fill='transparent' /> ) }
+        {(pc.speed >= pc.street_Mode.Speed_Limit + 5 &&               
+          <Path d={arc(xs(50), ys(50), xs(32), 0, speedangle(pc.speed))} stroke='red'     strokeWidth='12' fill='transparent' /> ) }
 
         {/* elapsed time and current time */}
         <SvgText x={xs(1)} y={ys(8)}  fontSize={30} fill="yellow" fontFamily="monospace" fontStyle="normal">{pc.elapsedTime}</SvgText>
         <SvgText x={xs(60)} y={ys(8)} fontSize={30} fill="yellow" fontFamily="monospace" fontStyle="normal">{pc.currentTime}</SvgText>
 
         {/* display trip distance */}
-        <Rect x={xs(33)} y={ys(60)} rx='20' ry='20' width={xs(36)} height="50" stroke='transparent' strokeWidth='1' fill='lightgrey' /> 
-        <SvgText x={xs(35)} y={ys(69)} fontSize={30} fill="black" fontFamily="monospace" fontStyle="normal">0000.00</SvgText>
+        <Rect x={xs(33)} y={ys(60)} rx='20' ry='20' width={xs(36)} height={ys(12)} stroke='transparent' strokeWidth='1' fill='lightgrey' /> 
+        <SvgText x={xs(68)} y={ys(69)} textAnchor="end" fontSize={30} fill="black" fontFamily="monospace" fontStyle="normal">{pc.trip.A}</SvgText>
 
+
+        {/* display assist level */}
+        <Rect x={xs(43)} y={ys(20)} rx='20' ry='20' width={xs(15)} height={ys(15)} stroke='transparent' strokeWidth='1' fill='lemonchiffon' />
+        {( pc.assistLevel === 0 &&
+          <SvgText x={xs(46.5)} y={ys(32)} fontSize={50} color='blue' fill="blue" fontFamily="monospace" fontStyle="normal" fontWeight='bold'>{pc.assistLevel}</SvgText>
+        )}
+        {(pc.assistLevel !== 0 &&
+          <SvgText x={xs(46.5)} y={ys(32)} fontSize={50} color='green' fill="green" fontFamily="monospace" fontStyle="normal" fontWeight='bold'>{pc.assistLevel}</SvgText>
+        )}
+        {/* Now add some assist level buttons (triangles) */}
+        <Path d={assistDecreaseButton()}  onPress={assistDn} stroke='red' strokeWidth='1' fill='lemonchiffon' />
+        <Path d={assistIncreaseButton()} onPress={assistUp} stroke='red' strokeWidth='1' fill='lemonchiffon' />
       </Svg>
 
     </View>

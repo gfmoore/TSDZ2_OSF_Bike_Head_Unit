@@ -59,6 +59,7 @@ const StartButton = () => {
   }
 
   const tripControl = () => {
+    console.log(pc.tripStatus)
     switch (pc.tripStatus) {
       case 'Stopped':  //so start the trip
         pc.setTripStatus('Started')
@@ -140,18 +141,35 @@ const StartButton = () => {
 
       {/* Buttons to start, pause and stop trip */}
       {(pc.motorStarted && 
-        <TouchableOpacity style={global.tripstartpause} onPress={tripControl}>
-          {(pc.tripStatus === 'Stopped' && <Icon name='play-circle-outline'   color='white' size={55} onPress={tripControl} /> )}
-          {(pc.tripStatus === 'Started' && <Icon name='pause-circle-outline'  color='white' size={55} onPress={tripControl} /> )}
-          {(pc.tripStatus === 'Paused'  && <Icon name='restart'               color='white' size={55} onPress={tripControl} /> )}
-          {(pc.tripStatus === 'Stopped' && <Icon name='play-circle-outline'   color='white' size={55} onPress={tripControl} /> )}
-        </TouchableOpacity>
+        <>
+          {( pc.tripStatus === 'Stopped' && 
+            <TouchableOpacity style={global.tripstart} onPress={tripControl} >
+              <Icon name='play-circle-outline' color='white' size={55} onPress={tripControl} />
+            </TouchableOpacity>
+          )}
+          {( pc.tripStatus === 'Started' &&
+            <>
+              <TouchableOpacity style={global.trippause} onPress={tripControl} >
+                <Icon name='pause-circle-outline' color='white' size={55} onPress={tripControl} />
+              </TouchableOpacity>
+              <TouchableOpacity style={global.tripstop} onPress={tripControl} >
+                <Icon name='stop-circle-outline' color='white' size={55} onPress={tripControlStop} />
+              </TouchableOpacity>
+            </>
+          )}
+          {( pc.tripStatus === 'Paused' &&
+            <>
+              <TouchableOpacity style={global.triprestart} onPress={tripControl} >
+                <Icon name='restart' color='white' size={55} onPress={tripControl} />
+              </TouchableOpacity>
+              <TouchableOpacity style={global.tripstop} onPress={tripControl} >
+                <Icon name='stop-circle-outline' color='white' size={55} onPress={tripControlStop} />
+              </TouchableOpacity>
+            </>
+          )}
+        </>  
       )}
-      {((pc.tripStatus === 'Started' || pc.tripStatus === 'Paused') &&
-        <TouchableOpacity style={global.tripstop} onPress={tripControlStop}>
-          <Icon name='stop-circle-outline' color='white' size={55} onPress={tripControlStop} />
-        </TouchableOpacity>
-      )}
+
     </>
   )
 }
@@ -160,3 +178,4 @@ export default StartButton
 
 
 //millistoTime https://stackoverflow.com/questions/21294302/converting-milliseconds-to-minutes-and-seconds-with-javascript
+

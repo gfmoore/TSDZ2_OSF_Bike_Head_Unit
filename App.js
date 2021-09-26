@@ -36,6 +36,10 @@ import { ParameterProvider } from './context/Context'
 import { CustomDrawer } from './screens/customDrawer'
 
 import Home                   from './screens/home'
+import User1                  from './screens/user1'
+import User2                  from './screens/user2'
+import User3                  from './screens/user3'
+
 import Map                    from './screens/map.js'
 import Tracks                 from './screens/tracks'
 import MotorParameters        from './screens/motorParameters'
@@ -87,9 +91,12 @@ const HomeTabs = () => {
       tabBarStyle: { backgroundColor: 'black'},
       tabBarActiveTintColor: 'white'
       }}>
-      <Tab.Screen name="Home"       component={Home}      options={{ title: 'Home', headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white' }} />
-      <Tab.Screen name="MapStack"   component={MapStack}  options={{ title: 'Map',  headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white' }} /> 
-      <Tab.Screen name="Tracks"     component={Tracks}    options={{ title: 'Tracks',  headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white' }} /> 
+      <Tab.Screen name="Tracks"   component={Tracks}   options={{ title: 'Trac', headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white' }} />
+      <Tab.Screen name="MapStack" component={MapStack} options={{ title: 'Map',  headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white' }} />
+      <Tab.Screen name="Home"     component={Home}     options={{ title: 'Strt', headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white' }} />
+      <Tab.Screen name="User1"    component={User1}    options={{ title: 'Usr1', headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white' }} />
+      <Tab.Screen name="User2"    component={User2}    options={{ title: 'Usr2', headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white' }} />
+      <Tab.Screen name="User3"    component={User3}    options={{ title: 'Usr3', headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white' }} />
     </Tab.Navigator>
   )
 }
@@ -483,6 +490,12 @@ const MainNavigator = () => {
 
   //for working with the Maps and SaveTracks screens
   const [points, setPoints] = useState([])
+
+  //the current assist level
+  const [assistLevel, setAssistLevel] = useState(0)
+
+  //current speed
+  const [speed, setSpeed] = useState(0)
 
   //#endregion
 
@@ -1113,6 +1126,8 @@ const MainNavigator = () => {
     tripStatus,           setTripStatus,
     currentTime,          setCurrentTime,
     elapsedTime,          setElapsedTime,
+    assistLevel,          setAssistLevel,
+    speed,                setSpeed,
     points,               setPoints
   }
   //#endregion
