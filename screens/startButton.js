@@ -22,6 +22,7 @@ let elapsedT      //the id of the timer
 let elapsed       //the elapsed milliseconds
 let pausedMillis  //the number of millis at pause time
 let now
+let testspeedo
 
 const StartButton = () => {
 
@@ -34,6 +35,22 @@ const StartButton = () => {
   const [colr, setColr]               = useState('red')
 
   const position = useRef(new Animated.ValueXY(pos)).current  
+ 
+
+  const testSpeedo = () => {
+    let i = 0
+    const speeds = [0, 5, 10, 15, 16, 17, 17, 17, 14, 18, 18, 23, 24, 25, 30, 23, 40, 40, 26, 24, 24, 18, 18, 15, 15, 23, 22, 20, 20, 30, 50, 55, 60, 60, 40, 35, 28, 27, 27, 27, 23, 20, 20, 20, 12, 13, 10, 5, 5]
+    testspeedo = setInterval(() => {
+      pc.setSpeed(speeds[i])
+      if (i < speeds.length - 1) {
+        i += 1
+      }
+      else {
+        i = 1
+      }
+    }, 500)
+  }
+
 
   const starting = () => {
     if (pc.motorStarted) {  
@@ -51,7 +68,7 @@ const StartButton = () => {
     }
     else {
       pc.setMotorStarted(true)
-      setPos( { x: -120, y: 485 })
+      setPos( { x: -120, y: 465 })
       setScaleFactor(0.3)
       setColr('green')
       setButtonText('Stop')
@@ -68,6 +85,9 @@ const StartButton = () => {
           elapsed = new Date() - now
           pc.setElapsedTime(msToTime(elapsed))  //is this causing multiple re-renders
         }, 100)
+
+        testSpeedo()
+
         return
       case 'Started': //so pause the trip
         pc.setTripStatus('Paused')
@@ -95,6 +115,8 @@ const StartButton = () => {
           text: 'Yes', onPress: () => { 
             pc.setTripStatus('Stopped')
             clearInterval(elapsedT)
+
+            clearInterval(testspeedo)
           }
         },
         {

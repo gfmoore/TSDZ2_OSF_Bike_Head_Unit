@@ -15,15 +15,11 @@ import { global } from '../styles/global'
 
 import StartButton from './startButton'
 import SpeedoDisplay from './speedoDisplay'
-import Test from './test'
+//import TestTSDZ2 from './testTSDZ2'
 
 import Context from '../context/Context'
 
-let cnt=0
-
 const Home = ({route, navigation}) => {
-
-  //console.log('how many? ' + cnt++)
 
   const pc = useContext(Context)
 
@@ -37,27 +33,34 @@ const Home = ({route, navigation}) => {
       secs = parseInt(tim.getSeconds())
 
       if (hrs < 12) { 
-        ampm = ' am'
+        ampm = 'am'
       }
       else {
-        ampm = ' pm'
+        ampm = 'pm'
         hrs = hrs - 12
       }
+      timestring = ''
       if (hrs < 10) timestring = '0'
       timestring += hrs.toString() + ':'
       
       if (mins < 10) timestring += '0'
-      timestring += mins + ':'
+      timestring += mins
+      // timestring += mins + ':'
 
-      if (secs < 10) timestring += '0'
-      timestring += secs
+      // if (secs < 10) timestring += '0'
+      // timestring += secs
 
       timestring += ampm
+
       pc.setCurrentTime(timestring)
 
     }, 1000)
   }, [])
 
+
+  const randomSpeed = () => {
+    return Math.floor(Math.random() * 65)
+  }
 
   return (
     <View style={global.app}>

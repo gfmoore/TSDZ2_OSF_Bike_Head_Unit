@@ -294,7 +294,7 @@
    },
    tripstart: {
     position: 'absolute',
-    top: 555,
+    top: 540,
     left: 320,
     width: 60,
     height: 60,
@@ -305,7 +305,7 @@
   },
   trippause: {
     position: 'absolute',
-    top: 555,
+    top: 540,
     left: 320,
     width: 60,
     height: 60,
@@ -316,7 +316,7 @@
    },
    triprestart: {
      position: 'absolute',
-     top: 555,
+     top: 540,
      left: 320,
      width: 60,
      height: 60,
@@ -327,7 +327,7 @@
    },
   tripstop: {
     position: 'absolute',
-    top: 555,
+    top: 540,
     left: 250,
     width: 60,
     height: 60,

@@ -102,11 +102,9 @@ const SpeedoDisplay = () => {
     return d
   }
 
-
-  
   return (
-    
-    <View style={[StyleSheet.absoluteFill, { bottom: 60, /* borderColor: 'green', borderWidth: 5 */ },]} >
+        
+    <View style={[StyleSheet.absoluteFill, { bottom: dh - ys(120), /*borderColor: 'green', borderWidth: 5*/  },]} >
 
       <Svg height='100%' width='100%' >
 
@@ -166,16 +164,16 @@ const SpeedoDisplay = () => {
         <Path d={radial(speedangle(pc.speed), xs(50), ys(50), xs(0), xs(30))} stroke='red' strokeWidth='10' fill='blue' />
 
         {/* speedo arc, color coded to speed limit */}
-        {(pc.speed < pc.street_Mode.Speed_Limit - 5 &&                
+        {(pc.speed < parseInt(pc.street_Mode.Speed_Limit) - 3 &&                
           <Path d={arc(xs(50), ys(50), xs(32), 0, speedangle(pc.speed))} stroke='green'   strokeWidth='12' fill='transparent' /> ) }
-        {(pc.speed >= pc.street_Mode.Speed_Limit && pc.speed < pc.street_Mode.Speed_Limit + 5 && 
+        {(pc.speed >= parseInt(pc.street_Mode.Speed_Limit) -3 && pc.speed < parseInt(pc.street_Mode.Speed_Limit) + 5 && 
           <Path d={arc(xs(50), ys(50), xs(32), 0, speedangle(pc.speed))} stroke='yellow'  strokeWidth='12' fill='transparent' /> ) }
-        {(pc.speed >= pc.street_Mode.Speed_Limit + 5 &&               
+        {(pc.speed >= parseInt(pc.street_Mode.Speed_Limit) + 5 &&               
           <Path d={arc(xs(50), ys(50), xs(32), 0, speedangle(pc.speed))} stroke='red'     strokeWidth='12' fill='transparent' /> ) }
 
         {/* elapsed time and current time */}
         <SvgText x={xs(1)} y={ys(8)}  fontSize={30} fill="yellow" fontFamily="monospace" fontStyle="normal">{pc.elapsedTime}</SvgText>
-        <SvgText x={xs(60)} y={ys(8)} fontSize={30} fill="yellow" fontFamily="monospace" fontStyle="normal">{pc.currentTime}</SvgText>
+        <SvgText x={xs(68)} y={ys(8)} fontSize={30} fill="yellow" fontFamily="monospace" fontStyle="normal">{pc.currentTime}</SvgText>
 
         {/* display trip distance */}
         <Rect x={xs(33)} y={ys(60)} rx='20' ry='20' width={xs(36)} height={ys(12)} stroke='transparent' strokeWidth='1' fill='lightgrey' /> 
@@ -194,6 +192,15 @@ const SpeedoDisplay = () => {
         <Path d={assistDecreaseButton()}  onPress={assistDn} stroke='red' strokeWidth='1' fill='lemonchiffon' />
         <Path d={assistIncreaseButton()} onPress={assistUp} stroke='red' strokeWidth='1' fill='lemonchiffon' />
       </Svg>
+
+      {/* <Svg height='100%' width='100%' >
+          <Rect x="0" y="10" width="100%" height="40%" stroke='red' strokeWidth='3' fill='none' />
+
+          <Rect x="0" y="10" width="50%" height="20%" stroke='blue' strokeWidth='1' fill='none' />
+          <Rect x="50%" y="10" width="50%" height="20%" stroke='blue' strokeWidth='1' fill='none' />
+          <Rect x="0" y="84" width="50%" height="20%" stroke='blue' strokeWidth='1' fill='none' />
+          <Rect x="50%" y="84" width="50%" height="20%" stroke='blue' strokeWidth='1' fill='none' />
+      </Svg> */}
 
     </View>
   )
