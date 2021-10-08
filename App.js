@@ -9,6 +9,7 @@
  * 
  * Version history
  * 0.0.1    13 August 2021     Initial version
+ * 0.0.2    7 October 2021     Add bluetooth screen
  */
 
 import 'react-native-gesture-handler'
@@ -48,6 +49,7 @@ import Settings               from './screens/settings'
 import ParametersListing      from './screens/parametersListing'
 import About                  from './screens/about'
 import StartUp                from './screens/startup'
+import Bluetooth              from './screens/bluetooth'
 
 import Motor                  from './screens/parameters/motor'
 import MotorTemperature       from './screens/parameters/motorTemperature'
@@ -1139,6 +1141,7 @@ const MainNavigator = () => {
         <Drawer.Screen name="HomeTabs"              component={HomeTabs}              options={{ title: 'TSDZ2 OSF Bike Head Unit' }} />
         <Drawer.Screen name="MapStack"              component={MapStack}              options={{ title: 'Map' }} />
         <Drawer.Screen name="MotorParametersStack"  component={MotorParametersStack}  options={{ title: 'Motor Parameters' }} />
+        <Drawer.Screen name="Bluetooth" component={Bluetooth} options={{ title: 'Bluetooth' }} />
         <Drawer.Screen name="FlashOSF"              component={FlashOSF}              options={{ title: 'Flash OSF'}  } />
         <Drawer.Screen name="SettingsStack"         component={SettingsStack}         options={{ title: 'Application settings' }} />
         <Drawer.Screen name="About"                 component={About}                 options={{ title: 'About this application' }} />

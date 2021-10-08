@@ -13,7 +13,7 @@ import React from 'react'
 import { Alert, View, Text, Button } from 'react-native'
 import { global } from '../styles/global'
 
-export default function FlashOSF() {
+const FlashOSF = () => {
   
   return (
     <View style={global.app}>
@@ -23,3 +23,5 @@ export default function FlashOSF() {
     </View>
   )
 }
+
+export default FlashOSF

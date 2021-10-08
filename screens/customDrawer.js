@@ -66,6 +66,11 @@ export function CustomDrawer(props) {
               onPress={() => { props.navigation.navigate('MotorParametersStack', {}) }}          
             />            
             <DrawerItem 
+              icon={ () => (<Icon name='bluetooth' color='white' size={24} onPress={() => {}} /> )} 
+              label={ () => ( <Text style={{color: 'white', fontSize: 20}}>Bluetooth</Text>) }
+              onPress={() => { props.navigation.navigate('Bluetooth') }}          
+            />            
+            <DrawerItem 
               icon={ () => (<Icon name='flash-outline' color='white' size={24} onPress={() => {}} /> )} 
               label={ () => ( <Text style={{color: 'white', fontSize: 20}}>Flash Motor</Text>) }
               onPress={() => { props.navigation.navigate('FlashOSF') }}          

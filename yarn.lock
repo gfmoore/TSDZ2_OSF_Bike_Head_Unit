@@ -1115,6 +1115,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/geolocation/-/geolocation-2.0.2.tgz#ba8b40f560ead8d014740d1cdea970b33f19312e"
   integrity sha512-tTNXRCgnhJBu79mulQwzabXRpDqfh/uaDqfHVpvF0nX4NTpolpy6mvTRiFg7eWFPGRArsnZz1EYp6rHfJWGgEA==
 
+"@react-native-community/viewpager@^5.0.11":
+  version "5.0.11"
+  resolved "https://registry.yarnpkg.com/@react-native-community/viewpager/-/viewpager-5.0.11.tgz#dbeb2d1b2452607926407c99e4de59c7db9e3019"
+  integrity sha512-eboJwbDQjP1qJP3LFzVspgh88IGNF07S2qpU296j+4kL0inVuL+HXs81SuczMGtJmDZ4u19RNEBVq79of/h+jQ==
+
 "@react-native-picker/picker@^2.0.0":
   version "2.0.0"
   resolved "https://registry.npmjs.org/@react-native-picker/picker/-/picker-2.0.0.tgz"
@@ -5699,6 +5704,11 @@ react-is@^16.13.0, react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.1"
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
+
+react-native-ble-manager@^7.6.3:
+  version "7.6.3"
+  resolved "https://registry.yarnpkg.com/react-native-ble-manager/-/react-native-ble-manager-7.6.3.tgz#f7e0dc1397cfa70153ad70807d81daa67fefcfa9"
+  integrity sha512-cZqJ2apg9lk3MAqZAS43tpbVzVRO7zAyzeZb8FcyJqzMNEqC3CDAqWuV/QFRiqq219hIlJvwFD2ul7TwEB3ySg==
 
 react-native-codegen@^0.0.6:
   version "0.0.6"

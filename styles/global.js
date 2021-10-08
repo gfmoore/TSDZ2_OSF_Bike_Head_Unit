@@ -335,5 +335,94 @@
     borderWidth: 2,
     borderColor: 'blue',
     borderRadius: 5,
-   }
+   },
+
+   btscanContainer: {
+     flexDirection: 'row'
+   },
+   btscanicon: {
+     width: 50,
+     paddingTop: 5,
+     paddingBottom: 5,
+     paddingLeft: 8,
+     borderColor: 'blue',
+     borderWidth: 2,
+     borderRadius: 5,
+     marginTop:10,
+   },
+   btsubheadercontainer: {
+     flexDirection: 'row',
+     justifyContent: 'space-between',
+     marginRight: 20,
+     marginBottom: 10,
+   },
+   btbutton: {
+     marginLeft: 20,
+     marginTop: 20,
+     width: 150,
+     height: 70,
+     backgroundColor: 'lightgreen',
+     alignItems: 'center',
+     justifyContent: 'center',
+     borderWidth: 1,
+     borderColor: 'black',
+     borderRadius: 10,
+   },
+   btbuttontext: {
+     fontSize: 20,
+   },
+   bttext: {
+     marginLeft: 20,
+     marginTop: 20,
+     fontSize: 20,
+   },
+   btratetext: {
+     marginLeft: 20,
+     marginTop: 20,
+     fontSize: 26,
+     color: 'white',
+   },
+   bttextheader: {
+     marginLeft: 20,
+     marginTop: 20,
+     fontSize: 20,
+     color: 'white',
+   },
+   btsavedperipheralsheader: {
+     marginLeft: 20,
+     marginTop: 20,
+     fontSize: 20,
+     color: 'blue',
+   },
+   btperipheralslist: {
+     flexDirection: 'row',
+     justifyContent: 'space-between',
+   },
+   btperipheralrow: {
+     padding: 10,
+     borderWidth: 1,
+     borderColor: 'grey',
+     borderRadius: 10,
+     marginTop: 10,
+     marginLeft: 20,
+     marginRight: 20,
+   },
+   btperipheraldisconnected: {
+     backgroundColor: 'lemonchiffon',
+   },
+   btperipheralconnected: {
+     backgroundColor: 'lightblue'
+   },
+   btperipheralrowtext: {
+     fontSize: 20,
+   },
+   btspacer: {
+     marginTop: 20,
+   },
+   btscanningtoast: {
+    fontSize: 15,
+    color: 'red',
+    marginLeft: 20,
+   },
+
 })
