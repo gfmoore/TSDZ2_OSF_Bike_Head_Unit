@@ -425,4 +425,35 @@
     marginLeft: 20,
    },
 
+   HM10button: {
+     marginLeft: 20,
+     marginTop: 20,
+     width: 150,
+     height: 40,
+     backgroundColor: 'lightgreen',
+     alignItems: 'center',
+     justifyContent: 'center',
+     borderWidth: 1,
+     borderColor: 'black',
+     borderRadius: 10,
+   },
+   HM10buttontext: {
+     fontSize: 20,
+   },
+   HM10text: {
+     marginLeft: 20,
+     marginTop: 20,
+     fontSize: 20,
+   },
+   HM10textInput: {
+     width: 300,
+     height: 50,
+     borderWidth: 1,
+     borderColor: 'red',
+     backgroundColor: 'lightyellow',
+     marginLeft: 20,
+     marginTop: 20,
+     borderRadius: 10,
+     fontSize: 20,
+   },
 })

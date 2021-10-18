@@ -10,7 +10,7 @@
  * 0.0.1    7 October 2021     Initial version
  */
 import React, { useState, useEffect, useContext } from 'react'
-import { Platform, PermissionsAndroid, LogBox, NativeModules, NativeEventEmitter, StyleSheet, Alert, View, Text, TouchableOpacity, FlatList } from 'react-native'
+import { Platform, PermissionsAndroid, LogBox, NativeModules, NativeEventEmitter, StyleSheet, Alert, View, Text, TextInput, TouchableOpacity, FlatList } from 'react-native'
 import { global } from '../styles/global'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -48,10 +48,14 @@ const Bluetooth = () => {
   const [peripheralData, setPeripheralData] = useState([])   //useState([{id: 0, data: 'heyupski'}])
 
   //particular peripheral data
-  const [heartrate, setHeartrate] = useState('0')
-  const [sspeed, setSspeed] = useState('0')
+  const [heartrate, setHeartrate] = useState('0')   
+  const [sspeed, setSspeed] = useState('0')          //doubled name because need to link into context at some point
   const [ccadence, setCcadence] = useState('0')
   const [mmotor, setMmotor] = useState('0')
+
+  const [testreaddata, setTestreaddata] = useState([])
+  const [testwritedata, setTestwritedata] = useState([])
+  const [sendtext, setSendtext] = useState('')
 
   //-----------------------------------------Async Storage routines-------------------------------------
   const clearAsyncStorage = async () => {  //!!!!!!!!!!!be careful will get rid of everything
@@ -164,10 +168,21 @@ const Bluetooth = () => {
           text: "OK", onPress: () => {
             let x = peripherals.filter(item => item.id !== p.id)
             setPeripherals(x)
+			
+            delPeripheral(p)  //need to actually delete it from async storage
           }
         }
       ]
     )
+  }
+  
+  const delPeripheral = async (p) => {
+    try {
+      await AsyncStorage.removeItem('ble'+p.id)
+    }
+    catch (e) {
+      console.log('GM: failed to delete peripheral : ', e)
+    }
   }
 
   //---------------------------------------------------Scan button--------------------------------------------------
@@ -258,9 +273,18 @@ const Bluetooth = () => {
         if (peripheralinfo.id === 'D6:70:81:A8:5B:2D') {  //the cadence
           setupNotifier('D6:70:81:A8:5B:2D', '1816', '2A5B')
         }
-        if (peripheralinfo.id === 'xx:xx:xx:xx:xx:xx') {  //TSDZ2 motor
-          setupNotifier('xx:xx:xx:xx:xx:xx', 'xxxx', 'xxxx')
+
+        if (peripheralinfo.id === '7C:EC:79:DC:AC:E8') {  //test with HM-10 (HMSoft) board  read
+          setupNotifier('7C:EC:79:DC:AC:E8', 'FFE0', 'FFE1')
         }
+
+        if (peripheralinfo.id === 'D5:81:32:F6:09:3C') {  //test with nRF52840 DK board
+          setupNotifier('D5:81:32:F6:09:3C', '1816', '2A5B')
+        }
+
+        // if (peripheralinfo.id === 'xx:xx:xx:xx:xx:xx') {  //TSDZ2 motor
+        //   setupNotifier('xx:xx:xx:xx:xx:xx', 'xxxx', 'xxxx')
+        // }
       }
       catch (e) {
         console.log("GM: Couldn't connect ", e)
@@ -396,6 +420,13 @@ const Bluetooth = () => {
             setCcadence(cadence.toFixed(0))
             console.log('Cadence ', cadence)
           }
+
+          //HM10
+          if (peripheral === '7C:EC:79:DC:AC:E8') {
+            setMmotor(String.fromCharCode.apply(null, value))
+            console.log('HM10 ', value, String.fromCharCode.apply(null, value))   //or try String.fromCharCode(...array); or String.fromCodePoint(...array) or let bytesView = new Uint8Array([104, 101, 108, 108, 111]); then str = new TextDecoder().decode(bytesView); 
+          }
+
         }
       )
     }
@@ -403,6 +434,84 @@ const Bluetooth = () => {
       console.log("GM: Couldn't add bleMUpdate listener ", e)
     }
   }
+
+  //----------------------------------------------Test HM10 stuff---------------------------------------------
+  const readdata = async () => {
+    let readdata
+    try {
+      // readdata = await BleManager.read("7C:EC:79:DC:AC:E8", "1800", "2A00" )
+      // console.log('Data from HM10 2A00 ',readdata)
+      // readdata = await BleManager.read("7C:EC:79:DC:AC:E8", "1800", "2A01" )
+      // console.log('Data from HM10 2A01 ',readdata)
+      // readdata = await BleManager.read("7C:EC:79:DC:AC:E8", "1800", "2A02" )
+      // console.log('Data from HM10 2A02 ',readdata)
+      // readdata = await BleManager.read("7C:EC:79:DC:AC:E8", "1800", "2A04" )
+      // console.log('Data from HM10 2A04 ',readdata)
+
+      readdata = await BleManager.read("7C:EC:79:DC:AC:E8", "FFE0", "FFE1")
+      console.log('Read from HM10 FFE0 FFE1 ', readdata)
+
+      setTestreaddata(readdata)
+      setMmotor(readdata)
+    }
+    catch (e) {
+      console.log('GM read error ', e)
+    }
+
+  }
+
+  const writedata = async () => {
+    //let str = 'Hello HM10'
+    let str = sendtext
+    let bdata = toUTF8Array(str)    //48-65-6C-6C-6F   //72-101-108-108-111
+    setTestwritedata(str)
+
+    try {
+      await BleManager.retrieveServices("7C:EC:79:DC:AC:E8")
+      await BleManager.writeWithoutResponse("7C:EC:79:DC:AC:E8", "FFE0", "FFE1", bdata)
+      console.log('Write to HM10 (FFE0 FFE1) ', bdata, str)
+    }
+    catch (e) {
+      console.log('GM write error ', e)
+    }
+  }
+
+
+  const toUTF8Array = (str) => {
+    let utf8 = [];
+    for (let i = 0; i < str.length; i++) {
+      let charcode = str.charCodeAt(i);
+      if (charcode < 0x80) utf8.push(charcode);
+      else if (charcode < 0x800) {
+        utf8.push(0xc0 | (charcode >> 6),
+          0x80 | (charcode & 0x3f));
+      }
+      else if (charcode < 0xd800 || charcode >= 0xe000) {
+        utf8.push(0xe0 | (charcode >> 12),
+          0x80 | ((charcode >> 6) & 0x3f),
+          0x80 | (charcode & 0x3f));
+      }
+      // surrogate pair
+      else {
+        i++;
+        // UTF-16 encodes 0x10000-0x10FFFF by
+        // subtracting 0x10000 and splitting the
+        // 20 bits of 0x0-0xFFFFF into two halves
+        charcode = 0x10000 + (((charcode & 0x3ff) << 10)
+          | (str.charCodeAt(i) & 0x3ff));
+        utf8.push(0xf0 | (charcode >> 18),
+          0x80 | ((charcode >> 12) & 0x3f),
+          0x80 | ((charcode >> 6) & 0x3f),
+          0x80 | (charcode & 0x3f));
+      }
+    }
+    return utf8;
+  }
+
+  const sendtextchange = (txt) => {
+    setSendtext(txt)
+  }
+
 
   //----------------------------------------------JSX---------------------------------------------------------
 
@@ -478,6 +587,14 @@ const Bluetooth = () => {
         :
         null
       }
+
+      {/* <TouchableOpacity onPress={ readdata } style={global.button}><Text style={global.buttontext}>Read</Text></TouchableOpacity>
+      <Text style={global.text}>Read data : {testreaddata} </Text> */}
+      <TextInput style={global.HM10textInput} autoCapitalize='none' autoCorrect={false}
+        value={sendtext} onChangeText={sendtextchange}
+      />
+      <TouchableOpacity onPress={writedata} style={global.HM10button}><Text style={global.HM10buttontext}>Write</Text></TouchableOpacity>
+      <Text style={global.HM10text}>Writedata : {testwritedata} </Text>
 
     </View>
   )
